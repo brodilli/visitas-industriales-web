@@ -1,0 +1,92 @@
+// import React, { useRef } from "react";
+import React, { useState } from "react";
+import "./Login.css";
+import axios from "axios";
+import { UserOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
+import Home from "../Home";
+
+const url = "http://localhost/ws-2/login2.php";
+
+export default function Login(props) {
+  const [user, setUser] = useState({ correo: "", contraseña: "" });
+  let navigate = useNavigate();
+  const handleChange = (e) => {
+    console.log(e.target.name, e.target.value);
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
+
+  const submitForm = (e) => {
+    e.preventDefault();
+    const sendData = {
+      correo: user.correo,
+      contraseña: user.contraseña,
+    };
+    console.log(sendData);
+    axios.post(url, sendData).then((result) => {
+      console.log(result.data.Status);
+      if (result.data.Status === "200") {
+        window.localStorage.setItem("correo", result.data.correo);
+        window.localStorage.setItem(
+          "nombreUsuario",
+          result.data.nombres +
+            " " +
+            result.data.apellidoP +
+            " " +
+            result.data.apellidoM
+        );
+        navigate("/home");
+      } else {
+        alert("Usuario o contraseña incorrectos");
+      }
+    });
+  };
+
+  return (
+    <form onSubmit={submitForm}>
+      <div className="login">
+        <div className="row">
+          <div className="col-sm-4 offset-4 mt-5">
+            <div className="card pt-2">
+              <div className="card-header">
+                <UserOutlined id="icono" />
+                <h3 className="titulo">Iniciar sesión</h3>
+              </div>
+              <div className="card-body">
+                <div className="form-group">
+                  <input
+                    type="email"
+                    className="form-control"
+                    id="exampleInputEmail1"
+                    aria-describedby="emailHelp"
+                    placeholder="Correo electrónico"
+                    typs="correo"
+                    name="correo"
+                    onChange={handleChange}
+                    value={user.correo}
+                  />
+                </div>
+                <div className="form-group pt-2 pb-2 ">
+                  <input
+                    type="password"
+                    className="form-control"
+                    id="exampleInputPassword1"
+                    placeholder="Contraseña"
+                    typs="contraseña"
+                    name="contraseña"
+                    onChange={handleChange}
+                    value={user.contraseña}
+                  />
+                </div>
+
+                <button type="submit" className="btn btn-primary btn-lg">
+                  Iniciar sesión
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  );
+}

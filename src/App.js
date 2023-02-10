@@ -1,25 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import { createRoot } from "react-dom/client";
+
+import Login from "./components/view/Login/Login";
+import Home from "./components/view/Home/index";
+import MostrarUsers from "./components/view/mostrarUsers/index";
+
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route exact path="/home" component={Home} />
+        <Route exact path="/mostrarUsers" component={MostrarUsers} />
+        <Route exact path="/" component={Login} />
+        <Route path="*" element={"No encontrado"}></Route>
+      </Routes>
+    </Router>
   );
 }
-
 export default App;
