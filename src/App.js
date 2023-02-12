@@ -8,15 +8,14 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    // <Router>
-    //   <Routes>
-    //     <Route exact path="/home" component={Home} />
-    //     <Route exact path="/mostrarUsers" component={MostrarUsers} />
-    //     <Route path="/" component={Login} />
-    //     <Route path="*" element={"No encontrado"}></Route>
-    //   </Routes>
-    // </Router>
-    <Login />
+    <Router>
+      <Routes>
+        <Route exact path="/home" element={<Home />} />
+        <Route exact path="/mostrarUsers" element={<MostrarUsers />} />
+        <Route path="/" element={<Login />} />
+        <Route path="*" element={"No encontrado"}></Route>
+      </Routes>
+    </Router>
   );
 }
 export default App;
