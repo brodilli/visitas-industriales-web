@@ -1,0 +1,103 @@
+import axios from "axios";
+import React from "react";
+import { useState } from "react";
+const Registro = () => {
+  const [data, setData] = useState({
+    nombres: "",
+    apellidoP: "",
+    apellidoM: "",
+    correo: "",
+    contraseña: "",
+  });
+  const handleChange = (e) => {
+    setData({ ...data, [e.target.id]: e.target.value });
+    console.log(data);
+  };
+  const submitForm = (e) => {
+    e.preventDefault();
+    const sendData = {
+      nombres: data.nombres,
+      apellidoP: data.apellidoP,
+      apellidoM: data.apellidoM,
+      correo: data.correo,
+      contraseña: data.contraseña,
+    };
+    axios
+      .post("http://localhost/ws-2/insertar_registro.php", sendData)
+      .then((result) => {
+        console.log(result.data.isOk);
+        if (result.data.isOk === "true") {
+          alert("Usuario registrado");
+        } else {
+          alert("Error al registrar usuario");
+        }
+      });
+    console.log(sendData);
+  };
+  return (
+    <div className="container">
+      <form onSubmit={submitForm}>
+        <div className="row">
+          <div className="col-sm-12 mt-3">
+            <h3>Nuevo usuario</h3>
+          </div>
+          <div className="card">
+            <div className="card-body">
+              <div className="form-group">
+                <label htmlFor="nombre">Nombres: </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="nombres"
+                  placeholder="Nombre"
+                  onChange={handleChange}
+                  value={data.nombres}
+                />
+                <label htmlFor="apellidoP">Apellido Paterno: </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="apellidoP"
+                  placeholder="Apellido Paterno"
+                  onChange={handleChange}
+                  value={data.apellidoP}
+                />
+                <label htmlFor="apellidoM">Apellido Materno: </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="apellidoM"
+                  placeholder="Apellido Materno"
+                  onChange={handleChange}
+                  value={data.apellidoM}
+                />
+                <label htmlFor="correo">Correo: </label>
+                <input
+                  type="email"
+                  className="form-control"
+                  id="correo"
+                  placeholder="Correo"
+                  onChange={handleChange}
+                  value={data.correo}
+                />
+                <label htmlFor="contraseña">Contraseña: </label>
+                <input
+                  type="password"
+                  className="form-control"
+                  id="contraseña"
+                  placeholder="Contraseña"
+                  onChange={handleChange}
+                  value={data.contraseña}
+                />
+              </div>
+              <button type="submit" className="btn btn-primary mt-3">
+                Registrar
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  );
+};
+export default Registro;

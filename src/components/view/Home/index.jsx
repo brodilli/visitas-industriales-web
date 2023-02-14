@@ -24,14 +24,12 @@ export default function Home() {
       </div>
       <div class="row">
         <div class="col-sm-12">
-          {
-            // Si hay registros, se muestran en la tabla
-            registros.length > 0 ? (
-              <Tabla registros={registros} />
-            ) : (
-              <h2>No hay registros</h2>
-            )
-          }
+          {// Si hay registros, se muestran en la tabla
+          registros.length > 0 ? (
+            <Tabla registros={registros} />
+          ) : (
+            <h2>No hay registros</h2>
+          )}
         </div>
       </div>
     </div>

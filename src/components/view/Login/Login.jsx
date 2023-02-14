@@ -4,7 +4,6 @@ import "./Login.css";
 import axios from "axios";
 import { UserOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import Home from "../Home";
 
 const url = "http://localhost/ws-2/login2.php";
 
@@ -43,50 +42,67 @@ export default function Login(props) {
   };
 
   return (
-    <form onSubmit={submitForm}>
-      <div className="login">
-        <div className="row">
-          <div className="col-sm-4 offset-4 mt-5">
-            <div className="card pt-2">
-              <div className="card-header">
-                <UserOutlined id="icono" />
-                <h3 className="titulo">Iniciar sesión</h3>
-              </div>
-              <div className="card-body">
-                <div className="form-group">
-                  <input
-                    type="email"
-                    className="form-control"
-                    id="exampleInputEmail1"
-                    aria-describedby="emailHelp"
-                    placeholder="Correo electrónico"
-                    typs="correo"
-                    name="correo"
-                    onChange={handleChange}
-                    value={user.correo}
-                  />
-                </div>
-                <div className="form-group pt-2 pb-2 ">
-                  <input
-                    type="password"
-                    className="form-control"
-                    id="exampleInputPassword1"
-                    placeholder="Contraseña"
-                    typs="contraseña"
-                    name="contraseña"
-                    onChange={handleChange}
-                    value={user.contraseña}
-                  />
-                </div>
+    <div className="container" id="form">
+      <form onSubmit={submitForm}>
+        <div className="login ">
+          <div className="imagen">
+            <img
+              src="https://cdguzman.tecnm.mx/itcg/pluginfile.php/1/theme_moove/logo/1662120580/Imagen11.png"
+              alt=""
+            />
+          </div>
 
-                <button type="submit" className="btn btn-primary btn-lg">
-                  Iniciar sesión
-                </button>
+          <div className="container pt-5">
+            <div className="card pt-2" id="info">
+              <div className="texto">
+                <p>
+                  Sitio web para la administración <br /> de Visitas
+                  Industriales
+                </p>
+              </div>
+            </div>
+            <div className="login-card">
+              <div className="card pt-2">
+                <div className="card-header">
+                  <UserOutlined id="icono" />
+                  <h3 className="titulo">Iniciar sesión</h3>
+                </div>
+                <div className="card-body">
+                  <div className="form-group">
+                    <input
+                      type="email"
+                      className="form-control"
+                      id="exampleInputEmail1"
+                      aria-describedby="emailHelp"
+                      placeholder="Correo electrónico"
+                      typs="correo"
+                      name="correo"
+                      onChange={handleChange}
+                      value={user.correo}
+                    />
+                  </div>
+                  <div className="form-group pt-2 pb-2 ">
+                    <input
+                      type="password"
+                      className="form-control"
+                      id="exampleInputPassword1"
+                      placeholder="Contraseña"
+                      typs="contraseña"
+                      name="contraseña"
+                      onChange={handleChange}
+                      value={user.contraseña}
+                    />
+                  </div>
+
+                  <button type="submit" className="btn btn-primary btn-lg">
+                    Iniciar sesión
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   );
 }

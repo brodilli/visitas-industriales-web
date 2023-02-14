@@ -1,0 +1,16 @@
+.navbar {
+    background-color: #1B396A;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.navbar #link {
+    color: white;
+    text-decoration: none;
+}
+
+.navbar #link:hover {
+    text-decoration: underline;
+    color: aliceblue;
+}
