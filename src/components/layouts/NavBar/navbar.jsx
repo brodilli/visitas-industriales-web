@@ -1,9 +1,23 @@
 import { Fragment } from "react";
 import React from "react";
+import { useState, useEffect } from "react";
 import { Link, Outlet } from "react-router-dom";
 import "./navbar.css";
 
 const NavBar = () => {
+  const [verifi, setVerifi] = useState({
+    nombre: "",
+    apellidoP: "",
+  });
+  useEffect(() => {
+    const nombre = window.localStorage.getItem("nombreUsuario");
+    const apellidoP = window.localStorage.getItem("apellidoP");
+    setVerifi({
+      nombre: nombre,
+      apellidoP: apellidoP,
+    });
+  }, []);
+
   return (
     <Fragment>
       <nav className="navbar navbar-expand-lg ">
@@ -34,6 +48,11 @@ const NavBar = () => {
                 Mostrar Usuarios
               </Link>
             </div>
+          </div>
+          <div className="datos">
+            <p>
+              {verifi.nombre} {verifi.apellidoP}
+            </p>
           </div>
         </div>
       </nav>

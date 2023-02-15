@@ -11,7 +11,7 @@ export default function Login(props) {
   const [user, setUser] = useState({ correo: "", contraseña: "" });
   let navigate = useNavigate();
   const handleChange = (e) => {
-    console.log(e.target.name, e.target.value);
+    // console.log(e.target.name, e.target.value);
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
@@ -21,9 +21,9 @@ export default function Login(props) {
       correo: user.correo,
       contraseña: user.contraseña,
     };
-    console.log(sendData);
+    // console.log(sendData);
     axios.post(url, sendData).then((result) => {
-      console.log(result.data.Status);
+      //   console.log(result.data.Status);
       if (result.data.Status === "200") {
         window.localStorage.setItem("correo", result.data.correo);
         window.localStorage.setItem(

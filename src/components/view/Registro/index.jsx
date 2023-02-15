@@ -25,9 +25,12 @@ const Registro = () => {
     axios
       .post("http://localhost/ws-2/insertar_registro.php", sendData)
       .then((result) => {
-        console.log(result.data.isOk);
+        console.log(result.data);
         if (result.data.isOk === "true") {
           alert("Usuario registrado");
+        }
+        if (result.data.isOk === "existe") {
+          alert("Correo ya registrado");
         } else {
           alert("Error al registrar usuario");
         }
