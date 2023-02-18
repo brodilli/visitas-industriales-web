@@ -4,10 +4,13 @@ import "./Login.css";
 import axios from "axios";
 import { UserOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setLogin } from "../../../redux/reducers/userReducer";
 
 const url = "http://localhost/ws-2/login2.php";
 
-export default function Login(props) {
+export default function Login() {
+  const dispatch = useDispatch();
   const [user, setUser] = useState({ correo: "", contraseña: "" });
   let navigate = useNavigate();
   const handleChange = (e) => {
@@ -17,10 +20,12 @@ export default function Login(props) {
 
   const submitForm = (e) => {
     e.preventDefault();
+
     const sendData = {
       correo: user.correo,
       contraseña: user.contraseña,
     };
+
     // console.log(sendData);
     axios.post(url, sendData).then((result) => {
       //   console.log(result.data.Status);
@@ -34,6 +39,7 @@ export default function Login(props) {
             " " +
             result.data.apellidoM
         );
+        dispatch(setLogin(true));
         navigate("/home");
       } else {
         alert("Usuario o contraseña incorrectos");

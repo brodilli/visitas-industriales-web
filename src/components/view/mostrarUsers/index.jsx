@@ -22,16 +22,14 @@ export default function MostrarUsers() {
       <div className="jumbotron">
         <h1>Todos los usuarios</h1>
       </div>
-      <div class="row">
-        <div class="col-sm-12">
-          {
-            // Si hay registros, se muestran en la tabla
-            registros.length > 0 ? (
-              <Tabla registros={registros} />
-            ) : (
-              <h2>No hay registros</h2>
-            )
-          }
+      <div className="row">
+        <div className="col-sm-12">
+          {// Si hay registros, se muestran en la tabla
+          registros.length > 0 ? (
+            <Tabla registros={registros} />
+          ) : (
+            <h2>No hay registros</h2>
+          )}
         </div>
       </div>
     </div>
