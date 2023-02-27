@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Tabla from "../../TablaUsers";
+import "./mostrarUsers.css";
 
 export default function MostrarUsers() {
   // Variable que guarda los registros
@@ -18,8 +19,8 @@ export default function MostrarUsers() {
       });
   };
   return (
-    <div className="container">
-      <div className="jumbotron">
+    <div className="containerUsers">
+      <div className="jumbotronUsers">
         <h1>Todos los usuarios</h1>
       </div>
       <div className="row">

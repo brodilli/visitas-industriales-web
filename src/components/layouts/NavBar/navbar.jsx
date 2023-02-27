@@ -2,21 +2,13 @@ import { Fragment } from "react";
 import React from "react";
 import { useState, useEffect } from "react";
 import { Link, Outlet } from "react-router-dom";
+import { SettingOutlined } from "@ant-design/icons";
+import { useSelector } from "react-redux";
 import "./navbar.css";
 
 const NavBar = () => {
-  const [verifi, setVerifi] = useState({
-    nombre: "",
-    apellidoP: "",
-  });
-  useEffect(() => {
-    const nombre = window.localStorage.getItem("nombreUsuario");
-    const apellidoP = window.localStorage.getItem("apellidoP");
-    setVerifi({
-      nombre: nombre,
-      apellidoP: apellidoP,
-    });
-  }, []);
+  const { nombres } = useSelector((state) => state.login);
+  console.log(nombres);
 
   return (
     <Fragment>
@@ -47,12 +39,16 @@ const NavBar = () => {
               <Link className="nav-link" id="link" to="/mostrarUsers">
                 Mostrar Usuarios
               </Link>
+              {/* <Link className="nav-link" id="link" to="/editarUsers">
+                Editar Usuario
+              </Link> */}
             </div>
           </div>
           <div className="datos">
-            <p>
-              {verifi.nombre} {verifi.apellidoP}
-            </p>
+            <p id="p-nombre">{nombres}</p>
+            <Link className="nav-link" id="link-setting" to="/editarUser">
+              <SettingOutlined id="setting" />
+            </Link>
           </div>
         </div>
       </nav>

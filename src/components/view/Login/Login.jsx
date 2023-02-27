@@ -12,6 +12,9 @@ const url = "http://localhost/ws-2/login2.php";
 export default function Login() {
   const dispatch = useDispatch();
   const [user, setUser] = useState({ correo: "", contraseña: "" });
+  const olvidoContraseña = () => {
+    alert("Olvido contraseña");
+  };
   let navigate = useNavigate();
   const handleChange = (e) => {
     // console.log(e.target.name, e.target.value);
@@ -27,19 +30,22 @@ export default function Login() {
     };
 
     // console.log(sendData);
+
     axios.post(url, sendData).then((result) => {
       //   console.log(result.data.Status);
       if (result.data.Status === "200") {
-        window.localStorage.setItem("correo", result.data.correo);
-        window.localStorage.setItem(
-          "nombreUsuario",
-          result.data.nombres +
-            " " +
-            result.data.apellidoP +
-            " " +
-            result.data.apellidoM
+        dispatch(
+          setLogin({
+            login: true,
+            nombres: result.data.nombres,
+            apellidoP: result.data.apellidoP,
+            apellidoM: result.data.apellidoM,
+            correo: user.correo,
+            contraseña: user.contraseña,
+            id: result.data.id,
+          })
         );
-        dispatch(setLogin(true));
+
         navigate("/home");
       } else {
         alert("Usuario o contraseña incorrectos");
@@ -99,7 +105,9 @@ export default function Login() {
                       value={user.contraseña}
                     />
                   </div>
-
+                  <a onClick={olvidoContraseña} href="" visibility={false}>
+                    ¿Olvidaste tu contraseña?
+                  </a>
                   <button type="submit" className="btn btn-primary btn-lg">
                     Iniciar sesión
                   </button>
