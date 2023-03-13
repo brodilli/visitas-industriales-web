@@ -6,8 +6,7 @@ export default function Tabla(props) {
       <table className="table">
         <thead className="thead-dark">
           <tr>
-            <th scope="col">#</th>
-            <th scope="col">id</th>
+            <th scope="col">id_usuario</th>
             <th scope="col">Nombres</th>
             <th scope="col">Apellido Paterno</th>
             <th scope="col">Apellido Materno</th>
@@ -17,8 +16,7 @@ export default function Tabla(props) {
         <tbody>
           {props.registros.map((item, i) => (
             <tr key={i}>
-              <th scope="row">{i}</th>
-              <td>{item.id}</td>
+              <td>{item.id_usuario}</td>
               <td>{item.nombres}</td>
               <td>{item.apellidoP}</td>
               <td>{item.apellidoM}</td>

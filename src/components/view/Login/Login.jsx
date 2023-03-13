@@ -42,7 +42,7 @@ export default function Login() {
             apellidoM: result.data.apellidoM,
             correo: user.correo,
             contraseña: user.contraseña,
-            id: result.data.id,
+            id_usuario: result.data.id_usuario,
           })
         );
 

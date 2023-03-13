@@ -7,7 +7,7 @@ const initialState = {
   apellidoP: "",
   apellidoM: "",
   contraseña: "",
-  id: "",
+  id_usuario: "",
 };
 
 export const userReducer = createSlice({
@@ -21,7 +21,7 @@ export const userReducer = createSlice({
       state.apellidoP = action.payload.apellidoP;
       state.apellidoM = action.payload.apellidoM;
       state.contraseña = action.payload.contraseña;
-      state.id = action.payload.id;
+      state.id_usuario = action.payload.id_usuario;
     },
     outLogin: (state) => {
       state.login = false;
@@ -30,7 +30,7 @@ export const userReducer = createSlice({
       state.apellidoP = "";
       state.apellidoM = "";
       state.contraseña = "";
-      state.id = "";
+      state.id_usuario = "";
     },
   },
 });

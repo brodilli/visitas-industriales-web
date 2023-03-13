@@ -1,14 +1,18 @@
 import { Fragment } from "react";
 import React from "react";
-import { useState, useEffect } from "react";
 import { Link, Outlet } from "react-router-dom";
-import { SettingOutlined } from "@ant-design/icons";
+import { SettingOutlined, LogoutOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 import "./navbar.css";
 
 const NavBar = () => {
-  const { nombres } = useSelector((state) => state.login);
+  const { nombres, id_usuario } = useSelector((state) => state.login);
   console.log(nombres);
+  console.log(id_usuario);
+  const cerrarSesion = () => {
+    localStorage.removeItem("token");
+    window.location.href = "/login";
+  };
 
   return (
     <Fragment>
@@ -42,13 +46,17 @@ const NavBar = () => {
               {/* <Link className="nav-link" id="link" to="/editarUsers">
                 Editar Usuario
               </Link> */}
+              <Link className="nav-link" id="link" to="/registroEmpresa">
+                Registro Empresa
+              </Link>
             </div>
           </div>
           <div className="datos">
             <p id="p-nombre">{nombres}</p>
             <Link className="nav-link" id="link-setting" to="/editarUser">
-              <SettingOutlined id="setting" />
+              <SettingOutlined id="setting" title="Configuración" />
             </Link>
+            <LogoutOutlined id="logout" onClick={cerrarSesion} title="Salir" />
           </div>
         </div>
       </nav>

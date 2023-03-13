@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Tabla from "../../TablaUsers";
+import Tabla from "../../Tablas/TablaUsers";
 import "./mostrarUsers.css";
 
 export default function MostrarUsers() {

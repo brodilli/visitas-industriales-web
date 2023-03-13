@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect } from "react";
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import { useSelector } from "react-redux";
 const editarUsers = () => {
   const { nombres, apellidoP, apellidoM, correo, contraseña, id } = useSelector(
@@ -20,13 +20,13 @@ const editarUsers = () => {
     correoRef.current.value = correo;
     contraseñaRef.current.value = contraseña;
   }, [nombreRef, apellidoPRef, apellidoMRef, correoRef, contraseñaRef]);
-  const [data, setData] = useState({
-    nombres: "",
-    apellidoP: "",
-    apellidoM: "",
-    correo: "",
-    contraseña: "",
-  });
+  // const [data, setData] = useState({
+  //   nombres: "",
+  //   apellidoP: "",
+  //   apellidoM: "",
+  //   correo: "",
+  //   contraseña: "",
+  // });
   // const handleChange = (e) => {
   //   setData({ ...data, [e.target.id]: e.target.value });
   //   // console.log(data);

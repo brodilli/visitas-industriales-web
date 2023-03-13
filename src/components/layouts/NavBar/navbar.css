@@ -15,6 +15,11 @@
     color: aliceblue;
 }
 
+.navbar #p-id {
+    display: inline;
+    padding-top: 10px;
+}
+
 .navbar #p-nombre {
     display: inline;
     padding-top: 10px;
@@ -26,10 +31,16 @@
     font-size: 1.3rem;
 }
 
+.navbar #logout {
+    padding-top: 10px;
+    color: white;
+    font-size: 1.3rem;
+}
+
 .datos {
     display: grid;
     width: auto;
-    grid-template-columns: 1fr 0.5fr;
+    grid-template-columns: 1fr 0.5fr 0.5fr 0.5fr;
     margin-top: 10px;
 }
 

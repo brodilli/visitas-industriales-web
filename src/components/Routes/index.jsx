@@ -4,6 +4,7 @@ import Home from "../../components/view/Home/index";
 import Registo from "../../components/view/Registro/index";
 import MostrarUsers from "../../components/view/mostrarUsers/index";
 import EditarUsers from "../../components/view/editarUsers/index";
+import RegistroEmpresa from "../RegistroEmpresa";
 import NavBar from "../../components/layouts/NavBar/navbar";
 import { ProtectedRoute } from "../../components/ProtectedRoute/ProtectedRoute";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -22,6 +23,7 @@ function Rutas() {
           <Route exact path="/mostrarUsers" element={<MostrarUsers />} />
           <Route exact path="/registro" element={<Registo />} />
           <Route exact path="/editarUser" element={<EditarUsers />} />
+          <Route exact path="/registroEmpresa" element={<RegistroEmpresa />} />
         </Route>
 
         <Route exact path="/login" element={<Login />} />
