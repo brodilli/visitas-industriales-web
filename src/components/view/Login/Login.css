@@ -42,8 +42,9 @@
 
 .btn {
     display: block;
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 15%;
+    margin-right: 15%;
+
     background-color: #166fe5;
     border-color: #166fe5;
 }

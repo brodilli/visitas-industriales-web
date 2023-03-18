@@ -10,6 +10,7 @@ export default function Home() {
   const { id_usuario } = useSelector((state) => state.login);
   console.log(id_usuario);
   const refId_empresa = useRef("");
+
   const [data, setData] = useState({
     id_usuario: id_usuario,
     semestre: "1",
@@ -60,10 +61,13 @@ export default function Home() {
         console.log(result.data);
         if (result.data.isOk === "true") {
           alert("visita registrada");
+          // setData({ ...data, [e.target.id]: "" });
+          refId_empresa.current.value = "1";
         } else {
           alert("Error al registrar la visita");
         }
       });
+
     console.log(sendData);
   };
 
@@ -163,6 +167,7 @@ export default function Home() {
                   <div>
                     <label htmlFor="">Grupo: </label>
                     <Input
+                      className="grupo"
                       id="grupo"
                       type="text"
                       maxLength={1}

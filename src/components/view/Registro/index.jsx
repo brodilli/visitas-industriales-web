@@ -3,6 +3,7 @@ import React from "react";
 import { useState } from "react";
 const Registro = () => {
   const [data, setData] = useState({
+    tipoUser: "Usuario",
     nombres: "",
     apellidoP: "",
     apellidoM: "",
@@ -16,6 +17,7 @@ const Registro = () => {
   const submitForm = (e) => {
     e.preventDefault();
     const sendData = {
+      tipoUser: data.tipoUser,
       nombres: data.nombres,
       apellidoP: data.apellidoP,
       apellidoM: data.apellidoM,
@@ -31,7 +33,8 @@ const Registro = () => {
         }
         if (result.data.isOk === "existe") {
           alert("Correo ya registrado");
-        } else {
+        }
+        if (result.data.isOk === "false") {
           alert("Error al registrar usuario");
         }
       });
@@ -47,6 +50,19 @@ const Registro = () => {
           <div className="card">
             <div className="card-body">
               <div className="form-group">
+                <label htmlFor="tipoUser">Tipo de usuario: </label>
+                <select
+                  className="form-control"
+                  id="tipoUser"
+                  onChange={handleChange}
+                  value={data.tipoUser}
+                >
+                  <option value="Usuario">Usuario</option>
+                  <option value="Administrador">Administrador</option>
+                  <option value="Administrador de recursos">
+                    Administrador de recursos materiales y servicios
+                  </option>
+                </select>
                 <label htmlFor="nombre">Nombres: </label>
                 <input
                   type="text"

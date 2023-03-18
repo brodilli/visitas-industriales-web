@@ -55,6 +55,7 @@ const RegistroEmpresa = () => {
                   placeholder="Nombre"
                   onChange={handleChange}
                   value={data.nombre}
+                  required
                 />
                 <label htmlFor="lugar">Ciudad: </label>
                 <input
@@ -64,6 +65,7 @@ const RegistroEmpresa = () => {
                   placeholder="ciudad"
                   onChange={handleChange}
                   value={data.lugar}
+                  required
                 />
                 <label htmlFor="nombre_contacto">Nombre de contacto: </label>
                 <input
@@ -73,6 +75,7 @@ const RegistroEmpresa = () => {
                   placeholder="Nombre del contacto"
                   onChange={handleChange}
                   value={data.nombre_contacto}
+                  required
                 />
                 <label htmlFor="correo_contacto">Correo de contacto: </label>
                 <input
@@ -82,6 +85,7 @@ const RegistroEmpresa = () => {
                   placeholder="Correo"
                   onChange={handleChange}
                   value={data.correo_contacto}
+                  required
                 />
                 <label htmlFor="telefono_contacto">
                   Telefono del contacto:{" "}
@@ -93,6 +97,7 @@ const RegistroEmpresa = () => {
                   placeholder="Telefono"
                   onChange={handleChange}
                   value={data.telefono_contacto}
+                  required
                 />
               </div>
               <button type="submit" className="btn btn-primary mt-3">

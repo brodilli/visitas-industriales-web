@@ -3,12 +3,16 @@
     border-radius: 10px;
     padding: 10px;
     margin: 10px;
-    width: 90%;
+
     height: auto;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+}
+
+.card-body {
+    /* margin-left: 15%; */
 }
 
 .card #select {
@@ -27,6 +31,11 @@
 }
 
 .num_alumnas {
+    width: 30%;
+
+}
+
+.grupo {
     width: 30%;
 
 }

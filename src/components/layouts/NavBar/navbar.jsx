@@ -49,6 +49,9 @@ const NavBar = () => {
               <Link className="nav-link" id="link" to="/registroEmpresa">
                 Registro Empresa
               </Link>
+              <Link className="nav-link" id="link" to="/mostrarSolicitudes">
+                Mostrar solicitudes de visitas
+              </Link>
             </div>
           </div>
           <div className="datos">

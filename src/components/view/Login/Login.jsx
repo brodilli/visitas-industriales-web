@@ -108,6 +108,7 @@ export default function Login() {
                   <a onClick={olvidoContraseña} href="" visibility={false}>
                     ¿Olvidaste tu contraseña?
                   </a>
+                  <br />
                   <button type="submit" className="btn btn-primary btn-lg">
                     Iniciar sesión
                   </button>
