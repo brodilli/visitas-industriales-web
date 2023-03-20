@@ -12,9 +12,9 @@ const url = "http://localhost/ws-2/login2.php";
 export default function Login() {
   const dispatch = useDispatch();
   const [user, setUser] = useState({ correo: "", contraseña: "" });
-  const olvidoContraseña = () => {
-    alert("Olvido contraseña");
-  };
+  // const olvidoContraseña = () => {
+  //   alert("Olvido contraseña");
+  // };
   let navigate = useNavigate();
   const handleChange = (e) => {
     // console.log(e.target.name, e.target.value);
@@ -43,6 +43,7 @@ export default function Login() {
             correo: user.correo,
             contraseña: user.contraseña,
             id_usuario: result.data.id_usuario,
+            tipoUser: result.data.tipoUser,
           })
         );
 
@@ -105,9 +106,9 @@ export default function Login() {
                       value={user.contraseña}
                     />
                   </div>
-                  <a onClick={olvidoContraseña} href="" visibility={false}>
+                  {/* <a onClick={olvidoContraseña} visibility={false}>
                     ¿Olvidaste tu contraseña?
-                  </a>
+                  </a> */}
                   <br />
                   <button type="submit" className="btn btn-primary btn-lg">
                     Iniciar sesión

@@ -5,7 +5,7 @@ import { SettingOutlined, LogoutOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 import "./navbar.css";
 
-const NavBar = () => {
+const NavBarUser = () => {
   const { nombres } = useSelector((state) => state.login);
   const cerrarSesion = () => {
     localStorage.removeItem("token");
@@ -35,12 +35,7 @@ const NavBar = () => {
               <Link className="nav-link" id="home" to="/home">
                 Home
               </Link>
-              <Link className="nav-link" id="registro" to="/registro">
-                Registro
-              </Link>
-              <Link className="nav-link" id="mostrarUsers" to="/mostrarUsers">
-                Mostrar Usuarios
-              </Link>
+
               <Link
                 className="nav-link"
                 id="registroEmpresa"
@@ -53,7 +48,7 @@ const NavBar = () => {
                 id="mostrarSolicitudes"
                 to="/mostrarSolicitudes"
               >
-                Mostrar solicitudes de visitas
+                Mostrar mis solicitudes de visitas
               </Link>
             </div>
           </div>
@@ -72,4 +67,4 @@ const NavBar = () => {
     </Fragment>
   );
 };
-export default NavBar;
+export default NavBarUser;

@@ -7,17 +7,18 @@ import EditarUsers from "../../components/view/editarUsers/index";
 import MostrarSolicitudes from "../view/mostrarSolicitudesVisitas/index";
 import RegistroEmpresa from "../RegistroEmpresa";
 import NavBar from "../../components/layouts/NavBar/navbar";
+import NavBarUser from "../layouts/NavBar/navBarUser";
 import { ProtectedRoute } from "../../components/ProtectedRoute/ProtectedRoute";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 function Rutas() {
-  const { login, nombres } = useSelector((state) => state.login);
+  const { login, nombres, tipoUser } = useSelector((state) => state.login);
   console.log(nombres);
 
   return (
     <Router>
-      <NavBar />
+      {tipoUser === "Usuario" ? <NavBarUser /> : <NavBar />}
       <Routes>
         <Route exact path="/home" element={<Home />} />
         <Route element={<ProtectedRoute login={login} />}>

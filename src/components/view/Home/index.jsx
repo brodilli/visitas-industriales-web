@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
-import { Input, Select } from "antd";
+import { Input } from "antd";
 import axios from "axios";
 import "./home.css";
 export default function Home() {
@@ -94,7 +94,7 @@ export default function Home() {
                 >
                   {empresas.sort().map((empresas) => (
                     <option value={empresas.id_empresa}>
-                      {`${empresas.nombre}` +
+                      {`${empresas.nombre_empresa}` +
                         "  " +
                         "(" +
                         `${empresas.lugar}` +
