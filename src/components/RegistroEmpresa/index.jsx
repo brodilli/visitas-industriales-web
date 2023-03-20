@@ -3,7 +3,7 @@ import React from "react";
 import { useState } from "react";
 const RegistroEmpresa = () => {
   const [data, setData] = useState({
-    nombre: "",
+    nombre_empresa: "",
     lugar: "",
     nombre_contacto: "",
     correo_contacto: "",
@@ -16,7 +16,7 @@ const RegistroEmpresa = () => {
   const submitForm = (e) => {
     e.preventDefault();
     const sendData = {
-      nombre: data.nombre,
+      nombre: data.nombre_empresa,
       lugar: data.lugar,
       nombre_contacto: data.nombre_contacto,
       correo_contacto: data.correo_contacto,
@@ -54,7 +54,7 @@ const RegistroEmpresa = () => {
                   id="nombre"
                   placeholder="Nombre"
                   onChange={handleChange}
-                  value={data.nombre}
+                  value={data.nombre_empresa}
                   required
                 />
                 <label htmlFor="lugar">Ciudad: </label>

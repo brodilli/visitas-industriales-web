@@ -45,8 +45,8 @@ const NavBarUser = () => {
               </Link>
               <Link
                 className="nav-link"
-                id="mostrarSolicitudes"
-                to="/mostrarSolicitudes"
+                id="mostrarSolicitudesUsuario"
+                to="/mostrarSolicitudesUsuario"
               >
                 Mostrar mis solicitudes de visitas
               </Link>

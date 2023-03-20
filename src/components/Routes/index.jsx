@@ -5,6 +5,7 @@ import Registo from "../../components/view/Registro/index";
 import MostrarUsers from "../../components/view/mostrarUsers/index";
 import EditarUsers from "../../components/view/editarUsers/index";
 import MostrarSolicitudes from "../view/mostrarSolicitudesVisitas/index";
+import MostrarSolicitudesUsuario from "../view/MostrarSolicitudVisitaUsuario";
 import RegistroEmpresa from "../RegistroEmpresa";
 import NavBar from "../../components/layouts/NavBar/navbar";
 import NavBarUser from "../layouts/NavBar/navBarUser";
@@ -30,6 +31,11 @@ function Rutas() {
             exact
             path="/mostrarSolicitudes"
             element={<MostrarSolicitudes />}
+          />
+          <Route
+            exact
+            path="/mostrarSolicitudesUsuario"
+            element={<MostrarSolicitudesUsuario />}
           />
         </Route>
 

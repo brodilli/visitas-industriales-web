@@ -92,8 +92,8 @@ export default function Home() {
                   required
                   onChange={handleChange}
                 >
-                  {empresas.sort().map((empresas) => (
-                    <option value={empresas.id_empresa}>
+                  {empresas.sort().map((empresas, i) => (
+                    <option key={i} value={empresas.id_empresa}>
                       {`${empresas.nombre_empresa}` +
                         "  " +
                         "(" +

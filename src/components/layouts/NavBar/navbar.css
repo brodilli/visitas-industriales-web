@@ -5,14 +5,22 @@
     font-weight: bold;
 }
 
-.navbar #link {
+.nav-link {
     color: white;
     text-decoration: none;
 }
 
-.navbar #link:hover {
-    text-decoration: underline;
+.nav-link {
+    color: white;
+}
+
+.nav-link:hover {
     color: aliceblue;
+}
+
+.nav-link:focus {
+    color: aliceblue;
+    text-decoration: underline;
 }
 
 .navbar #p-id {
@@ -40,11 +48,22 @@
 .datos {
     display: grid;
     width: auto;
-    grid-template-columns: 1fr 0.5fr 0.5fr 0.5fr;
+    grid-template-columns: 1.5fr 0.5fr 0.5fr;
     margin-top: 10px;
 }
 
-.navbar #link-setting {
+#link-setting {
+    display: inline;
+    padding-left: 10px;
+}
+
+#logout {
+    display: inline;
+    margin-left: 10px;
+}
+
+
+/* .navbar #link-setting {
     padding-left: 10px;
     display: inline;
-}
+} */
