@@ -15,6 +15,8 @@ const mostrarSolicitudes = () => {
     console.log(solicitud);
   };
   async function modifyPdf(solicitud) {
+    const alumnosTotales =
+      parseInt(solicitud.num_alumnos) + parseInt(solicitud.num_alumnas);
     // const url =
     //   "https://drive.google.com/uc?id=1NjbgYb10LpDvPUi8Ix-XayidRRmHc8Id&";
 
@@ -48,20 +50,27 @@ const mostrarSolicitudes = () => {
 
     form
       .getTextField("Empresa  Ciudad1")
-      .setText(solicitud.nombre_empresa + solicitud.lugar);
+      .setText(solicitud.nombre_empresa + "\n" + solicitud.lugar);
 
     form
       .getTextField("Área a observar y objetivo1")
       .setText(solicitud.objetivo);
-    form.getTextField("numAlum").setText(solicitud.num_alumnos);
+    form.getTextField("numAlum").setText(alumnosTotales.toString());
     form.getTextField("Fecha  Turno1").setText(solicitud.fecha);
     form
       .getTextField("carrera")
       .setText(
-        solicitud.semestre + solicitud.grupo + "-" + solicitud.nombre_carrera
+        solicitud.semestre +
+          "°" +
+          solicitud.grupo +
+          "\n" +
+          solicitud.nombre_carrera,
+        {
+          size: 10,
+        }
       );
     form.getTextField("fecha").setText(solicitud.fecha);
-    form.getTextField("periodo").setText("enero-junio");
+    form.getTextField("periodo").setText("enero-junio", { size: 20 });
     form
       .getTextField("Solicitante Asignatura1")
       .setText(
