@@ -3,6 +3,8 @@ import React from "react";
 import { Link, Outlet } from "react-router-dom";
 import { SettingOutlined, LogoutOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
+import "bootstrap/dist/css/bootstrap.css";
+
 import "./navbar.css";
 
 const NavBar = () => {
@@ -16,15 +18,12 @@ const NavBar = () => {
     <Fragment>
       <nav className="navbar navbar-expand-lg ">
         <div className="container-fluid">
-          {/* <Link className="navbar-brand" to="/home">
-            Visitas Industriales
-          </Link> */}
           <button
             className="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
-            data-bs-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
@@ -66,9 +65,7 @@ const NavBar = () => {
           </div>
         </div>
       </nav>
-      <section>
-        <Outlet></Outlet>
-      </section>
+      <Outlet />
     </Fragment>
   );
 };

@@ -1,9 +1,19 @@
+.contenedor {
+    display: inline-block;
+    margin-left: 15%;
+    align-items: center;
+
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    font-family: "Poppins", sans-serif;
+    width: auto;
+}
+
 .login {
-    position: absolute;
-    top: 0%;
-    left: 0%;
-    width: 100%;
-    height: 100%;
+
     background-color: #f8f9fa;
 
 }
@@ -16,11 +26,6 @@
 
 }
 
-.container {
-    display: flex;
-    justify-content: center;
-    font-family: "Poppins", sans-serif;
-}
 
 .card-header {
     background-color: white;

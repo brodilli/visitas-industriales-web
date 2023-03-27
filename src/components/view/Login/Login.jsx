@@ -46,6 +46,8 @@ export default function Login() {
             tipoUser: result.data.tipoUser,
           })
         );
+        localStorage.setItem("nombres", result.data.nombres);
+        localStorage.setItem("id_usuario", result.data.id_usuario);
 
         navigate("/home");
       } else {
@@ -55,17 +57,16 @@ export default function Login() {
   };
 
   return (
-    <div className="container" id="form">
-      <form onSubmit={submitForm}>
-        <div className="login ">
-          <div className="imagen">
-            <img
-              src="https://cdguzman.tecnm.mx/itcg/pluginfile.php/1/theme_moove/logo/1662120580/Imagen11.png"
-              alt=""
-            />
-          </div>
-
-          <div className="container pt-5">
+    <div className="contenedor">
+      <div className="imagen">
+        <img
+          src="https://cdguzman.tecnm.mx/itcg/pluginfile.php/1/theme_moove/logo/1662120580/Imagen11.png"
+          alt=""
+        />
+      </div>
+      <div className="login ">
+        <form onSubmit={submitForm}>
+          <div className="container">
             <div className="card pt-2" id="info">
               <div className="texto">
                 <p>
@@ -117,8 +118,8 @@ export default function Login() {
               </div>
             </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   );
 }

@@ -78,7 +78,7 @@ export default function MostrarUsers() {
   };
   return (
     <>
-      <div className="contenedor">
+      <div className="contenedorMostrarUsers">
         <h1 className="titulo">Todos los usuarios</h1>
         <Container className="contenedor-mostrar-users">
           {/* <Button color="primary"> Agregar usuario </Button> */}

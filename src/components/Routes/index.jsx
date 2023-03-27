@@ -17,12 +17,25 @@ function Rutas() {
   const { login, nombres, tipoUser } = useSelector((state) => state.login);
   console.log(nombres);
 
+  const nav = () => {
+    if (login === true) {
+      if (tipoUser === "Usuario") {
+        return <NavBarUser />;
+      } else {
+        return <NavBar />;
+      }
+    } else {
+      return null;
+    }
+  };
+
   return (
     <Router>
-      {tipoUser === "Usuario" ? <NavBarUser /> : <NavBar />}
+      {nav()}
+
       <Routes>
-        <Route exact path="/home" element={<Home />} />
         <Route element={<ProtectedRoute login={login} />}>
+          <Route exact path="/home" element={<Home />} />
           <Route exact path="/mostrarUsers" element={<MostrarUsers />} />
           <Route exact path="/registro" element={<Registo />} />
           <Route exact path="/editarUser" element={<EditarUsers />} />

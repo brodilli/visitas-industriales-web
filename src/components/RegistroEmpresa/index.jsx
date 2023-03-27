@@ -16,7 +16,7 @@ const RegistroEmpresa = () => {
   const submitForm = (e) => {
     e.preventDefault();
     const sendData = {
-      nombre: data.nombre_empresa,
+      nombre_empresa: data.nombre_empresa,
       lugar: data.lugar,
       nombre_contacto: data.nombre_contacto,
       correo_contacto: data.correo_contacto,
@@ -29,11 +29,6 @@ const RegistroEmpresa = () => {
         if (result.data.isOk === "true") {
           alert("Empresa registrada");
         }
-        // if (result.data.isOk === "existe") {
-        //   alert("Correo ya registrado");
-        // } else {
-        //   alert("Error al registrar usuario");
-        // }
       });
     console.log(sendData);
   };
@@ -51,7 +46,7 @@ const RegistroEmpresa = () => {
                 <input
                   type="text"
                   className="form-control"
-                  id="nombre"
+                  id="nombre_empresa"
                   placeholder="Nombre"
                   onChange={handleChange}
                   value={data.nombre_empresa}

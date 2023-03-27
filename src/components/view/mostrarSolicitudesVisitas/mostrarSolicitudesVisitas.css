@@ -1,14 +1,20 @@
-.contenedor {
-    display: flex;
-    flex-direction: column;
-    row-gap: 1rem;
-    flex-wrap: wrap;
-    margin: 0 auto;
+.contenedorSolicitudes {
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
     margin-left: 1%;
 
 }
 
 .carta {
-    width: 100%;
-    margin: 0 auto;
+    margin: 1%;
+    width: 200%;
+
+    height: 100%;
+}
+
+.botonesMostrar {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
 }
