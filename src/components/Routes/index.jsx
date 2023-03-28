@@ -6,6 +6,7 @@ import MostrarUsers from "../../components/view/mostrarUsers/index";
 import EditarUsers from "../../components/view/editarUsers/index";
 import MostrarSolicitudes from "../view/mostrarSolicitudesVisitas/index";
 import MostrarSolicitudesUsuario from "../view/MostrarSolicitudVisitaUsuario";
+import ExportarSolicitudes from "../view/Export/index";
 import RegistroEmpresa from "../RegistroEmpresa";
 import NavBar from "../../components/layouts/NavBar/navbar";
 import NavBarUser from "../layouts/NavBar/navBarUser";
@@ -49,6 +50,11 @@ function Rutas() {
             exact
             path="/mostrarSolicitudesUsuario"
             element={<MostrarSolicitudesUsuario />}
+          />
+          <Route
+            exact
+            path="/exportarSolicitudes"
+            element={<ExportarSolicitudes />}
           />
         </Route>
 

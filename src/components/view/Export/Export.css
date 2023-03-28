@@ -1,0 +1,14 @@
+.export {
+    margin-left: 5%;
+}
+
+.contenedorExportarSolicitudes {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+}
+
+.botonExport {
+    margin-left: 80%;
+    margin-top: 3%;
+}

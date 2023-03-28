@@ -54,6 +54,13 @@ const NavBar = () => {
               >
                 Mostrar solicitudes de visitas
               </Link>
+              <Link
+                className="nav-link"
+                id="exportarSolicitudes"
+                to="/exportarSolicitudes"
+              >
+                Exportar solicitudes de visitas
+              </Link>
             </div>
           </div>
           <div className="datos">

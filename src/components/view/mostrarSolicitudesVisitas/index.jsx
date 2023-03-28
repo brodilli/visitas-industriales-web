@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Col } from "antd";
 import { Button } from "reactstrap";
 import { PDFDocument } from "pdf-lib";
@@ -18,7 +18,6 @@ import "./mostrarSolicitudesVisitas.css";
 const mostrarSolicitudes = () => {
   const [solicitudes, setSolicitudes] = useState([]);
   const [modal, setModal] = useState(false);
-  const refId_empresa = useRef("");
   const [empresas, setEmpresas] = useState([]);
 
   const [data, setData] = useState({
