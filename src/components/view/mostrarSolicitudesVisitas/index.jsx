@@ -25,7 +25,7 @@ const mostrarSolicitudes = () => {
     id_solicitud: "",
     id_empresa: "",
     id_usuario: "",
-    nombre_empresa: "",
+    // nombre_empresa: "",
     lugar: "",
     objetivo: "",
     num_alumnos: "",
@@ -33,18 +33,19 @@ const mostrarSolicitudes = () => {
     fecha: "",
     semestre: "",
     grupo: "",
-    nombre_carrera: "",
+    id_carrera: "",
   });
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.id]: e.target.value });
-    console.log(data);
+
+    // console.log(data);
   };
 
   const actualizar = (e) => {
     e.preventDefault();
     const sendData = {
-      id_solicitud: data.id_solicitud,
+      id_visita: data.id_visita,
       id_empresa: data.id_empresa,
       id_usuario: data.id_usuario,
       nombre_empresa: data.nombre_empresa,
@@ -55,25 +56,26 @@ const mostrarSolicitudes = () => {
       fecha: data.fecha,
       semestre: data.semestre,
       grupo: data.grupo,
-      nombre_carrera: data.nombre_carrera,
+      asignatura: data.asignatura,
+      id_carrera: data.id_carrera,
     };
     console.log(sendData);
     axios
       .post("http://localhost/ws-2/actualizar_solicitud_visita.php", sendData)
       .then((result) => {
         console.log(result.data);
-        if (result.data.isOk === true) {
-          alert("Usuario actualizado");
+        if (result.data.isOk === "true") {
           setModal(false);
           window.location.reload();
         } else {
-          alert("Error al actualizar usuario");
+          alert("Error al actualizar");
         }
       });
   };
   const abrirModal = (solicitud) => {
     setModal(true);
     setData(solicitud);
+    console.log(solicitud);
   };
 
   const cerrarModal = () => {
@@ -238,11 +240,11 @@ const mostrarSolicitudes = () => {
             />
           </FormGroup>
           <FormGroup>
-            <Label for="empresa">empresa</Label>
+            <Label for="id_empresa">empresa</Label>
             <br />
             <select
-              ref={refId_empresa}
-              name="empresa"
+              // ref={refId_empresa}
+              name="id_empresa"
               id="id_empresa"
               className="select-empresa form-control"
               value={data.id_empresa}
@@ -353,7 +355,8 @@ const mostrarSolicitudes = () => {
           <FormGroup>
             <Label for="carrera">Carrera</Label>
             <select
-              defaultChecked="1"
+              for="id_carrera"
+              name="id_carrera"
               id="id_carrera"
               className="form-control"
               onChange={handleChange}
@@ -373,7 +376,9 @@ const mostrarSolicitudes = () => {
           </FormGroup>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary">Actualizar</Button>{" "}
+          <Button color="primary" onClick={actualizar}>
+            Actualizar
+          </Button>{" "}
           <Button color="danger" onClick={cerrarModal}>
             Cancelar
           </Button>
