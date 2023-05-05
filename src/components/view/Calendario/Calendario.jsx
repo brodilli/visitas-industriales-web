@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
@@ -15,6 +15,26 @@ const Agenda = () => {
   const [eventStart, setEventStart] = useState("");
   const [eventEnd, setEventEnd] = useState("");
 
+  const obtenerEventos = () => {
+    fetch("http://localhost/ws-2/obtener_uso_vehiculos.php")
+      .then((resp) => resp.json())
+      .then((json) => {
+        const eventos = json.map((evento) => ({
+          title: evento.titulo,
+          start: evento.inicio,
+          end: evento.fin,
+        }));
+        setEvents(eventos);
+      });
+  };
+
+  useEffect(() => {
+    obtenerEventos();
+  }, []);
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
   const handleDateSelect = (selectInfo) => {
     setShowModal(true);
     setEventTitle("");
@@ -22,17 +42,33 @@ const Agenda = () => {
     setEventEnd(selectInfo.endStr);
   };
 
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
-
   const handleAddEvent = () => {
     const newEvent = {
       title: eventTitle,
-      start: eventStart,
-      end: eventEnd,
+      start: new Date(eventStart),
+      end: new Date(eventEnd),
     };
     setEvents([...events, newEvent]);
+
+    fetch("http://localhost/ws-2/insertar_uso_vehiculos.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        titulo: eventTitle,
+        inicio: eventStart,
+        fin: eventEnd,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+
     setShowModal(false);
   };
 
