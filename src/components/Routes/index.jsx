@@ -8,8 +8,10 @@ import MostrarSolicitudes from "../view/mostrarSolicitudesVisitas/index";
 import MostrarSolicitudesUsuario from "../view/MostrarSolicitudVisitaUsuario";
 import ExportarSolicitudes from "../view/Export/index";
 import RegistroEmpresa from "../RegistroEmpresa";
+import Calendario from "../view/Calendario/Calendario";
 import NavBar from "../../components/layouts/NavBar/navbar";
 import NavBarUser from "../layouts/NavBar/navBarUser";
+import NavBarCalendar from "../layouts/NavBar/navBarCalendar";
 import { ProtectedRoute } from "../../components/ProtectedRoute/ProtectedRoute";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -22,6 +24,8 @@ function Rutas() {
     if (login === true) {
       if (tipoUser === "Usuario") {
         return <NavBarUser />;
+      } else if (tipoUser === "Administrador de recursos") {
+        return <NavBarCalendar />;
       } else {
         return <NavBar />;
       }
@@ -56,6 +60,7 @@ function Rutas() {
             path="/exportarSolicitudes"
             element={<ExportarSolicitudes />}
           />
+          <Route exact path="/calendario" element={<Calendario />} />
         </Route>
 
         <Route exact path="/login" element={<Login />} />

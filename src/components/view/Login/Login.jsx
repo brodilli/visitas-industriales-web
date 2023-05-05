@@ -48,8 +48,11 @@ export default function Login() {
         );
         localStorage.setItem("nombres", result.data.nombres);
         localStorage.setItem("id_usuario", result.data.id_usuario);
-
-        navigate("/home");
+        if (result.data.tipoUser === "Administrador de recursos") {
+          navigate("/Calendario");
+        } else {
+          navigate("/home");
+        }
       } else {
         alert("Usuario o contraseña incorrectos");
       }

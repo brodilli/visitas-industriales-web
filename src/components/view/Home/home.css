@@ -73,3 +73,19 @@
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr;
 }
+
+@media screen and (max-width: 768px) {
+    .container {
+        background-color: blue;
+    }
+}
+
+@media screen and (max-width: 350) {
+    .card-home {
+        flex-direction: column;
+    }
+
+    .triple {
+        grid-template-columns: 1fr;
+    }
+}

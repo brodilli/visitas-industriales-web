@@ -8,6 +8,10 @@ export default function Home() {
   const [empresas, setEmpresas] = useState([]);
   // // Ciclo de vida: cuando el componente esta recien cargado
   const { id_usuario } = useSelector((state) => state.login);
+  const cerrarSesion = () => {
+    localStorage.removeItem("token");
+    window.location.href = "/login";
+  };
   console.log(id_usuario);
   const refId_empresa = useRef("");
 
@@ -21,6 +25,9 @@ export default function Home() {
     num_alumnos: "",
     num_alumnas: "",
     asignatura: "",
+  });
+  window.addEventListener("popstate", () => {
+    cerrarSesion();
   });
   useEffect(() => {
     obtenerEmpresas();

@@ -1,3 +1,8 @@
+.container-fluid {
+    display: flex;
+    justify-content: space-between;
+}
+
 .navbar {
     background-color: #1B396A;
     color: white;
@@ -28,6 +33,7 @@
     padding-top: 10px;
 }
 
+
 .navbar #p-nombre {
     display: inline;
     padding-top: 10px;
@@ -45,11 +51,21 @@
     font-size: 1.3rem;
 }
 
+.container-fluid {
+    grid-template-columns: 1fr 1fr;
+}
+
 .datos {
-    display: grid;
-    width: auto;
+    display: flex;
     grid-template-columns: 1.5fr 0.5fr 0.5fr;
-    margin-top: 10px;
+    align-items: center;
+    margin-left: auto;
+
+}
+
+.datos p {
+    margin: 0;
+    padding: 0;
 }
 
 #link-setting {

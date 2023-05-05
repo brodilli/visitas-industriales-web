@@ -22,23 +22,8 @@ const NavBar = () => {
           <Navbar.Toggle aria-controls="navbarNavAltMarkup" />
           <Navbar.Collapse id="navbarNavAltMarkup">
             <div className="navbar-nav">
-              <Link className="nav-link" id="home" to="/home">
-                Home
-              </Link>
-
-              <Link
-                className="nav-link"
-                id="registroEmpresa"
-                to="/registroEmpresa"
-              >
-                Registro Empresa
-              </Link>
-              <Link
-                className="nav-link"
-                id="mostrarSolicitudes"
-                to="/mostrarSolicitudes"
-              >
-                Mostrar mis solicitudes de visitas
+              <Link className="nav-link" id="home" to="/Calendario">
+                Calendario
               </Link>
             </div>
             <div className="datos">

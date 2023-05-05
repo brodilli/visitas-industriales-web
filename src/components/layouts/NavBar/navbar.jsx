@@ -4,6 +4,7 @@ import { Link, Outlet } from "react-router-dom";
 import { SettingOutlined, LogoutOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 import "bootstrap/dist/css/bootstrap.css";
+import { Navbar } from "react-bootstrap";
 
 import "./navbar.css";
 
@@ -16,20 +17,10 @@ const NavBar = () => {
 
   return (
     <Fragment>
-      <nav className="navbar navbar-expand-lg ">
+      <Navbar expand="md">
         <div className="container-fluid">
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <Navbar.Toggle aria-controls="navbarNavAltMarkup" />
+          <Navbar.Collapse id="navbarNavAltMarkup">
             <div className="navbar-nav">
               <Link className="nav-link" id="home" to="/home">
                 Home
@@ -62,16 +53,20 @@ const NavBar = () => {
                 Exportar solicitudes de visitas
               </Link>
             </div>
-          </div>
-          <div className="datos">
-            <p id="p-nombre">{nombres}</p>
-            <Link className="nav-link" id="link-setting" to="/editarUser">
-              <SettingOutlined id="setting" title="Configuración" />
-            </Link>
-            <LogoutOutlined id="logout" onClick={cerrarSesion} title="Salir" />
-          </div>
+            <div className="datos">
+              <p id="p-nombre">{nombres}</p>
+              <Link className="nav-link" id="link-setting" to="/editarUser">
+                <SettingOutlined id="setting" title="Configuración" />
+              </Link>
+              <LogoutOutlined
+                id="logout"
+                onClick={cerrarSesion}
+                title="Salir"
+              />
+            </div>
+          </Navbar.Collapse>
         </div>
-      </nav>
+      </Navbar>
       <Outlet />
     </Fragment>
   );
