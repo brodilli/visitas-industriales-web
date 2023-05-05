@@ -4,52 +4,36 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import esLocale from "@fullcalendar/core/locales/es";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 
 const Agenda = () => {
-  const [events, setEvents] = useState([
-    {
-      title: "Meeting with Jane",
-      start: "2023-05-10T10:00:00",
-      end: "2023-05-10T11:00:00",
-    },
-    {
-      title: "Lunch with John",
-      start: "2023-05-12T12:30:00",
-      end: "2023-05-12T13:30:00",
-    },
-    {
-      title: "Call with Sarah",
-      start: "2023-05-15T15:00:00",
-      end: "2023-05-15T16:00:00",
-    },
-  ]);
+  const [events, setEvents] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [eventTitle, setEventTitle] = useState("");
+  const [eventStart, setEventStart] = useState("");
+  const [eventEnd, setEventEnd] = useState("");
 
-  const [editingEvent, setEditingEvent] = useState(null);
-
-  const handleDateClick = (arg) => {
-    setEditingEvent({
-      title: "",
-      start: arg.date,
-      end: arg.date,
-    });
+  const handleDateSelect = (selectInfo) => {
+    setShowModal(true);
+    setEventTitle("");
+    setEventStart(selectInfo.startStr);
+    setEventEnd(selectInfo.endStr);
   };
 
-  const handleEventClick = (arg) => {
-    alert(`Clicked on event "${arg.event.title}"`);
+  const handleCloseModal = () => {
+    setShowModal(false);
   };
 
-  const handleEventInputChange = (event) => {
-    setEditingEvent({
-      ...editingEvent,
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  const handleEventFormSubmit = (event) => {
-    event.preventDefault();
-
-    setEvents([...events, editingEvent]);
-    setEditingEvent(null);
+  const handleAddEvent = () => {
+    const newEvent = {
+      title: eventTitle,
+      start: eventStart,
+      end: eventEnd,
+    };
+    setEvents([...events, newEvent]);
+    setShowModal(false);
   };
 
   return (
@@ -63,35 +47,46 @@ const Agenda = () => {
           right: "dayGridMonth,timeGridWeek,timeGridDay",
         }}
         events={events}
-        dateClick={handleDateClick}
-        eventClick={handleEventClick}
         locale={esLocale}
         height={"90vh"}
+        selectable={true}
+        selectMirror={true}
+        dayMaxEvents={true}
+        select={handleDateSelect}
       />
-      {editingEvent && (
-        <form onSubmit={handleEventFormSubmit}>
-          <input
-            type="text"
-            name="title"
-            placeholder="Title"
-            value={editingEvent.title}
-            onChange={handleEventInputChange}
-          />
-          <input
-            type="datetime-local"
-            name="start"
-            value={editingEvent.start.toISOString().slice(0, -8)}
-            onChange={handleEventInputChange}
-          />
-          <input
-            type="datetime-local"
-            name="end"
-            value={editingEvent.end.toISOString().slice(0, -8)}
-            onChange={handleEventInputChange}
-          />
-          <button type="submit">Save</button>
-        </form>
-      )}
+      <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Agregar evento</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group controlId="eventTitle">
+              <Form.Label>Título</Form.Label>
+              <Form.Control
+                type="text"
+                value={eventTitle}
+                onChange={(e) => setEventTitle(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group controlId="eventStart">
+              <Form.Label>Inicio</Form.Label>
+              <Form.Control type="text" value={eventStart} disabled />
+            </Form.Group>
+            <Form.Group controlId="eventEnd">
+              <Form.Label>Fin</Form.Label>
+              <Form.Control type="text" value={eventEnd} disabled />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            Cancelar
+          </Button>
+          <Button variant="primary" onClick={handleAddEvent}>
+            Agregar
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
