@@ -4,6 +4,8 @@ import { PDFDocument } from "pdf-lib";
 import _raw from "../mostrarSolicitudesVisitas/pruebaPDF2.pdf";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import Estatus from "../mostrarSolicitudesVisitas/Estatus";
+import "./mostrarSolicitudesVisitasUser.css";
 
 const mostrarSolicitudesUsuario = () => {
   const { id_usuario } = useSelector((state) => state.login);
@@ -101,30 +103,44 @@ const mostrarSolicitudesUsuario = () => {
   return (
     <div>
       <h1>Solicitudes de visitas</h1>
-      {solicitudes.length > 0 &&
-        solicitudes.map((solicitud, i) => (
-          <Col key={i} span={8}>
-            <Card title={"id: " + solicitud.id_visita}>
-              <div className="informacion">
-                <p></p>
-                <p>Nombre de la empresa: {solicitud.nombre_empresa}</p>
-                <p>
-                  Nombre del usuario: {solicitud.nombres} {solicitud.apellidoP}{" "}
-                  {solicitud.apellidoM}
-                </p>
-                <p>Fecha: {solicitud.fecha}</p>
-                <p>Asignatura: {solicitud.asignatura}</p>
-                <p>Objetivo: {solicitud.objetivo}</p>
-                <p>Grupo: {solicitud.grupo}</p>
-                <p>Semestre: {solicitud.semestre}</p>
-                <p>Numero de alumnos: {solicitud.num_alumnos}</p>
-                <p>Numero de alumnas: {solicitud.num_alumnas}</p>
-                <p>Nombre de la carrera: {solicitud.nombre_carrera}</p>
-                <Button onClick={() => modifyPdf(solicitud)}> Imprimir </Button>
-              </div>
-            </Card>
-          </Col>
-        ))}
+      <div className="contenedorSolicitudes">
+        {solicitudes.length > 0 &&
+          solicitudes.map((solicitud, i) => (
+            <div className="carta">
+              <Col key={i} span={8}>
+                <Card
+                  title={
+                    <div className="titulo">
+                      id:{+solicitud.id_visita}
+                      <Estatus estatus={solicitud.estatus} />
+                    </div>
+                  }
+                >
+                  <div className="informacion">
+                    <p></p>
+                    <p>Nombre de la empresa: {solicitud.nombre_empresa}</p>
+                    <p>
+                      Nombre del usuario: {solicitud.nombres}{" "}
+                      {solicitud.apellidoP} {solicitud.apellidoM}
+                    </p>
+                    <p>Fecha: {solicitud.fecha}</p>
+                    <p>Asignatura: {solicitud.asignatura}</p>
+                    <p>Objetivo: {solicitud.objetivo}</p>
+                    <p>Grupo: {solicitud.grupo}</p>
+                    <p>Semestre: {solicitud.semestre}</p>
+                    <p>Numero de alumnos: {solicitud.num_alumnos}</p>
+                    <p>Numero de alumnas: {solicitud.num_alumnas}</p>
+                    <p>Nombre de la carrera: {solicitud.nombre_carrera}</p>
+                    <Button onClick={() => modifyPdf(solicitud)}>
+                      {" "}
+                      Imprimir{" "}
+                    </Button>
+                  </div>
+                </Card>
+              </Col>
+            </div>
+          ))}
+      </div>
     </div>
   );
 };

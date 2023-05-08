@@ -14,6 +14,7 @@ import {
 } from "reactstrap";
 import _raw from "./pruebaPDF2.pdf";
 import "./mostrarSolicitudesVisitas.css";
+import Estatus from "./Estatus";
 
 const mostrarSolicitudes = () => {
   const [solicitudes, setSolicitudes] = useState([]);
@@ -33,6 +34,7 @@ const mostrarSolicitudes = () => {
     semestre: "",
     grupo: "",
     id_carrera: "",
+    estatus: "",
   });
 
   const handleChange = (e) => {
@@ -57,6 +59,7 @@ const mostrarSolicitudes = () => {
       grupo: data.grupo,
       asignatura: data.asignatura,
       id_carrera: data.id_carrera,
+      estatus: data.estatus,
     };
     console.log(sendData);
     axios
@@ -181,7 +184,14 @@ const mostrarSolicitudes = () => {
             solicitudes.map((solicitud, i) => (
               <div className="carta">
                 <Col key={i} span={8}>
-                  <Card title={"id: " + solicitud.id_visita}>
+                  <Card
+                    title={
+                      <div className="titulo">
+                        id:{+solicitud.id_visita}
+                        <Estatus estatus={solicitud.estatus} />
+                      </div>
+                    }
+                  >
                     <div className="informacion">
                       <p></p>
                       <p>Nombre de la empresa: {solicitud.nombre_empresa}</p>
@@ -237,6 +247,22 @@ const mostrarSolicitudes = () => {
               placeholder="id_usuario"
               readOnly
             />
+          </FormGroup>
+          <FormGroup>
+            <Label for="estatus">Estatus:</Label>
+            <br />
+            <select
+              name="estatus"
+              id="estatus"
+              className="select-estatus form-control"
+              value={data.estatus}
+              onChange={handleChange}
+              required
+            >
+              <option value="En proceso">En proceso</option>
+              <option value="Aceptada">Aceptada</option>
+              <option value="Rechazada">Rechazada</option>
+            </select>
           </FormGroup>
           <FormGroup>
             <Label for="id_empresa">empresa</Label>
