@@ -12,6 +12,7 @@ import Calendario from "../view/Calendario/Calendario";
 import NavBar from "../../components/layouts/NavBar/navbar";
 import NavBarUser from "../layouts/NavBar/navBarUser";
 import NavBarCalendar from "../layouts/NavBar/navBarCalendar";
+import VistaCalendario from "../view/VistaCalendario";
 import { ProtectedRoute } from "../../components/ProtectedRoute/ProtectedRoute";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -61,6 +62,7 @@ function Rutas() {
             element={<ExportarSolicitudes />}
           />
           <Route exact path="/calendario" element={<Calendario />} />
+          <Route exact path="/vistaCalendario" element={<VistaCalendario />} />
         </Route>
 
         <Route exact path="/login" element={<Login />} />

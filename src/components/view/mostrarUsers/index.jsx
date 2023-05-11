@@ -27,10 +27,12 @@ export default function MostrarUsers() {
     apellidoM: "",
     correo: "",
   });
+  const [reloadView, setReloadView] = useState(false);
   // Ciclo de vida: cuando el componente esta recien cargado
   useEffect(() => {
     obtenerRegistros();
-  }, []);
+    setReloadView(false);
+  }, [reloadView]);
 
   const obtenerRegistros = () => {
     fetch("http://localhost/ws-2/obtener_usuarios.php")
@@ -70,7 +72,7 @@ export default function MostrarUsers() {
         if (result.data.isOk === true) {
           alert("Usuario actualizado");
           setModalInsertar(false);
-          window.location.reload();
+          setReloadView(true);
         } else {
           alert("Error al actualizar usuario");
         }

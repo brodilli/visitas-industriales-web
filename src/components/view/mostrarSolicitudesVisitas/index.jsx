@@ -3,6 +3,7 @@ import { Card, Col } from "antd";
 import { Button } from "reactstrap";
 import { PDFDocument } from "pdf-lib";
 import axios from "axios";
+import { isWithinInterval } from "date-fns";
 import {
   FormGroup,
   Input,
@@ -20,6 +21,8 @@ const mostrarSolicitudes = () => {
   const [solicitudes, setSolicitudes] = useState([]);
   const [modal, setModal] = useState(false);
   const [empresas, setEmpresas] = useState([]);
+  const [reloadView, setReloadView] = useState(false);
+  const [diasOcupados, setDiasOcupados] = useState([]);
 
   const [data, setData] = useState({
     id_solicitud: "",
@@ -68,7 +71,7 @@ const mostrarSolicitudes = () => {
         console.log(result.data);
         if (result.data.isOk === "true") {
           setModal(false);
-          window.location.reload();
+          setReloadView(true);
         } else {
           alert("Error al actualizar");
         }
@@ -87,7 +90,10 @@ const mostrarSolicitudes = () => {
   useEffect(() => {
     obtenerSolicitudes();
     obtenerEmpresas();
-  }, []);
+    obtenerDiasOcupados();
+    setReloadView(false);
+    console.log(diasOcupados);
+  }, [reloadView]);
 
   async function modifyPdf(solicitud) {
     const alumnosTotales =
@@ -166,6 +172,15 @@ const mostrarSolicitudes = () => {
         setSolicitudes(json);
       });
   };
+  const obtenerDiasOcupados = () => {
+    fetch("http://localhost/ws-2/obtener_uso_vehiculos.php")
+      .then((resp) => resp.json())
+      .then((json) => {
+        console.log(json);
+        setDiasOcupados(json);
+      });
+  };
+
   const obtenerEmpresas = () => {
     fetch("http://localhost/ws-2/obtener_empresas.php")
       .then((resp) => resp.json())
@@ -181,55 +196,71 @@ const mostrarSolicitudes = () => {
         <h1>Solicitudes de visitas</h1>
         <div className="contenedorSolicitudes">
           {solicitudes.length > 0 &&
-            solicitudes.map((solicitud, i) => (
-              <div className="carta">
-                <Col key={i} span={8}>
-                  <Card
-                    title={
-                      <div className="titulo">
-                        id:{+solicitud.id_visita}
-                        <Estatus estatus={solicitud.estatus} />
-                      </div>
-                    }
-                  >
-                    <div className="informacion">
-                      <p></p>
-                      <p>Nombre de la empresa: {solicitud.nombre_empresa}</p>
-                      <p>
-                        Nombre del usuario: {solicitud.nombres}{" "}
-                        {solicitud.apellidoP} {solicitud.apellidoM}
-                      </p>
-                      <p>Fecha: {solicitud.fecha}</p>
-                      <p>Asignatura: {solicitud.asignatura}</p>
-                      <p>Objetivo: {solicitud.objetivo}</p>
-                      <p>Grupo: {solicitud.grupo}</p>
-                      <p>Semestre: {solicitud.semestre}</p>
-                      <p>Numero de alumnos: {solicitud.num_alumnos}</p>
-                      <p>Numero de alumnas: {solicitud.num_alumnas}</p>
-                      <p>Nombre de la carrera: {solicitud.nombre_carrera}</p>
+            solicitudes.map((solicitud, i) => {
+              const fechaOcupada = diasOcupados.some((dia) => {
+                const inicio = new Date(dia.inicio).getTime();
+                const fin = new Date(dia.fin).getTime();
+                const fecha = new Date(solicitud.fecha).getTime();
+                return fecha >= inicio && fecha <= fin;
+              });
 
-                      <div className="botonesMostrar">
-                        <Button
-                          color="secondary"
-                          className="modificar"
-                          onClick={() => abrirModal(solicitud)}
-                        >
-                          {" "}
-                          Modificar{" "}
-                        </Button>
-                        <Button
-                          color="success"
-                          onClick={() => modifyPdf(solicitud)}
-                        >
-                          {" "}
-                          Imprimir{" "}
-                        </Button>
+              return (
+                <div className="carta">
+                  <Col key={i} span={8}>
+                    <Card
+                      title={
+                        <div className="titulo">
+                          id:{+solicitud.id_visita}
+                          <Estatus estatus={solicitud.estatus} />
+                        </div>
+                      }
+                    >
+                      <div className="informacion">
+                        <p></p>
+                        <p>Nombre de la empresa: {solicitud.nombre_empresa}</p>
+                        <p>
+                          Nombre del usuario: {solicitud.nombres}{" "}
+                          {solicitud.apellidoP} {solicitud.apellidoM}
+                        </p>
+                        {fechaOcupada ? (
+                          <p id="fechaOcupada">
+                            Fecha ocupada: {solicitud.fecha}
+                          </p>
+                        ) : (
+                          <p>Fecha disponible: {solicitud.fecha}</p>
+                        )}
+
+                        <p>Asignatura: {solicitud.asignatura}</p>
+                        <p>Objetivo: {solicitud.objetivo}</p>
+                        <p>Grupo: {solicitud.grupo}</p>
+                        <p>Semestre: {solicitud.semestre}</p>
+                        <p>Numero de alumnos: {solicitud.num_alumnos}</p>
+                        <p>Numero de alumnas: {solicitud.num_alumnas}</p>
+                        <p>Nombre de la carrera: {solicitud.nombre_carrera}</p>
+
+                        <div className="botonesMostrar">
+                          <Button
+                            color="secondary"
+                            className="modificar"
+                            onClick={() => abrirModal(solicitud)}
+                          >
+                            {" "}
+                            Modificar{" "}
+                          </Button>
+                          <Button
+                            color="success"
+                            onClick={() => modifyPdf(solicitud)}
+                          >
+                            {" "}
+                            Imprimir{" "}
+                          </Button>
+                        </div>
                       </div>
-                    </div>
-                  </Card>
-                </Col>
-              </div>
-            ))}
+                    </Card>
+                  </Col>
+                </div>
+              );
+            })}
         </div>
       </div>
       <Modal isOpen={modal}>

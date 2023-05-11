@@ -1,6 +1,6 @@
 import axios from "axios";
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 const RegistroEmpresa = () => {
   const [data, setData] = useState({
     nombre_empresa: "",
@@ -9,10 +9,15 @@ const RegistroEmpresa = () => {
     correo_contacto: "",
     telefono_contacto: "",
   });
+  const [reloadView, setReloadView] = useState(false);
   const handleChange = (e) => {
     setData({ ...data, [e.target.id]: e.target.value });
     console.log(data);
   };
+  useEffect(() => {
+    setReloadView(false);
+  }, [reloadView]);
+
   const submitForm = (e) => {
     e.preventDefault();
     const sendData = {
@@ -29,7 +34,15 @@ const RegistroEmpresa = () => {
         if (result.data.isOk === "true") {
           alert("Empresa registrada");
         }
+        setData({
+          nombre_empresa: "",
+          lugar: "",
+          nombre_contacto: "",
+          correo_contacto: "",
+          telefono_contacto: "",
+        });
       });
+    setReloadView(true);
     console.log(sendData);
   };
   return (

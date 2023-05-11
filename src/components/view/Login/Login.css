@@ -1,7 +1,18 @@
+/* Type: CSS File */
 .contenedor {
     display: inline-block;
     margin-left: 15%;
     align-items: center;
+    background-image: url(https://cdguzman.tecnm.mx/itcg/pluginfile.php/1/theme_moove/headerimg/1682613422/moodle.JPG);
+    background-size: cover;
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    position: fixed;
+
 
 }
 
@@ -10,6 +21,7 @@
     justify-content: center;
     font-family: "Poppins", sans-serif;
     width: auto;
+
 }
 
 .login {
@@ -27,12 +39,13 @@
 
 
 .card-header {
-    background-color: white;
+    display: flex;
+    background-color: white !important;
 
 }
 
 #info {
-    background-color: #2780D8;
+    background-color: #0f6fc5 !important;
     color: white;
     padding-left: 15px;
     padding-right: 15px;
@@ -46,16 +59,22 @@
 
 .btn {
     display: block;
-    margin-left: 15%;
     margin-right: 15%;
-
     background-color: #166fe5;
     border-color: #166fe5;
 }
 
+#btn-login {
+    display: block;
+    width: 100%;
+    font-weight: 400;
+    background-color: #0f6fc5 !important;
+    border-color: #0f6fc5 !important;
+}
+
 .btn:hover {
-    background-color: #0d4db8;
-    border-color: #0d4db8;
+    background-color: #2780D8 !important;
+    border-color: #2780D8 !important;
 }
 
 .titulo {
@@ -65,6 +84,5 @@
 }
 
 #icono {
-
-    font-size: 50px;
+    font-size: 35px;
 }

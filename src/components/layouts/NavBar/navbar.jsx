@@ -52,6 +52,13 @@ const NavBar = () => {
               >
                 Exportar solicitudes de visitas
               </Link>
+              <Link
+                className="nav-link"
+                id="vistaCalendario"
+                to="/vistaCalendario"
+              >
+                Calendario de Vehiculos
+              </Link>
             </div>
             <div className="datos">
               <p id="p-nombre">{nombres}</p>

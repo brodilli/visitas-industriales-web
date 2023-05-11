@@ -7,6 +7,10 @@
 
 }
 
+#fechaOcupada {
+    color: red;
+}
+
 .carta {
     margin: 1%;
     width: 200%;

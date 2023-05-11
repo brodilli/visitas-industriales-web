@@ -110,13 +110,17 @@ export default function Login() {
                       value={user.contraseña}
                     />
                   </div>
+                  <button
+                    type="submit"
+                    className="btn btn-primary btn-lg"
+                    id="btn-login"
+                  >
+                    Acceder
+                  </button>
                   {/* <a onClick={olvidoContraseña} visibility={false}>
                     ¿Olvidaste tu contraseña?
                   </a> */}
                   <br />
-                  <button type="submit" className="btn btn-primary btn-lg">
-                    Iniciar sesión
-                  </button>
                 </div>
               </div>
             </div>

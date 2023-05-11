@@ -6,6 +6,7 @@ import "./home.css";
 export default function Home() {
   // // Variable que guarda los registros
   const [empresas, setEmpresas] = useState([]);
+  const [reloadView, setReloadView] = useState(false);
   // // Ciclo de vida: cuando el componente esta recien cargado
   const { id_usuario } = useSelector((state) => state.login);
   const cerrarSesion = () => {
@@ -31,7 +32,8 @@ export default function Home() {
   });
   useEffect(() => {
     obtenerEmpresas();
-  }, []);
+    setReloadView(false);
+  }, [reloadView]);
   const handleChange = (e) => {
     setData({ ...data, [e.target.id]: e.target.value });
     console.log(data);
@@ -68,12 +70,23 @@ export default function Home() {
         console.log(result.data);
         if (result.data.isOk === "true") {
           alert("visita registrada");
+          setData({
+            semestre: "1",
+            grupo: "",
+            objetivo: "",
+            fecha: "",
+            id_carrera: "1",
+            num_alumnos: "",
+            num_alumnas: "",
+            asignatura: "",
+          });
           // setData({ ...data, [e.target.id]: "" });
           refId_empresa.current.value = "1";
         } else {
           alert("Error al registrar la visita");
         }
       });
+    setReloadView(true);
 
     console.log(sendData);
   };

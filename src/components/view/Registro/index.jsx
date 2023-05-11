@@ -1,6 +1,6 @@
 import axios from "axios";
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 const Registro = () => {
   const [data, setData] = useState({
     tipoUser: "Usuario",
@@ -10,10 +10,15 @@ const Registro = () => {
     correo: "",
     contraseña: "",
   });
+  const [reloadView, setReloadView] = useState(false);
   const handleChange = (e) => {
     setData({ ...data, [e.target.id]: e.target.value });
     console.log(data);
   };
+  useEffect(() => {
+    console.log("useEffect");
+    setReloadView(false);
+  }, [reloadView]);
   const submitForm = (e) => {
     e.preventDefault();
     const sendData = {
@@ -30,6 +35,14 @@ const Registro = () => {
         console.log(result.data);
         if (result.data.isOk === "true") {
           alert("Usuario registrado");
+          setData({
+            tipoUser: "Usuario",
+            nombres: "",
+            apellidoP: "",
+            apellidoM: "",
+            correo: "",
+            contraseña: "",
+          });
         }
         if (result.data.isOk === "existe") {
           alert("Correo ya registrado");
@@ -37,6 +50,7 @@ const Registro = () => {
         if (result.data.isOk === "false") {
           alert("Error al registrar usuario");
         }
+        setReloadView(true);
       });
     console.log(sendData);
   };
