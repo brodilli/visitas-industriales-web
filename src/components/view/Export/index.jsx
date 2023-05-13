@@ -35,6 +35,10 @@ const exportarSolicitudes = () => {
                 <th>Lugar</th>
                 <th>Empresa</th>
                 <th>No. Alumnos</th>
+                <th>No. Alumnas</th>
+                <th>Semestre</th>
+                <th>Grupo</th>
+
                 <th>Carrera</th>
                 <th>Fecha</th>
               </tr>
@@ -45,10 +49,10 @@ const exportarSolicitudes = () => {
                   <td>{solicitud.id_visita}</td>
                   <td>{solicitud.lugar}</td>
                   <td>{solicitud.nombre_empresa}</td>
-                  <td>
-                    {parseInt(solicitud.num_alumnos) +
-                      parseInt(solicitud.num_alumnas)}
-                  </td>
+                  <td>{parseInt(solicitud.num_alumnos)}</td>
+                  <td>{parseInt(solicitud.num_alumnas)}</td>
+                  <td>{solicitud.semestre}</td>
+                  <td>{solicitud.grupo}</td>
                   <td>{solicitud.nombre_carrera}</td>
                   <td>{solicitud.fecha}</td>
                 </tr>
