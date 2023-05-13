@@ -22,6 +22,8 @@
     "pdf-lib": "^1.17.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.2",
+    "react-csv": "^2.2.2",
+    "react-data-export": "^0.6.0",
     "react-datetime": "^3.2.0",
     "react-datetime-picker": "^5.0.3",
     "react-dom": "^18.2.0",
@@ -33,7 +35,8 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-persist": "^6.0.0",
     "table-to-excel-react": "^1.0.4",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "xlsx": "^0.18.5"
   },
   "scripts": {
     "predeploy": "npm run build",

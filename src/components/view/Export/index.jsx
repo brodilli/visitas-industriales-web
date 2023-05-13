@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "antd";
-import { useDownloadExcel } from "table-to-excel-react";
+import { CSVLink } from "react-csv";
 import "./Export.css";
-const exportarSolicitudes = () => {
+
+const ExportarSolicitudes = () => {
   const [solicitudes, setSolicitudes] = useState([]);
 
-  const { onDownload } = useDownloadExcel({
-    fileName: "Solicitudes",
-    table: "table-to-xls",
-    sheet: "Hoja 1",
-  });
   useEffect(() => {
     obtenerSolicitudes();
   }, []);
@@ -18,17 +14,28 @@ const exportarSolicitudes = () => {
     fetch("http://localhost/ws-2/obtener_solicitudes_visitas.php")
       .then((resp) => resp.json())
       .then((json) => {
-        //console.log(json);
         setSolicitudes(json);
       });
   };
+
+  const headers = [
+    { label: "id_visita", key: "id_visita" },
+    { label: "Lugar", key: "lugar" },
+    { label: "Empresa", key: "nombre_empresa" },
+    { label: "No. Alumnos", key: "num_alumnos" },
+    { label: "No. Alumnas", key: "num_alumnas" },
+    { label: "Semestre", key: "semestre" },
+    { label: "Grupo", key: "grupo" },
+    { label: "Carrera", key: "nombre_carrera" },
+    { label: "Fecha", key: "fecha" },
+  ];
 
   return (
     <>
       <div className="export">
         <h1>Exportar Solicitudes de visitas</h1>
         <div className="contenedorExportarSolicitudes">
-          <table id="table-to-xls">
+          <table>
             <thead>
               <tr>
                 <th>id_visita</th>
@@ -38,14 +45,13 @@ const exportarSolicitudes = () => {
                 <th>No. Alumnas</th>
                 <th>Semestre</th>
                 <th>Grupo</th>
-
                 <th>Carrera</th>
                 <th>Fecha</th>
               </tr>
             </thead>
             <tbody>
               {solicitudes.map((solicitud) => (
-                <tr>
+                <tr key={solicitud.id_visita}>
                   <td>{solicitud.id_visita}</td>
                   <td>{solicitud.lugar}</td>
                   <td>{solicitud.nombre_empresa}</td>
@@ -60,11 +66,16 @@ const exportarSolicitudes = () => {
             </tbody>
           </table>
         </div>
-        <Button className="botonExport" onClick={onDownload}>
-          Download
-        </Button>
+        <CSVLink
+          data={solicitudes}
+          headers={headers}
+          filename={"Solicitudes.csv"}
+        >
+          <Button className="botonExport">Descargar</Button>
+        </CSVLink>
       </div>
     </>
   );
 };
-export default exportarSolicitudes;
+
+export default ExportarSolicitudes;
