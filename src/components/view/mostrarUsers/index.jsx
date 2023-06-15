@@ -26,6 +26,7 @@ export default function MostrarUsers() {
     apellidoP: "",
     apellidoM: "",
     correo: "",
+    contraseña: "",
   });
   const [reloadView, setReloadView] = useState(false);
   // Ciclo de vida: cuando el componente esta recien cargado
@@ -63,6 +64,7 @@ export default function MostrarUsers() {
       apellidoP: data.apellidoP,
       apellidoM: data.apellidoM,
       correo: data.correo,
+      contraseña: data.contraseña,
     };
     console.log(sendData);
     axios
@@ -196,6 +198,17 @@ export default function MostrarUsers() {
               placeholder="correo"
               onChange={handleChange}
             />
+            <FormGroup>
+              <label for="password">Contraseña</label>
+              <Input
+                value={data.contraseña}
+                type="password"
+                name="contraseña"
+                id="contraseña"
+                placeholder="contraseña"
+                onChange={handleChange}
+              />
+            </FormGroup>
           </FormGroup>
         </ModalBody>
         <ModalFooter>

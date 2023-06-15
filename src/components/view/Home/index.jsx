@@ -22,6 +22,8 @@ export default function Home() {
     grupo: "",
     objetivo: "",
     fecha: "",
+    horaLlegada: "",
+    horaSalida: "",
     id_carrera: "1",
     num_alumnos: "",
     num_alumnas: "",
@@ -60,6 +62,8 @@ export default function Home() {
       grupo: data.grupo,
       objetivo: data.objetivo,
       fecha: data.fecha,
+      horaSalida: data.horaSalida,
+      horaLlegada: data.horaLlegada,
       num_alumnos: data.num_alumnos,
       num_alumnas: data.num_alumnas,
       asignatura: data.asignatura,
@@ -140,6 +144,25 @@ export default function Home() {
                   value={data.fecha}
                   required
                 />
+                <label htmlFor="">Hora de salida</label>
+                <Input
+                  type="time"
+                  className="form-control"
+                  id="horaSalida"
+                  onChange={handleChange}
+                  value={data.horaSalida}
+                  required
+                />
+                <label htmlFor="">Hora de llegada</label>
+                <Input
+                  type="time"
+                  className="form-control"
+                  id="horaLlegada"
+                  onChange={handleChange}
+                  value={data.horaLlegada}
+                  required
+                />
+
                 <label htmlFor="">Carrera: </label>
                 <select
                   defaultChecked="1"

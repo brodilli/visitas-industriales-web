@@ -33,10 +33,13 @@ const mostrarSolicitudes = () => {
     num_alumnos: "",
     num_alumnas: "",
     fecha: "",
+    horaSalida: "",
+    horaLlegada: "",
     semestre: "",
     grupo: "",
     id_carrera: "",
     estatus: "",
+    comentarios: "",
   });
 
   const handleChange = (e) => {
@@ -57,11 +60,14 @@ const mostrarSolicitudes = () => {
       num_alumnos: data.num_alumnos,
       num_alumnas: data.num_alumnas,
       fecha: data.fecha,
+      horaSalida: data.horaSalida,
+      horaLlegada: data.horaLlegada,
       semestre: data.semestre,
       grupo: data.grupo,
       asignatura: data.asignatura,
       id_carrera: data.id_carrera,
       estatus: data.estatus,
+      comentarios: data.comentarios,
     };
     console.log(sendData);
     axios
@@ -172,7 +178,7 @@ const mostrarSolicitudes = () => {
       });
   };
   const obtenerDiasOcupados = () => {
-    fetch("http://localhost/ws-2/obtener_uso_vehiculos.php")
+    fetch("http://localhost/ws-2/obtener_agenda.php")
       .then((resp) => resp.json())
       .then((json) => {
         console.log(json);
@@ -228,7 +234,8 @@ const mostrarSolicitudes = () => {
                         ) : (
                           <p>Fecha disponible: {solicitud.fecha}</p>
                         )}
-
+                        <p>Hora salida:{solicitud.horaSalida}</p>
+                        <p>Hora llegada:{solicitud.horaLlegada}</p>
                         <p>Asignatura: {solicitud.asignatura}</p>
                         <p>Objetivo: {solicitud.objetivo}</p>
                         <p>Grupo: {solicitud.grupo}</p>
@@ -236,6 +243,7 @@ const mostrarSolicitudes = () => {
                         <p>Numero de alumnos: {solicitud.num_alumnos}</p>
                         <p>Numero de alumnas: {solicitud.num_alumnas}</p>
                         <p>Nombre de la carrera: {solicitud.nombre_carrera}</p>
+                        <p>Comentarios: {solicitud.comentarios} </p>
 
                         <div className="botonesMostrar">
                           <Button
@@ -325,6 +333,28 @@ const mostrarSolicitudes = () => {
               name="fecha"
               id="fecha"
               placeholder="fecha"
+              onChange={handleChange}
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label for="horaSalida">Hora salida</Label>
+            <Input
+              value={data.horaSalida}
+              type="time"
+              name="horaSalida"
+              id="horaSalida"
+              placeholder="horaSalida"
+              onChange={handleChange}
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label for="horaLlegada">Hora llegada</Label>
+            <Input
+              value={data.horaLlegada}
+              type="time"
+              name="horaLlegada"
+              id="horaLlegada"
+              placeholder="horaLlegada"
               onChange={handleChange}
             />
           </FormGroup>
@@ -428,6 +458,17 @@ const mostrarSolicitudes = () => {
               <option value="9">Ingeniería Electrónica</option>
               <option value="10">Ingeniería en Gestión Empresarial</option>
             </select>
+          </FormGroup>
+          <FormGroup>
+            <label for="comentarios">Comentarios</label>
+            <textarea
+              className="form-control"
+              name="comentarios"
+              id="comentarios"
+              rows="3"
+              value={data.comentarios}
+              onChange={handleChange}
+            ></textarea>
           </FormGroup>
         </ModalBody>
         <ModalFooter>

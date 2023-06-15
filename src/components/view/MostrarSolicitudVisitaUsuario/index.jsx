@@ -124,6 +124,8 @@ const mostrarSolicitudesUsuario = () => {
                       {solicitud.apellidoP} {solicitud.apellidoM}
                     </p>
                     <p>Fecha: {solicitud.fecha}</p>
+                    <p>Hora salida: {solicitud.horaSalida}</p>
+                    <p>Hora llegada: {solicitud.horaLlegada}</p>
                     <p>Asignatura: {solicitud.asignatura}</p>
                     <p>Objetivo: {solicitud.objetivo}</p>
                     <p>Grupo: {solicitud.grupo}</p>
@@ -131,6 +133,7 @@ const mostrarSolicitudesUsuario = () => {
                     <p>Numero de alumnos: {solicitud.num_alumnos}</p>
                     <p>Numero de alumnas: {solicitud.num_alumnas}</p>
                     <p>Nombre de la carrera: {solicitud.nombre_carrera}</p>
+                    <p>Comentarios: {solicitud.comentarios}</p>
                     <Button onClick={() => modifyPdf(solicitud)}>
                       {" "}
                       Imprimir{" "}

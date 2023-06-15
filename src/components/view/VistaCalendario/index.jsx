@@ -9,7 +9,7 @@ import { useEffect } from "react";
 const VistaCalendario = () => {
   const [events, setEvents] = useState([]);
   const obtenerEventos = () => {
-    fetch("http://localhost/ws-2/obtener_uso_vehiculos.php")
+    fetch("http://localhost/ws-2/obtener_agenda.php")
       .then((resp) => resp.json())
       .then((json) => {
         const eventos = json.map((evento) => ({
