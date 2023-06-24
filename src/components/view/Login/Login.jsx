@@ -44,14 +44,32 @@ export default function Login() {
             contraseña: user.contraseña,
             id_usuario: result.data.id_usuario,
             tipoUser: result.data.tipoUser,
+            numSesion: result.data.numSesion,
+            numTelefono: result.data.numTelefono,
           })
         );
+        const sendData = {
+          id_usuario: result.data.id_usuario,
+          numSesion: parseInt(result.data.numSesion) + 1,
+        };
+        console.log(sendData);
+        axios
+          .post("http://localhost/ws-2/contador_sesion_usuarios.php", sendData)
+          .then((result) => {
+            // console.log(result.data);
+          });
         localStorage.setItem("nombres", result.data.nombres);
         localStorage.setItem("id_usuario", result.data.id_usuario);
-        if (result.data.tipoUser === "Administrador de recursos") {
-          navigate("/Calendario");
+        if (result.data.numSesion === "0") {
+          navigate("/cambiarContraseña");
         } else {
-          navigate("/home");
+          if (result.data.tipoUser === "Administrador de recursos") {
+            navigate("/Calendario");
+          } else if (result.data.tipoUser === "Usuario Consulta") {
+            navigate("/vistaCalendario");
+          } else {
+            navigate("/home");
+          }
         }
       } else {
         alert("Usuario o contraseña incorrectos");

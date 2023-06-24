@@ -9,6 +9,7 @@ const initialState = {
   contraseña: "",
   id_usuario: "",
   tipoUser: "",
+  numTelefono: "",
 };
 
 export const userReducer = createSlice({
@@ -24,6 +25,7 @@ export const userReducer = createSlice({
       state.contraseña = action.payload.contraseña;
       state.id_usuario = action.payload.id_usuario;
       state.tipoUser = action.payload.tipoUser;
+      state.numTelefono = action.payload.numTelefono;
     },
     outLogin: (state) => {
       state.login = false;
@@ -34,6 +36,7 @@ export const userReducer = createSlice({
       state.contraseña = "";
       state.id_usuario = "";
       state.tipoUser = "";
+      state.numTelefono = "";
     },
   },
 });

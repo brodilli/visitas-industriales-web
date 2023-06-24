@@ -28,6 +28,7 @@ export default function Home() {
     num_alumnos: "",
     num_alumnas: "",
     asignatura: "",
+    acompanante: "",
   });
   window.addEventListener("popstate", () => {
     cerrarSesion();
@@ -67,6 +68,7 @@ export default function Home() {
       num_alumnos: data.num_alumnos,
       num_alumnas: data.num_alumnas,
       asignatura: data.asignatura,
+      acompanante: data.acompanante,
     };
     axios
       .post("http://localhost/ws-2/insertar_solicitud_visita.php", sendData)
@@ -193,7 +195,7 @@ export default function Home() {
                       id="semestre"
                       onChange={handleChange}
                       value={data.semestre}
-                      defaultValue="1"
+                      // defaultValue="1"
                       required
                     >
                       <option value="1">1°</option>
@@ -252,6 +254,14 @@ export default function Home() {
                   onChange={handleChange}
                   value={data.asignatura}
                   required
+                />
+                <label htmlFor="">Acompañante: </label>
+                <Input
+                  id="acompanante"
+                  type="text"
+                  className="form-control"
+                  onChange={handleChange}
+                  value={data.acompanante}
                 />
                 <button type="submit" className="btn btn-primary mt-3">
                   Enviar

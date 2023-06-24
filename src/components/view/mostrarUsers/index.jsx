@@ -106,14 +106,16 @@ export default function MostrarUsers() {
                   <td>{registro.apellidoP}</td>
                   <td>{registro.apellidoM}</td>
                   <td>{registro.correo}</td>
-                  <Button
-                    color="primary"
-                    className="abrirModalInsertar"
-                    onClick={() => abrirModalInsertar(registro)}
-                  >
-                    {" "}
-                    Editar{" "}
-                  </Button>
+                  <td>
+                    <Button
+                      color="primary"
+                      className="abrirModalInsertar"
+                      onClick={() => abrirModalInsertar(registro)}
+                    >
+                      {" "}
+                      Editar{" "}
+                    </Button>
+                  </td>
 
                   {/* <Button color="danger"> Eliminar </Button> */}
                 </tr>

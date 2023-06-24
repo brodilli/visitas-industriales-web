@@ -210,8 +210,8 @@ const mostrarSolicitudes = () => {
               });
 
               return (
-                <div className="carta">
-                  <Col key={i} span={8}>
+                <div className="carta" key={i}>
+                  <Col span={8}>
                     <Card
                       title={
                         <div className="titulo">
@@ -400,7 +400,7 @@ const mostrarSolicitudes = () => {
               id="semestre"
               onChange={handleChange}
               value={data.semestre}
-              defaultValue="1"
+              // defaultValue="1"
             >
               <option value="1">1°</option>
               <option value="2">2°</option>

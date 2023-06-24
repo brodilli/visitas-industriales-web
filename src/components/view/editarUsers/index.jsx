@@ -3,9 +3,15 @@ import React, { useEffect } from "react";
 import { useRef } from "react";
 import { useSelector } from "react-redux";
 const editarUsers = () => {
-  const { nombres, apellidoP, apellidoM, correo, contraseña, id } = useSelector(
-    (state) => state.login
-  );
+  const {
+    nombres,
+    apellidoP,
+    apellidoM,
+    correo,
+    contraseña,
+    id_usuario,
+    numTelefono,
+  } = useSelector((state) => state.login);
 
   console.log(correo);
   const nombreRef = useRef("");
@@ -13,33 +19,33 @@ const editarUsers = () => {
   const apellidoMRef = useRef("");
   const correoRef = useRef("");
   const contraseñaRef = useRef("");
+  const numTelefonoRef = useRef("");
   useEffect(() => {
     nombreRef.current.value = nombres;
     apellidoPRef.current.value = apellidoP;
     apellidoMRef.current.value = apellidoM;
     correoRef.current.value = correo;
     contraseñaRef.current.value = contraseña;
-  }, [nombreRef, apellidoPRef, apellidoMRef, correoRef, contraseñaRef]);
-  // const [data, setData] = useState({
-  //   nombres: "",
-  //   apellidoP: "",
-  //   apellidoM: "",
-  //   correo: "",
-  //   contraseña: "",
-  // });
-  // const handleChange = (e) => {
-  //   setData({ ...data, [e.target.id]: e.target.value });
-  //   // console.log(data);
-  // };
+    numTelefonoRef.current.value = numTelefono;
+  }, [
+    nombreRef,
+    apellidoPRef,
+    apellidoMRef,
+    correoRef,
+    contraseñaRef,
+    numTelefonoRef,
+  ]);
+
   const submitForm = (e) => {
     e.preventDefault();
     const sendData = {
-      id: id,
+      id_usuario: id_usuario,
       nombres: nombreRef.current.value,
       apellidoP: apellidoPRef.current.value,
       apellidoM: apellidoMRef.current.value,
       correo: correoRef.current.value,
       contraseña: contraseñaRef.current.value,
+      numTelefono: numTelefonoRef.current.value,
     };
     console.log(sendData);
     axios
@@ -112,6 +118,16 @@ const editarUsers = () => {
                   placeholder="Contraseña"
                   // onChange={handleChange}
                   value={contraseñaRef.current.value}
+                />
+                <label htmlFor="numTelefono">Numero de telefono: </label>
+                <input
+                  ref={numTelefonoRef}
+                  type="text"
+                  className="form-control"
+                  id="numTelefono"
+                  placeholder="Numero de telefono"
+                  // onChange={handleChange}
+                  value={numTelefonoRef.current.value}
                 />
               </div>
               <button type="submit" className="btn btn-primary mt-3">

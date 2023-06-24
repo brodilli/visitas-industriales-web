@@ -9,10 +9,12 @@ import MostrarSolicitudesUsuario from "../view/MostrarSolicitudVisitaUsuario";
 import ExportarSolicitudes from "../view/Export/index";
 import RegistroEmpresa from "../RegistroEmpresa";
 import Calendario from "../view/Calendario/Calendario";
+import PrimerInicio from "../view/primerInicio/index";
 import NavBar from "../../components/layouts/NavBar/navbar";
 import NavBarUser from "../layouts/NavBar/navBarUser";
 import NavBarCalendar from "../layouts/NavBar/navBarCalendar";
 import VistaCalendario from "../view/VistaCalendario";
+import NavBarCalendarVista from "../layouts/NavBar/navBarCalendarVista";
 import { ProtectedRoute } from "../../components/ProtectedRoute/ProtectedRoute";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -27,6 +29,8 @@ function Rutas() {
         return <NavBarUser />;
       } else if (tipoUser === "Administrador de recursos") {
         return <NavBarCalendar />;
+      } else if (tipoUser === "Usuario Consulta") {
+        return <NavBarCalendarVista />;
       } else {
         return <NavBar />;
       }
@@ -63,8 +67,8 @@ function Rutas() {
           />
           <Route exact path="/calendario" element={<Calendario />} />
           <Route exact path="/vistaCalendario" element={<VistaCalendario />} />
+          <Route exact path="/cambiarContraseña" element={<PrimerInicio />} />
         </Route>
-
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/" element={<Login />} />
         <Route path="*" element={"No encontrado"}></Route>
