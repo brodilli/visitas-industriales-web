@@ -12,12 +12,16 @@ import {
   ModalHeader,
   ModalFooter,
 } from "reactstrap";
-import _raw from "./pruebaPDF2.pdf";
+import _1raw from "./1.pdf";
+import _2raw from "./2.pdf";
+import _3raw from "./3.pdf";
+import _4raw from "./4.pdf";
 import "./mostrarSolicitudesVisitas.css";
 import Estatus from "./Estatus";
 
 const mostrarSolicitudes = () => {
   const [solicitudes, setSolicitudes] = useState([]);
+  const [solicitudesPDF, setSolicitudesPDF] = useState([]);
   const [modal, setModal] = useState(false);
   const [empresas, setEmpresas] = useState([]);
   const [reloadView, setReloadView] = useState(false);
@@ -99,18 +103,62 @@ const mostrarSolicitudes = () => {
     setReloadView(false);
     console.log(diasOcupados);
   }, [reloadView]);
+  
+  const obtenerSolicitudesPDF = (solicitud) => {
+    console.log(solicitud);
+    const sendData = {
+      id_usuario: solicitud.id_usuario,
+      id_carrera: solicitud.id_carrera,
+      semestre: solicitud.semestre,
+      grupo: solicitud.grupo,
+      asignatura: solicitud.asignatura,      
+    };
+    axios
+      .post(
+        "http://localhost/ws-2/obtener_solicitudes_pdf.php",
+        sendData
+      )
+      .then((result) => {
+        // console.log(result.data.length);
+        modifyPdf(result.data);
+      });
+  };
+  
 
   async function modifyPdf(solicitud) {
-    const alumnosTotales =
-      parseInt(solicitud.num_alumnos) + parseInt(solicitud.num_alumnas);
-
+    const existingPdfBytes = await fetch(_1raw).then((res) => res.arrayBuffer());
+    const numero = 0;
+    console.log(solicitud);
+    const sendData = {
+      id_usuario: solicitud.id_usuario,
+      id_carrera: solicitud.id_carrera,
+      semestre: solicitud.semestre,
+      grupo: solicitud.grupo,
+      asignatura: solicitud.asignatura,      
+    };
+    axios
+      .post(
+        "http://localhost/ws-2/num_solicitud_usuario.php",
+        sendData
+      )
+      .then((result) => {
+       numero = result.data;
+      });
+    console.log(numero);
+    switch (numero) {
+      case 1:
+         existingPdfBytes = await fetch(_1raw).then((res) => res.arrayBuffer());
+      case 2:
+         existingPdfBytes = await fetch(_2raw).then((res) => res.arrayBuffer());
+      case 3:
+         existingPdfBytes = await fetch(_3raw).then((res) => res.arrayBuffer());
+      case 4:
+         existingPdfBytes = await fetch(_4raw).then((res) => res.arrayBuffer());
+    }
     // read document
-
-    const existingPdfBytes = await fetch(_raw).then((res) => res.arrayBuffer());
-
+    
     // Load a PDFDocument from the existing PDF bytes
     const pdfDoc = await PDFDocument.load(existingPdfBytes);
-
     const fieldNames = pdfDoc
       .getForm()
       .getFields()
@@ -119,45 +167,48 @@ const mostrarSolicitudes = () => {
     // const courier = await pdfDoc.embedFont(StandardFonts.Courier);
     //Se obtiene el formulario
     const form = pdfDoc.getForm();
-
+    
+    form.getTextField("fecha").setText(solicitud.fecha);
+    form.getTextField("periodo").setText("enero-junio", { size: 20 });
+    
+    for(let i = 0; i < solicitud.length; i++){
+      const alumnosTotales =
+      parseInt(solicitud[i].num_alumnos) + parseInt(solicitud[i].num_alumnas);
+      form
+      .getTextField("Empresa"+i)
+      .setText(solicitud[i].nombre_empresa + "\n" + solicitud[i].lugar);
     form
-      .getTextField("Empresa  Ciudad1")
-      .setText(solicitud.nombre_empresa + "\n" + solicitud.lugar);
-
-    form
-      .getTextField("Área a observar y objetivo1")
-      .setText(solicitud.objetivo);
-    form.getTextField("numAlum").setText(alumnosTotales.toString());
-    form.getTextField("Fecha  Turno1").setText(solicitud.fecha);
+      .getTextField("objetivo"+i)
+      .setText(solicitud[i].objetivo);
+    form.getTextField("Numero").setText(alumnosTotales.toString());
+    form.getTextField("Fecha"+i).setText(solicitud[i].fecha);
     form
       .getTextField("carrera")
       .setText(
-        solicitud.semestre +
+        solicitud[i].semestre +
           "°" +
-          solicitud.grupo +
+          solicitud[i].grupo +
           "\n" +
-          solicitud.nombre_carrera,
+          solicitud[i].nombre_carrera,
         {
           size: 10,
         }
       );
-    form.getTextField("fecha").setText(solicitud.fecha);
-    form.getTextField("periodo").setText("enero-junio", { size: 20 });
+    
     form
-      .getTextField("Solicitante Asignatura1")
+      .getTextField("solicitante" + i)
       .setText(
-        solicitud.nombres +
+        solicitud[i].nombres +
           " " +
-          solicitud.apellidoP +
+          solicitud[i].apellidoP +
           " " +
-          solicitud.apellidoM
+          solicitud[i].apellidoM
       );
     form
-      .getTextField("Solicitante Asignatura1_2")
-      .setText(solicitud.asignatura);
-
+      .getTextField("asignatura" + i)
+      .setText(solicitud[i].asignatura); 
+    }
     const pdfBytes = await pdfDoc.save();
-
     //Download the PDF document
     const downloadLink = document.createElement("a");
     downloadLink.href = URL.createObjectURL(
@@ -210,8 +261,8 @@ const mostrarSolicitudes = () => {
               });
 
               return (
-                <div className="carta" key={i}>
-                  <Col span={8}>
+                <div className="carta">
+                  <Col key={i} span={8}>
                     <Card
                       title={
                         <div className="titulo">
@@ -256,7 +307,7 @@ const mostrarSolicitudes = () => {
                           </Button>
                           <Button
                             color="success"
-                            onClick={() => modifyPdf(solicitud)}
+                            onClick={() => obtenerSolicitudesPDF(solicitud)}
                           >
                             {" "}
                             Imprimir{" "}
@@ -400,7 +451,7 @@ const mostrarSolicitudes = () => {
               id="semestre"
               onChange={handleChange}
               value={data.semestre}
-              // defaultValue="1"
+              defaultValue="1"
             >
               <option value="1">1°</option>
               <option value="2">2°</option>

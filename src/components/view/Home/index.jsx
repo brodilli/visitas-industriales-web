@@ -19,7 +19,7 @@ export default function Home() {
   const [data, setData] = useState({
     id_usuario: id_usuario,
     semestre: "1",
-    grupo: "",
+    grupo: "A",
     objetivo: "",
     fecha: "",
     horaLlegada: "",
@@ -74,22 +74,28 @@ export default function Home() {
       .post("http://localhost/ws-2/insertar_solicitud_visita.php", sendData)
       .then((result) => {
         console.log(result.data);
+        console.log(result.data);
         if (result.data.isOk === "true") {
           alert("visita registrada");
-          setData({
-            semestre: "1",
-            grupo: "",
-            objetivo: "",
-            fecha: "",
-            id_carrera: "1",
-            num_alumnos: "",
-            num_alumnas: "",
-            asignatura: "",
-          });
+          // setData({
+          //   semestre: "1",
+          //   grupo: "",
+          //   objetivo: "",
+          //   fecha: "",
+          //   id_carrera: "1",
+          //   num_alumnos: "",
+          //   num_alumnas: "",
+          //   asignatura: "",
+          // });
           // setData({ ...data, [e.target.id]: "" });
           refId_empresa.current.value = "1";
         } else {
-          alert("Error al registrar la visita");
+          if (result.data.isOk === "false") {
+            alert("Error al registrar la visita");
+          }else if (result.data === 406){ //numero que indica que ya se alcanzo el limite de solicitudes
+            alert("Usted no puede realizar otra solicitud de visita, ya que alcanzó el límite de solicitudes permitidas por grupo, semestre y materia.");
+          }
+          
         }
       });
     setReloadView(true);
@@ -211,7 +217,7 @@ export default function Home() {
                   </div>
                   <div>
                     <label htmlFor="">Grupo: </label>
-                    <Input
+                    {/* <Input
                       className="grupo"
                       id="grupo"
                       type="text"
@@ -219,7 +225,24 @@ export default function Home() {
                       pattern="[A-Z]"
                       onChange={handleChange}
                       value={data.grupo}
-                    />
+                    /> */}
+                    <select 
+                      name="grupo"
+                      id="grupo" 
+                      value={data.grupo} 
+                      onChange={handleChange}
+                      required
+                    >
+                      <option value="A">A</option>
+                      <option value="B">B</option>
+                      <option value="C">C</option>
+                      <option value="D">D</option>
+                      <option value="E">E</option>
+                      <option value="F">F</option>
+                      <option value="G">G</option>
+                      <option value="H">H</option>
+                    </select>
+
                   </div>
                   <div>
                     <label htmlFor="">Número de alumnos: </label>
