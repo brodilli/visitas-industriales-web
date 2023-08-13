@@ -21,7 +21,6 @@ import Estatus from "./Estatus";
 
 const mostrarSolicitudes = () => {
   const [solicitudes, setSolicitudes] = useState([]);
-  const [solicitudesPDF, setSolicitudesPDF] = useState([]);
   const [modal, setModal] = useState(false);
   const [empresas, setEmpresas] = useState([]);
   const [reloadView, setReloadView] = useState(false);
@@ -103,60 +102,85 @@ const mostrarSolicitudes = () => {
     setReloadView(false);
     console.log(diasOcupados);
   }, [reloadView]);
-  
-  const obtenerSolicitudesPDF = (solicitud) => {
-    console.log(solicitud);
+
+  async function obtenerSolicitudesPDF(solicitud) {
     const sendData = {
       id_usuario: solicitud.id_usuario,
       id_carrera: solicitud.id_carrera,
       semestre: solicitud.semestre,
       grupo: solicitud.grupo,
-      asignatura: solicitud.asignatura,      
+      asignatura: solicitud.asignatura,
     };
-    axios
-      .post(
+
+    try {
+      const result = await axios.post(
         "http://localhost/ws-2/obtener_solicitudes_pdf.php",
         sendData
-      )
-      .then((result) => {
-        // console.log(result.data.length);
-        modifyPdf(result.data);
-      });
-  };
-  
+      );
+      const data = result.data;
+      await modifyPdf(data, solicitud.id_carrera);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
-  async function modifyPdf(solicitud) {
-    const existingPdfBytes = await fetch(_1raw).then((res) => res.arrayBuffer());
-    const numero = 0;
+  async function modifyPdf(solicitud, id_carrera) {
+    var existingPdfBytes = "nada";
+    var numero;
     console.log(solicitud);
     const sendData = {
-      id_usuario: solicitud.id_usuario,
-      id_carrera: solicitud.id_carrera,
-      semestre: solicitud.semestre,
-      grupo: solicitud.grupo,
-      asignatura: solicitud.asignatura,      
+      id_usuario: solicitud[0].id_usuario,
+      id_carrera: id_carrera,
+      semestre: solicitud[0].semestre,
+      grupo: solicitud[0].grupo,
+      asignatura: solicitud[0].asignatura,
     };
-    axios
-      .post(
+    console.log(sendData);
+
+    try {
+      const result = await axios.post(
         "http://localhost/ws-2/num_solicitud_usuario.php",
         sendData
-      )
-      .then((result) => {
-       numero = result.data;
-      });
-    console.log(numero);
-    switch (numero) {
-      case 1:
-         existingPdfBytes = await fetch(_1raw).then((res) => res.arrayBuffer());
-      case 2:
-         existingPdfBytes = await fetch(_2raw).then((res) => res.arrayBuffer());
-      case 3:
-         existingPdfBytes = await fetch(_3raw).then((res) => res.arrayBuffer());
-      case 4:
-         existingPdfBytes = await fetch(_4raw).then((res) => res.arrayBuffer());
+      );
+      console.log(result.data);
+      numero = result.data;
+      console.log(numero);
+
+      switch (numero) {
+        case 1:
+          existingPdfBytes = await fetch(_1raw).then((res) =>
+            res.arrayBuffer()
+          );
+          break;
+        case 2:
+          existingPdfBytes = await fetch(_2raw).then((res) =>
+            res.arrayBuffer()
+          );
+          break;
+        case 3:
+          existingPdfBytes = await fetch(_3raw).then((res) =>
+            res.arrayBuffer()
+          );
+          break;
+        case 4:
+          existingPdfBytes = await fetch(_4raw).then((res) =>
+            res.arrayBuffer()
+          );
+          break;
+        default:
+          console.log("no hay pdf");
+          break;
+      }
+
+      // Resto del código que utiliza existingPdfBytes
+      console.log("existingPdfBytes", existingPdfBytes);
+      // ...
+    } catch (error) {
+      console.error(error);
     }
+
     // read document
-    
+    // console.log("existingPdfBytes", existingPdfBytes);
     // Load a PDFDocument from the existing PDF bytes
     const pdfDoc = await PDFDocument.load(existingPdfBytes);
     const fieldNames = pdfDoc
@@ -167,46 +191,44 @@ const mostrarSolicitudes = () => {
     // const courier = await pdfDoc.embedFont(StandardFonts.Courier);
     //Se obtiene el formulario
     const form = pdfDoc.getForm();
-    
-    form.getTextField("fecha").setText(solicitud.fecha);
+
+    form.getTextField("fecha").setText(solicitud[0].fecha, { size: 20 });
     form.getTextField("periodo").setText("enero-junio", { size: 20 });
-    
-    for(let i = 0; i < solicitud.length; i++){
+
+    for (let i = 0; i < solicitud.length; i++) {
       const alumnosTotales =
-      parseInt(solicitud[i].num_alumnos) + parseInt(solicitud[i].num_alumnas);
+        parseInt(solicitud[i].num_alumnos) + parseInt(solicitud[i].num_alumnas);
       form
-      .getTextField("Empresa"+i)
-      .setText(solicitud[i].nombre_empresa + "\n" + solicitud[i].lugar);
-    form
-      .getTextField("objetivo"+i)
-      .setText(solicitud[i].objetivo);
-    form.getTextField("Numero").setText(alumnosTotales.toString());
-    form.getTextField("Fecha"+i).setText(solicitud[i].fecha);
-    form
-      .getTextField("carrera")
-      .setText(
-        solicitud[i].semestre +
-          "°" +
-          solicitud[i].grupo +
-          "\n" +
-          solicitud[i].nombre_carrera,
-        {
-          size: 10,
-        }
-      );
-    
-    form
-      .getTextField("solicitante" + i)
-      .setText(
-        solicitud[i].nombres +
-          " " +
-          solicitud[i].apellidoP +
-          " " +
-          solicitud[i].apellidoM
-      );
-    form
-      .getTextField("asignatura" + i)
-      .setText(solicitud[i].asignatura); 
+        .getTextField("empresa" + (i + 1))
+        .setText(solicitud[i].nombre_empresa + "\n" + solicitud[i].lugar);
+      form.getTextField("objetivo" + (i + 1)).setText(solicitud[i].objetivo);
+      form.getTextField("Numero" + (i + 1)).setText(alumnosTotales.toString());
+      form.getTextField("Fecha" + (i + 1)).setText(solicitud[i].fecha);
+      form
+        .getTextField("carrera" + (i + 1))
+        .setText(
+          solicitud[i].semestre +
+            "°" +
+            solicitud[i].grupo +
+            "\n" +
+            solicitud[i].nombre_carrera,
+          {
+            size: 10,
+          }
+        );
+
+      form
+        .getTextField("solicitante" + (i + 1))
+        .setText(
+          solicitud[i].nombres +
+            " " +
+            solicitud[i].apellidoP +
+            " " +
+            solicitud[i].apellidoM
+        );
+      form
+        .getTextField("asignatura" + (i + 1))
+        .setText(solicitud[i].asignatura);
     }
     const pdfBytes = await pdfDoc.save();
     //Download the PDF document
@@ -261,7 +283,7 @@ const mostrarSolicitudes = () => {
               });
 
               return (
-                <div className="carta">
+                <div className="carta" key={solicitud.id_visita}>
                   <Col key={i} span={8}>
                     <Card
                       title={
