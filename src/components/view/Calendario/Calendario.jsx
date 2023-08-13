@@ -102,54 +102,69 @@ const Agenda = () => {
   };
 
   const handleAddEvent = () => {
-    if (idVehiculo === "") {
-      setShowModal(false);
-      alert("Ingrese un id de vehiculo");
-    }
-    const newEvent = {
-      idVisita: idVisita,
-      idVehiculo: idVehiculo,
-      fecha: fecha,
-      horaSalida: horaSalida,
-      horaLlegada: horaLlegada,
-      empresa: empresa,
-      lugar: lugar,
-      docente: maestroResponsable,
-      numAlumnos: numAlumnos,
-      title: idVisita,
+    const sendData = {
+      id_visita: idVisita,
     };
-    const colors = ["blue", "red", "green", "yellow", "purple", "orange"];
-    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+    axios
+      .post("http://localhost/ws-2/no_repetir_agenda.php", sendData)
+      .then((response) => {
+        const cont = response.data.count;
+        // console.log(idVisita);
+        // console.log(cont.count);
+        if (cont === "0") {
+          if (idVehiculo === "") {
+            setShowModal(false);
+            alert("Ingrese un id de vehiculo");
+          }
+          const newEvent = {
+            idVisita: idVisita,
+            idVehiculo: idVehiculo,
+            fecha: fecha,
+            horaSalida: horaSalida,
+            horaLlegada: horaLlegada,
+            empresa: empresa,
+            lugar: lugar,
+            docente: maestroResponsable,
+            numAlumnos: numAlumnos,
+            title: idVisita,
+          };
+          const colors = ["blue", "red", "green", "yellow", "purple", "orange"];
+          const randomColor = colors[Math.floor(Math.random() * colors.length)];
 
-    setEvents([...events, newEvent]);
+          setEvents([...events, newEvent]);
 
-    fetch("http://localhost/ws-2/insertar_agenda.php", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id_visita: idVisita,
-        id_vehiculo: idVehiculo,
-        fecha: fecha,
-        horaSalida: horaSalida,
-        horaLlegada: horaLlegada,
-        empresa: empresa,
-        lugar: lugar,
-        docente: maestroResponsable,
-        numAlumnos: numAlumnos,
-        color: randomColor,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Success:", data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
+          fetch("http://localhost/ws-2/insertar_agenda.php", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              id_visita: idVisita,
+              id_vehiculo: idVehiculo,
+              fecha: fecha,
+              horaSalida: horaSalida,
+              horaLlegada: horaLlegada,
+              empresa: empresa,
+              lugar: lugar,
+              docente: maestroResponsable,
+              numAlumnos: numAlumnos,
+              color: randomColor,
+            }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log("Success:", data);
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
+
+          setShowModal(false);
+        } else {
+          alert("La visita ya se encuentra en la agenda");
+          setShowModal(false);
+        }
       });
-
-    setShowModal(false);
   };
 
   return (
