@@ -23,6 +23,8 @@ const Agenda = () => {
   const [maestroResponsable, setMaestroResponsable] = useState("");
   const [numAlumnos, setNumAlumnos] = useState("");
 
+  const [selectedEvent, setSelectedEvent] = useState(null);
+
   const cerrarSesion = () => {
     localStorage.removeItem("token");
     window.location.href = "/login";
@@ -32,20 +34,57 @@ const Agenda = () => {
     cerrarSesion();
   });
 
+  // const obtenerEventos = () => {
+  //   fetch("http://localhost/ws-2/obtener_agenda.php")
+  //     .then((resp) => resp.json())
+  //     .then((json) => {
+  //       const eventos = json.map((evento) => ({
+  //         idVisita: evento.id_visita,
+  //         idVehiculo: evento.id_vehiculo, // Convertir la fecha a tipo Date
+  //         fecha: evento.fecha, // Convertir la fecha a tipo Date
+  //         horaSalida: evento.horaSalida,
+  //         horaLlegada: evento.horaLlegada,
+  //         empresa: evento.nombre_empresa,
+  //         lugar: evento.lugar,
+  //         maestroResponsable: evento.docente,
+  //         numAlumnos: evento.num_alumnos,
+  //         color: evento.color,
+  //       }));
+  //       setEvents(eventos);
+  //       console.log(eventos);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error al obtener eventos:", error);
+  //     });
+  // };
+
   const obtenerEventos = () => {
     fetch("http://localhost/ws-2/obtener_agenda.php")
       .then((resp) => resp.json())
       .then((json) => {
         const eventos = json.map((evento) => ({
-          idVisita: evento.id_visita,
+          id: evento.id_visita, // FullCalendar espera que el campo se llame 'id'
+          title: evento.empresa,
+          start: new Date(evento.fecha + "T" + evento.horaSalida), // Concatenar fecha y hora
+          end: new Date(evento.fecha + "T" + evento.horaLlegada), // Concatenar fecha y hora
+          color: evento.color,
+          // ... (otros campos que quieras incluir)
           idVehiculo: evento.id_vehiculo, // Convertir la fecha a tipo Date
           fecha: evento.fecha, // Convertir la fecha a tipo Date
+          horaSalida: evento.horaSalida,
+          horaLlegada: evento.horaLlegada,
+          empresa: evento.empresa,
+          lugar: evento.lugar,
+          maestroResponsable: evento.docente,
+          numAlumnos: evento.numAlumnos,
         }));
         setEvents(eventos);
         console.log(eventos);
+      })
+      .catch((error) => {
+        console.error("Error al obtener eventos:", error);
       });
   };
-
   useEffect(() => {
     obtenerEventos();
   }, []);
@@ -87,19 +126,44 @@ const Agenda = () => {
     }
   };
 
-  const handleDateSelect = (selectInfo) => {
+  const handleEventClick = (eventClickInfo) => {
+    // Obtén el evento clicado desde eventClickInfo.event y configura el estado
+
+    setIdVisita(eventClickInfo.event.id);
+    setFecha(eventClickInfo.event.extendedProps.fecha);
+    setHoraSalida(eventClickInfo.event.extendedProps.horaSalida);
+    setHoraLlegada(eventClickInfo.event.extendedProps.horaLlegada);
+    setEmpresa(eventClickInfo.event.title);
+    setLugar(eventClickInfo.event.extendedProps.lugar);
+    setMaestroResponsable(
+      eventClickInfo.event.extendedProps.maestroResponsable
+    );
+    setNumAlumnos(eventClickInfo.event.extendedProps.numAlumnos);
+    setIdVehiculo(eventClickInfo.event.extendedProps.idVehiculo);
+
+    console.log(eventClickInfo.event);
     setShowModal(true);
-    console.log(selectInfo);
-    // setFecha(selectInfo.startStr);
-    // setHoraSalida(selectInfo.startStr);
-    // setHoraLlegada(selectInfo.startStr);
-    // setEmpresa(selectInfo.startStr);
-    // setLugar(selectInfo.startStr);
-    // setMaestroResponsable(selectInfo.startStr);
-    // setNumAlumnos(selectInfo.startStr);
-    // setIdVehiculo(selectInfo.startStr);
-    // setIdVisita(selectInfo.startStr);
   };
+
+  // const handleDateSelect = (selectInfo) => {
+  //   const selectedDate = selectInfo.dateStr;
+  //   console.log(selectInfo);
+  //   // Simulamos la obtención del evento correspondiente desde tu lista de eventos
+  //   const eventData = {
+  //     id_visita: selectInfo.id,
+  //     nombre_empresa: empresa,
+  //     lugar: lugar,
+  //     docente: maestroResponsable,
+  //     num_alumnos: numAlumnos,
+  //     fecha: selectedDate,
+  //     horaSalida: horaSalida,
+  //     horaLlegada: horaLlegada,
+  //     id_vehiculo: idVehiculo,
+  //   };
+
+  //   setSelectedEvent(eventData);
+  //   setShowModal(true);
+  // };
 
   const handleAddEvent = () => {
     const sendData = {
@@ -187,12 +251,12 @@ const Agenda = () => {
           right: "dayGridMonth,timeGridWeek,timeGridDay",
         }}
         events={events}
+        eventClick={handleEventClick}
         locale={esLocale}
         height={"90vh"}
         selectable={true}
         selectMirror={true}
         dayMaxEvents={true}
-        select={handleDateSelect}
       />
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>

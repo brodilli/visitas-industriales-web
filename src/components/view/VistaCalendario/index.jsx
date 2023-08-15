@@ -13,11 +13,26 @@ const VistaCalendario = () => {
       .then((resp) => resp.json())
       .then((json) => {
         const eventos = json.map((evento) => ({
-          title: evento.titulo,
-          start: evento.inicio,
-          end: evento.fin,
+          id: evento.id_visita, // FullCalendar espera que el campo se llame 'id'
+          title: evento.empresa,
+          start: new Date(evento.fecha + "T" + evento.horaSalida), // Concatenar fecha y hora
+          end: new Date(evento.fecha + "T" + evento.horaLlegada), // Concatenar fecha y hora
+          color: evento.color,
+          // ... (otros campos que quieras incluir)
+          idVehiculo: evento.id_vehiculo, // Convertir la fecha a tipo Date
+          fecha: evento.fecha, // Convertir la fecha a tipo Date
+          horaSalida: evento.horaSalida,
+          horaLlegada: evento.horaLlegada,
+          empresa: evento.nombre_empresa,
+          lugar: evento.lugar,
+          maestroResponsable: evento.docente,
+          numAlumnos: evento.num_alumnos,
         }));
         setEvents(eventos);
+        console.log(eventos);
+      })
+      .catch((error) => {
+        console.error("Error al obtener eventos:", error);
       });
   };
   useEffect(() => {
