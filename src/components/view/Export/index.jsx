@@ -2,19 +2,27 @@ import React, { useState, useEffect } from "react";
 import { Button } from "antd";
 import { CSVLink } from "react-csv";
 import "./Export.css";
+import axios from "axios";
 
 const ExportarSolicitudes = () => {
   const [solicitudes, setSolicitudes] = useState([]);
+  const [rango, setRango] = useState("1");
+  const [reloadView, setReloadView] = useState(false);
 
   useEffect(() => {
     obtenerSolicitudes();
-  }, []);
+    setReloadView(false);
+  }, [reloadView]);
 
   const obtenerSolicitudes = () => {
-    fetch("http://localhost/ws-2/obtener_solicitudes_visitas.php")
-      .then((resp) => resp.json())
-      .then((json) => {
-        setSolicitudes(json);
+    axios
+      .post("http://localhost/ws-2/obtener_solicitudes_visitas.php", { rango })
+      .then((response) => {
+        setSolicitudes(response.data);
+        setReloadView(false);
+      })
+      .catch((error) => {
+        console.error("Error al obtener las solicitudes:", error);
       });
   };
 
@@ -34,6 +42,19 @@ const ExportarSolicitudes = () => {
     <>
       <div className="export">
         <h1>Exportar Solicitudes de visitas</h1>
+        <select
+          className="form-control"
+          id="tipoUser"
+          value={rango}
+          onChange={(e) => {
+            setRango(e.target.value); // Actualizar el estado 'rango' con el valor seleccionado
+            obtenerSolicitudes(e.target.value);
+            setReloadView(true);
+          }}
+        >
+          <option value="1">Este semestre</option>
+          <option value="2">Todas</option>
+        </select>
         <div className="contenedorExportarSolicitudes">
           <table>
             <thead>

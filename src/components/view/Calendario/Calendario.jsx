@@ -128,7 +128,6 @@ const Agenda = () => {
 
   const handleEventClick = (eventClickInfo) => {
     // Obtén el evento clicado desde eventClickInfo.event y configura el estado
-
     setIdVisita(eventClickInfo.event.id);
     setFecha(eventClickInfo.event.extendedProps.fecha);
     setHoraSalida(eventClickInfo.event.extendedProps.horaSalida);

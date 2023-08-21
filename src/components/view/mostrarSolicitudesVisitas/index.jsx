@@ -25,6 +25,7 @@ const mostrarSolicitudes = () => {
   const [empresas, setEmpresas] = useState([]);
   const [reloadView, setReloadView] = useState(false);
   const [diasOcupados, setDiasOcupados] = useState([]);
+  const [rango, setRango] = useState("");
 
   const [data, setData] = useState({
     id_solicitud: "",
@@ -243,11 +244,14 @@ const mostrarSolicitudes = () => {
   }
 
   const obtenerSolicitudes = () => {
-    fetch("http://localhost/ws-2/obtener_solicitudes_visitas.php")
-      .then((resp) => resp.json())
-      .then((json) => {
-        //console.log(json);
-        setSolicitudes(json);
+    axios
+      .post("http://localhost/ws-2/obtener_solicitudes_visitas.php", { rango })
+      .then((response) => {
+        setSolicitudes(response.data);
+        setReloadView(true);
+      })
+      .catch((error) => {
+        console.error("Error al obtener las solicitudes:", error);
       });
   };
   const obtenerDiasOcupados = () => {
@@ -272,75 +276,93 @@ const mostrarSolicitudes = () => {
     <>
       <div>
         <h1>Solicitudes de visitas</h1>
+        <select
+          className="form-control"
+          id="tipoUser"
+          value={rango}
+          onChange={(e) => {
+            setRango(e.target.value); // Actualizar el estado 'rango' con el valor seleccionado
+            obtenerSolicitudes(e.target.value);
+          }}
+        >
+          <option value="1">Este semestre</option>
+          <option value="2">Todas</option>
+        </select>
         <div className="contenedorSolicitudes">
           {solicitudes.length > 0 &&
-            solicitudes.map((solicitud, i) => {
-              const fechaOcupada = diasOcupados.some((dia) => {
-                const inicio = new Date(dia.inicio).getTime();
-                const fin = new Date(dia.fin).getTime();
-                const fecha = new Date(solicitud.fecha).getTime();
-                return fecha >= inicio && fecha <= fin;
-              });
-
-              return (
-                <div className="carta" key={solicitud.id_visita}>
-                  <Col key={i} span={8}>
-                    <Card
-                      title={
-                        <div className="titulo">
-                          id:{+solicitud.id_visita}
-                          <Estatus estatus={solicitud.estatus} />
-                        </div>
-                      }
-                    >
-                      <div className="informacion">
-                        <p></p>
-                        <p>Nombre de la empresa: {solicitud.nombre_empresa}</p>
-                        <p>
-                          Nombre del usuario: {solicitud.nombres}{" "}
-                          {solicitud.apellidoP} {solicitud.apellidoM}
-                        </p>
-                        {fechaOcupada ? (
-                          <p id="fechaOcupada">
-                            Fecha ocupada: {solicitud.fecha}
+            solicitudes
+              .slice() // Hacemos una copia del array para no modificar el orden original
+              .sort((a, b) => b.id_visita - a.id_visita) // Ordenamos descendientemente por id_visita
+              .map((solicitud, i) => {
+                const fechaOcupada = diasOcupados.some((dia) => {
+                  const inicio = new Date(dia.inicio).getTime();
+                  const fin = new Date(dia.fin).getTime();
+                  const fecha = new Date(solicitud.fecha).getTime();
+                  return fecha >= inicio && fecha <= fin;
+                });
+                return (
+                  <div className="carta" key={solicitud.id_visita}>
+                    <Col key={i} span={8}>
+                      <Card
+                        title={
+                          <div className="titulo">
+                            id:{+solicitud.id_visita}
+                            <Estatus estatus={solicitud.estatus} />
+                          </div>
+                        }
+                      >
+                        <div className="informacion">
+                          <p></p>
+                          <p>
+                            Nombre de la empresa: {solicitud.nombre_empresa}
                           </p>
-                        ) : (
-                          <p>Fecha disponible: {solicitud.fecha}</p>
-                        )}
-                        <p>Hora salida:{solicitud.horaSalida}</p>
-                        <p>Hora llegada:{solicitud.horaLlegada}</p>
-                        <p>Asignatura: {solicitud.asignatura}</p>
-                        <p>Objetivo: {solicitud.objetivo}</p>
-                        <p>Grupo: {solicitud.grupo}</p>
-                        <p>Semestre: {solicitud.semestre}</p>
-                        <p>Numero de alumnos: {solicitud.num_alumnos}</p>
-                        <p>Numero de alumnas: {solicitud.num_alumnas}</p>
-                        <p>Nombre de la carrera: {solicitud.nombre_carrera}</p>
-                        <p>Comentarios: {solicitud.comentarios} </p>
+                          <p>
+                            Nombre del usuario: {solicitud.nombres}{" "}
+                            {solicitud.apellidoP} {solicitud.apellidoM}
+                          </p>
+                          {fechaOcupada ? (
+                            <p id="fechaOcupada">
+                              Fecha ocupada: {solicitud.fecha}
+                            </p>
+                          ) : (
+                            <p>Fecha disponible: {solicitud.fecha}</p>
+                          )}
+                          <p>Hora salida:{solicitud.horaSalida}</p>
+                          <p>Hora llegada:{solicitud.horaLlegada}</p>
+                          <p>Asignatura: {solicitud.asignatura}</p>
+                          <p>Objetivo: {solicitud.objetivo}</p>
+                          <p>Grupo: {solicitud.grupo}</p>
+                          <p>Semestre: {solicitud.semestre}</p>
+                          <p>Numero de alumnos: {solicitud.num_alumnos}</p>
+                          <p>Numero de alumnas: {solicitud.num_alumnas}</p>
+                          <p>
+                            Nombre de la carrera: {solicitud.nombre_carrera}
+                          </p>
+                          <p>Comentarios: {solicitud.comentarios} </p>
 
-                        <div className="botonesMostrar">
-                          <Button
-                            color="secondary"
-                            className="modificar"
-                            onClick={() => abrirModal(solicitud)}
-                          >
-                            {" "}
-                            Modificar{" "}
-                          </Button>
-                          <Button
-                            color="success"
-                            onClick={() => obtenerSolicitudesPDF(solicitud)}
-                          >
-                            {" "}
-                            Imprimir{" "}
-                          </Button>
+                          <div className="botonesMostrar">
+                            <Button
+                              color="secondary"
+                              className="modificar"
+                              onClick={() => abrirModal(solicitud)}
+                            >
+                              {" "}
+                              Modificar{" "}
+                            </Button>
+                            <Button
+                              color="success"
+                              onClick={() => obtenerSolicitudesPDF(solicitud)}
+                            >
+                              {" "}
+                              Imprimir{" "}
+                            </Button>
+                          </div>
                         </div>
-                      </div>
-                    </Card>
-                  </Col>
-                </div>
-              );
-            })}
+                      </Card>
+                    </Col>
+                  </div>
+                );
+              })}
         </div>
       </div>
       <Modal isOpen={modal}>
