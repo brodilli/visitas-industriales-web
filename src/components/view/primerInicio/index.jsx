@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 const editarUsers = () => {
-  const { contraseña, id_usuario, numTelefono } = useSelector(
+  const { contraseña, id_usuario, numTelefono, tipoUser } = useSelector(
     (state) => state.login
   );
   let navigate = useNavigate();
@@ -29,7 +29,21 @@ const editarUsers = () => {
         console.log(result.data);
         if (result.data.isOk === true) {
           alert("Usuario actualizado");
-          navigate("/home");
+          if (tipoUser === "Usuario Consulta") {
+            navigate("/vistaCalendario");
+          }
+          if (tipoUser === "Administrador de recursos") {
+            navigate("/Calendario");
+          }
+          if (tipoUser === "Administrador") {
+            navigate("/Calendario");
+          }
+          if (tipoUser === "Usuario") {
+            navigate("/Home");
+          }
+          // else {
+          //   navigate("/home");
+          // }
         } else {
           alert("Error al actualizar usuario");
         }

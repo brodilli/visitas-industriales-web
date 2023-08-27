@@ -76,6 +76,9 @@ const Registro = () => {
                   <option value="Administrador de recursos">
                     Administrador de recursos materiales y servicios
                   </option>
+                  <option value="Usuario Consulta">
+                    Usuario que puede consultar el calendario
+                  </option>
                 </select>
                 <label htmlFor="nombre">Nombres: </label>
                 <input
