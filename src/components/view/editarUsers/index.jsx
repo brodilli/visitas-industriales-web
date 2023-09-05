@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { useRef } from "react";
 import { useSelector } from "react-redux";
 const editarUsers = () => {
+  const serverUrl = process.env.REACT_APP_SERVER_URL;
   const {
     nombres,
     apellidoP,
@@ -49,7 +50,7 @@ const editarUsers = () => {
     };
     console.log(sendData);
     axios
-      .post("http://localhost/ws-2/actualizar_usuarios.php", sendData)
+      .post(serverUrl + "/ws-2/actualizar_usuarios.php", sendData)
       .then((result) => {
         console.log(result.data);
         if (result.data.isOk === true) {

@@ -10,6 +10,8 @@ const editarUsers = () => {
   let navigate = useNavigate();
   const contraseñaRef = useRef("");
   const numTelefonoRef = useRef("");
+  const serverUrl = process.env.REACT_APP_SERVER_URL;
+
   useEffect(() => {
     contraseñaRef.current.value = contraseña;
     numTelefonoRef.current.value = numTelefono;
@@ -24,7 +26,7 @@ const editarUsers = () => {
     };
     console.log(sendData);
     axios
-      .post("http://localhost/ws-2/primer_inicio.php", sendData)
+      .post(serverUrl + "/ws-2/primer_inicio.php", sendData)
       .then((result) => {
         console.log(result.data);
         if (result.data.isOk === true) {

@@ -20,6 +20,7 @@ import "./mostrarSolicitudesVisitas.css";
 import Estatus from "./Estatus";
 
 const mostrarSolicitudes = () => {
+  const serverUrl = process.env.REACT_APP_SERVER_URL;
   const [solicitudes, setSolicitudes] = useState([]);
   const [modal, setModal] = useState(false);
   const [empresas, setEmpresas] = useState([]);
@@ -75,7 +76,7 @@ const mostrarSolicitudes = () => {
     };
     console.log(sendData);
     axios
-      .post("http://localhost/ws-2/actualizar_solicitud_visita.php", sendData)
+      .post(serverUrl + "/ws-2/actualizar_solicitud_visita.php", sendData)
       .then((result) => {
         console.log(result.data);
         if (result.data.isOk === "true") {
@@ -115,7 +116,7 @@ const mostrarSolicitudes = () => {
 
     try {
       const result = await axios.post(
-        "http://localhost/ws-2/obtener_solicitudes_pdf.php",
+        serverUrl + "/ws-2/obtener_solicitudes_pdf.php",
         sendData
       );
       const data = result.data;
@@ -140,7 +141,7 @@ const mostrarSolicitudes = () => {
 
     try {
       const result = await axios.post(
-        "http://localhost/ws-2/num_solicitud_usuario.php",
+        serverUrl + "/ws-2/num_solicitud_usuario.php",
         sendData
       );
       console.log(result.data);
@@ -245,7 +246,7 @@ const mostrarSolicitudes = () => {
 
   const obtenerSolicitudes = () => {
     axios
-      .post("http://localhost/ws-2/obtener_solicitudes_visitas.php", { rango })
+      .post(serverUrl + "/ws-2/obtener_solicitudes_visitas.php", { rango })
       .then((response) => {
         setSolicitudes(response.data);
         setReloadView(true);
@@ -255,7 +256,7 @@ const mostrarSolicitudes = () => {
       });
   };
   const obtenerDiasOcupados = () => {
-    fetch("http://localhost/ws-2/obtener_agenda.php")
+    fetch(serverUrl + "/ws-2/obtener_agenda.php")
       .then((resp) => resp.json())
       .then((json) => {
         console.log(json);
@@ -264,7 +265,7 @@ const mostrarSolicitudes = () => {
   };
 
   const obtenerEmpresas = () => {
-    fetch("http://localhost/ws-2/obtener_empresas.php")
+    fetch(serverUrl + "/ws-2/obtener_empresas.php")
       .then((resp) => resp.json())
       .then((json) => {
         //console.log(json);

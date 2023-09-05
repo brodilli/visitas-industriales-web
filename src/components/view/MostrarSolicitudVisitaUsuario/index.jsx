@@ -10,7 +10,7 @@ import "./mostrarSolicitudesVisitasUser.css";
 const mostrarSolicitudesUsuario = () => {
   const { id_usuario } = useSelector((state) => state.login);
   const [solicitudes, setSolicitudes] = useState([]);
-
+  const serverUrl = process.env.REACT_APP_SERVER_URL;
   useEffect(() => {
     obtenerSolicitudes();
   }, []);
@@ -89,10 +89,7 @@ const mostrarSolicitudesUsuario = () => {
       id_usuario: id_usuario,
     };
     axios
-      .post(
-        "http://localhost/ws-2/obtener_solicitud_visita_usuario.php",
-        sendData
-      )
+      .post(serverUrl + "/ws-2/obtener_solicitud_visita_usuario.php", sendData)
       .then((result) => {
         console.log(result.data);
         setSolicitudes(result.data);

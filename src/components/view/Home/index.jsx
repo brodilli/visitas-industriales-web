@@ -9,6 +9,7 @@ export default function Home() {
   const [reloadView, setReloadView] = useState(false);
   // // Ciclo de vida: cuando el componente esta recien cargado
   const { id_usuario } = useSelector((state) => state.login);
+  const serverUrl = process.env.REACT_APP_SERVER_URL;
   const cerrarSesion = () => {
     localStorage.removeItem("token");
     window.location.href = "/login";
@@ -44,7 +45,7 @@ export default function Home() {
   };
 
   const obtenerEmpresas = () => {
-    fetch("http://localhost/ws-2/obtener_empresas.php")
+    fetch(serverUrl + "/ws-2/obtener_empresas.php")
       .then((resp) => resp.json())
       .then((json) => {
         //console.log(json);
@@ -71,7 +72,7 @@ export default function Home() {
       acompanante: data.acompanante,
     };
     axios
-      .post("http://localhost/ws-2/insertar_solicitud_visita.php", sendData)
+      .post(serverUrl + "/ws-2/insertar_solicitud_visita.php", sendData)
       .then((result) => {
         console.log(result.data);
         console.log(result.data);

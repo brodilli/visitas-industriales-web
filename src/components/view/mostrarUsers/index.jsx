@@ -18,6 +18,7 @@ export default function MostrarUsers() {
   // Variable que guarda los registros
   const [registros, setRegistros] = useState([]);
   const [modalInsertar, setModalInsertar] = useState(false);
+  const serverUrl = process.env.REACT_APP_SERVER_URL;
   //variables del usuario
   const [data, setData] = useState({
     id_usuario: "",
@@ -36,7 +37,7 @@ export default function MostrarUsers() {
   }, [reloadView]);
 
   const obtenerRegistros = () => {
-    fetch("http://localhost/ws-2/obtener_usuarios.php")
+    fetch(serverUrl + "/ws-2/obtener_usuarios.php")
       .then((resp) => resp.json())
       .then((json) => {
         //console.log(json);
@@ -68,7 +69,7 @@ export default function MostrarUsers() {
     };
     console.log(sendData);
     axios
-      .post("http://localhost/ws-2/actualizar_varios_usuarios.php", sendData)
+      .post(serverUrl + "/ws-2/actualizar_varios_usuarios.php", sendData)
       .then((result) => {
         console.log(result.data);
         if (result.data.isOk === true) {
@@ -77,6 +78,23 @@ export default function MostrarUsers() {
           setReloadView(true);
         } else {
           alert("Error al actualizar usuario");
+        }
+      });
+  };
+  const eliminar = (id) => {
+    const sendData = {
+      id_usuario: id,
+    };
+    axios
+      .post(serverUrl + "/ws-2/eliminar_usuario.php", sendData)
+      .then((result) => {
+        console.log(result.data);
+        if (result.data.isOk === true) {
+          alert("Usuario eliminado");
+          setReloadView(true);
+          setModalInsertar(false);
+        } else {
+          alert("Error al eliminar usuario");
         }
       });
   };
@@ -217,8 +235,11 @@ export default function MostrarUsers() {
           <Button color="primary" onClick={actualizar}>
             Actualizar
           </Button>{" "}
-          <Button color="danger" onClick={cerrarModalInsertar}>
+          <Button color="warning" onClick={cerrarModalInsertar}>
             Cancelar
+          </Button>
+          <Button color="danger" onClick={() => eliminar(data.id_usuario)}>
+            Eliminar
           </Button>
         </ModalFooter>
       </Modal>

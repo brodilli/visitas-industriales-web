@@ -9,6 +9,7 @@ const RegistroEmpresa = () => {
     correo_contacto: "",
     telefono_contacto: "",
   });
+  const serverUrl = process.env.REACT_APP_SERVER_URL;
   const [reloadView, setReloadView] = useState(false);
   const handleChange = (e) => {
     setData({ ...data, [e.target.id]: e.target.value });
@@ -28,7 +29,7 @@ const RegistroEmpresa = () => {
       telefono_contacto: data.telefono_contacto,
     };
     axios
-      .post("http://localhost/ws-2/insertar_empresa.php", sendData)
+      .post(serverUrl + "/ws-2/insertar_empresa.php", sendData)
       .then((result) => {
         console.log(result.data);
         if (result.data.isOk === "true") {

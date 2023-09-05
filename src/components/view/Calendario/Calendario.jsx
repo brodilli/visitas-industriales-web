@@ -12,7 +12,7 @@ import axios from "axios";
 const Agenda = () => {
   const [events, setEvents] = useState([]);
   const [showModal, setShowModal] = useState(false);
-
+  const serverUrl = process.env.REACT_APP_SERVER_URL;
   const [idVisita, setIdVisita] = useState("");
   const [idVehiculo, setIdVehiculo] = useState("");
   const [fecha, setFecha] = useState("");
@@ -35,7 +35,7 @@ const Agenda = () => {
   });
 
   // const obtenerEventos = () => {
-  //   fetch("http://localhost/ws-2/obtener_agenda.php")
+  //   fetch(serverUrl+"/ws-2/obtener_agenda.php")
   //     .then((resp) => resp.json())
   //     .then((json) => {
   //       const eventos = json.map((evento) => ({
@@ -59,7 +59,7 @@ const Agenda = () => {
   // };
 
   const obtenerEventos = () => {
-    fetch("http://localhost/ws-2/obtener_agenda.php")
+    fetch(serverUrl + "/ws-2/obtener_agenda.php")
       .then((resp) => resp.json())
       .then((json) => {
         const eventos = json.map((evento) => ({
@@ -101,7 +101,7 @@ const Agenda = () => {
         id_visita: idVisita,
       };
       axios
-        .get("http://localhost/ws-2/obtener_solicitud_visita.php", {
+        .get(serverUrl + "/ws-2/obtener_solicitud_visita.php", {
           params: sendData,
         })
         .then((response) => {
@@ -169,7 +169,7 @@ const Agenda = () => {
       id_visita: idVisita,
     };
     axios
-      .post("http://localhost/ws-2/no_repetir_agenda.php", sendData)
+      .post(serverUrl + "/ws-2/no_repetir_agenda.php", sendData)
       .then((response) => {
         const cont = response.data.count;
         // console.log(idVisita);
@@ -196,7 +196,7 @@ const Agenda = () => {
 
           setEvents([...events, newEvent]);
 
-          fetch("http://localhost/ws-2/insertar_agenda.php", {
+          fetch(serverUrl + "/ws-2/insertar_agenda.php", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

@@ -7,9 +7,10 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLogin } from "../../../redux/reducers/userReducer";
 
-const url = "http://localhost/ws-2/login2.php";
-
 export default function Login() {
+  const serverUrl = process.env.REACT_APP_SERVER_URL;
+  const url = serverUrl + "/ws-2/login2.php";
+  console.log(url);
   const dispatch = useDispatch();
   const [user, setUser] = useState({ correo: "", contraseña: "" });
   // const olvidoContraseña = () => {
@@ -54,7 +55,7 @@ export default function Login() {
         };
         console.log(sendData);
         axios
-          .post("http://localhost/ws-2/contador_sesion_usuarios.php", sendData)
+          .post(serverUrl + "/ws-2/contador_sesion_usuarios.php", sendData)
           .then((result) => {
             // console.log(result.data);
           });
