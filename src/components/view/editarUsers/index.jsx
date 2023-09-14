@@ -50,7 +50,7 @@ const editarUsers = () => {
     };
     console.log(sendData);
     axios
-      .post(serverUrl + "/ws-2/actualizar_usuarios.php", sendData)
+      .post(serverUrl + "/actualizar_usuarios.php", sendData)
       .then((result) => {
         console.log(result.data);
         if (result.data.isOk === true) {

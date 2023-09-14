@@ -89,7 +89,7 @@ const mostrarSolicitudesUsuario = () => {
       id_usuario: id_usuario,
     };
     axios
-      .post(serverUrl + "/ws-2/obtener_solicitud_visita_usuario.php", sendData)
+      .post(serverUrl + "/obtener_solicitud_visita_usuario.php", sendData)
       .then((result) => {
         console.log(result.data);
         setSolicitudes(result.data);

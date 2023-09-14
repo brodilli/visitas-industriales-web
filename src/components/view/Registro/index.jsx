@@ -32,7 +32,7 @@ const Registro = () => {
       contraseña: data.contraseña,
     };
     axios
-      .post(serverUrl + "/ws-2/insertar_registro.php", sendData)
+      .post(serverUrl + "/insertar_registro.php", sendData)
       .then((result) => {
         console.log(result.data);
         if (result.data.isOk === "true") {

@@ -17,7 +17,7 @@ const ExportarSolicitudes = () => {
 
   const obtenerSolicitudes = () => {
     axios
-      .post(serverUrl + "/ws-2/obtener_solicitudes_visitas.php", {
+      .post(serverUrl + "/obtener_solicitudes_visitas.php", {
         rango,
       })
       .then((response) => {

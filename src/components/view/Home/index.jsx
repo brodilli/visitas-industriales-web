@@ -45,7 +45,7 @@ export default function Home() {
   };
 
   const obtenerEmpresas = () => {
-    fetch(serverUrl + "/ws-2/obtener_empresas.php")
+    fetch(serverUrl + "/obtener_empresas.php")
       .then((resp) => resp.json())
       .then((json) => {
         //console.log(json);
@@ -72,7 +72,7 @@ export default function Home() {
       acompanante: data.acompanante,
     };
     axios
-      .post(serverUrl + "/ws-2/insertar_solicitud_visita.php", sendData)
+      .post(serverUrl + "/insertar_solicitud_visita.php", sendData)
       .then((result) => {
         console.log(result.data);
         console.log(result.data);

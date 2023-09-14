@@ -25,31 +25,29 @@ const editarUsers = () => {
       numTelefono: numTelefonoRef.current.value,
     };
     console.log(sendData);
-    axios
-      .post(serverUrl + "/ws-2/primer_inicio.php", sendData)
-      .then((result) => {
-        console.log(result.data);
-        if (result.data.isOk === true) {
-          alert("Usuario actualizado");
-          if (tipoUser === "Usuario Consulta") {
-            navigate("/vistaCalendario");
-          }
-          if (tipoUser === "Administrador de recursos") {
-            navigate("/Calendario");
-          }
-          if (tipoUser === "Administrador") {
-            navigate("/Calendario");
-          }
-          if (tipoUser === "Usuario") {
-            navigate("/Home");
-          }
-          // else {
-          //   navigate("/home");
-          // }
-        } else {
-          alert("Error al actualizar usuario");
+    axios.post(serverUrl + "/primer_inicio.php", sendData).then((result) => {
+      console.log(result.data);
+      if (result.data.isOk === true) {
+        alert("Usuario actualizado");
+        if (tipoUser === "Usuario Consulta") {
+          navigate("/vistaCalendario");
         }
-      });
+        if (tipoUser === "Administrador de recursos") {
+          navigate("/Calendario");
+        }
+        if (tipoUser === "Administrador") {
+          navigate("/Calendario");
+        }
+        if (tipoUser === "Usuario") {
+          navigate("/Home");
+        }
+        // else {
+        //   navigate("/home");
+        // }
+      } else {
+        alert("Error al actualizar usuario");
+      }
+    });
   };
   return (
     <div className="container">

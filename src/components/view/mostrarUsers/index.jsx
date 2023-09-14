@@ -37,7 +37,7 @@ export default function MostrarUsers() {
   }, [reloadView]);
 
   const obtenerRegistros = () => {
-    fetch(serverUrl + "/ws-2/obtener_usuarios.php")
+    fetch(serverUrl + "/obtener_usuarios.php")
       .then((resp) => resp.json())
       .then((json) => {
         //console.log(json);
@@ -69,7 +69,7 @@ export default function MostrarUsers() {
     };
     console.log(sendData);
     axios
-      .post(serverUrl + "/ws-2/actualizar_varios_usuarios.php", sendData)
+      .post(serverUrl + "/actualizar_varios_usuarios.php", sendData)
       .then((result) => {
         console.log(result.data);
         if (result.data.isOk === true) {
@@ -85,18 +85,16 @@ export default function MostrarUsers() {
     const sendData = {
       id_usuario: id,
     };
-    axios
-      .post(serverUrl + "/ws-2/eliminar_usuario.php", sendData)
-      .then((result) => {
-        console.log(result.data);
-        if (result.data.isOk === true) {
-          alert("Usuario eliminado");
-          setReloadView(true);
-          setModalInsertar(false);
-        } else {
-          alert("Error al eliminar usuario");
-        }
-      });
+    axios.post(serverUrl + "/eliminar_usuario.php", sendData).then((result) => {
+      console.log(result.data);
+      if (result.data.isOk === true) {
+        alert("Usuario eliminado");
+        setReloadView(true);
+        setModalInsertar(false);
+      } else {
+        alert("Error al eliminar usuario");
+      }
+    });
   };
   return (
     <>

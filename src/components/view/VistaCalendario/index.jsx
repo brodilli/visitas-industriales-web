@@ -25,7 +25,7 @@ const VistaCalendario = () => {
     setShowModal(false);
   };
   const obtenerEventos = () => {
-    fetch(serverUrl + "/ws-2/obtener_agenda.php")
+    fetch(serverUrl + "/obtener_agenda.php")
       .then((resp) => resp.json())
       .then((json) => {
         const eventos = json.map((evento) => ({
