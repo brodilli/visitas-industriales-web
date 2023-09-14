@@ -9,7 +9,8 @@ import { setLogin } from "../../../redux/reducers/userReducer";
 
 export default function Login() {
   const serverUrl = process.env.REACT_APP_SERVER_URL;
-  const url = serverUrl + "/login2.php";
+  const apiUrl = process.env.REACT_APP_API_URL;
+  const url = apiUrl + "/login2.php";
   console.log(url);
   const dispatch = useDispatch();
   const [user, setUser] = useState({ correo: "", contraseña: "" });
