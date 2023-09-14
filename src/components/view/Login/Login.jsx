@@ -9,7 +9,7 @@ import { setLogin } from "../../../redux/reducers/userReducer";
 
 export default function Login() {
   const serverUrl = process.env.REACT_APP_SERVER_URL;
-  const url = serverUrl + "/ws-2/login2.php";
+  const url = serverUrl + "/login2.php";
   console.log(url);
   const dispatch = useDispatch();
   const [user, setUser] = useState({ correo: "", contraseña: "" });
@@ -55,7 +55,7 @@ export default function Login() {
         };
         console.log(sendData);
         axios
-          .post(serverUrl + "/ws-2/contador_sesion_usuarios.php", sendData)
+          .post(serverUrl + "/contador_sesion_usuarios.php", sendData)
           .then((result) => {
             // console.log(result.data);
           });
