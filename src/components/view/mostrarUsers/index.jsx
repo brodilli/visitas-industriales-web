@@ -40,10 +40,21 @@ export default function MostrarUsers() {
     fetch(serverUrl + "/obtener_usuarios.php")
       .then((resp) => resp.json())
       .then((json) => {
-        //console.log(json);
-        setRegistros(json);
+        if (json.status === 200) {
+          // El servidor respondió con éxito (código 200)
+          console.log("Éxito:", json.data);
+          setRegistros(json.data);
+        } else {
+          // El servidor respondió con un error
+          console.error("Error:", json.error);
+        }
+      })
+      .catch((error) => {
+        // Error de red u otra excepción
+        console.error("Error de red:", error);
       });
   };
+
   const handleChange = (e) => {
     setData({ ...data, [e.target.id]: e.target.value });
     console.log(data);

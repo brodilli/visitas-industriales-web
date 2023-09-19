@@ -33,7 +33,7 @@ export default function Login() {
 
     // console.log(sendData);
 
-    axios.post(url, sendData).then((result) => {
+    axios.post(url, JSON.stringify(sendData)).then((result) => {
       //   console.log(result.data.Status);
       if (result.data.Status === "200") {
         dispatch(
