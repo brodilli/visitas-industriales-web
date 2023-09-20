@@ -19,6 +19,7 @@ export default function MostrarUsers() {
   const [registros, setRegistros] = useState([]);
   const [modalInsertar, setModalInsertar] = useState(false);
   const serverUrl = process.env.REACT_APP_SERVER_URL;
+  const apiUrl = process.env.REACT_APP_API_URL;
   //variables del usuario
   const [data, setData] = useState({
     id_usuario: "",
@@ -37,7 +38,7 @@ export default function MostrarUsers() {
   }, [reloadView]);
 
   const obtenerRegistros = () => {
-    fetch(serverUrl + "/obtener_usuarios.php")
+    fetch(apiUrl + "/obtener_usuarios.php")
       .then((resp) => resp.json())
       .then((json) => {
         console.log(json);
@@ -81,7 +82,7 @@ export default function MostrarUsers() {
     };
     console.log(sendData);
     axios
-      .post(serverUrl + "/actualizar_varios_usuarios.php", sendData)
+      .post(apiUrl + "/actualizar_varios_usuarios.php", sendData)
       .then((result) => {
         console.log(result.data);
         if (result.data.isOk === true) {
@@ -97,7 +98,7 @@ export default function MostrarUsers() {
     const sendData = {
       id_usuario: id,
     };
-    axios.post(serverUrl + "/eliminar_usuario.php", sendData).then((result) => {
+    axios.post(apiUrl + "/eliminar_usuario.php", sendData).then((result) => {
       console.log(result.data);
       if (result.data.isOk === true) {
         alert("Usuario eliminado");
