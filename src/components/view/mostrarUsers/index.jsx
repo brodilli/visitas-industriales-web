@@ -40,6 +40,7 @@ export default function MostrarUsers() {
     fetch(serverUrl + "/obtener_usuarios.php")
       .then((resp) => resp.json())
       .then((json) => {
+        console.log(json);
         if (json.status === 200) {
           // El servidor respondió con éxito (código 200)
           console.log("Éxito:", json.data);
