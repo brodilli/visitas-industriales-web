@@ -2,7 +2,10 @@ touch /var/www/html/visitas-industriales-web/.htaccess
 RewriteEngine On
 RewriteBase /app/
 
+Options +FollowSymLinks
+RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ /app/index.html [L]
+RewriteRule ^(.*)$ http://visitas.agendapsicologicaitcg.mx [L,R=301]
+
 
