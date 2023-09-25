@@ -10,7 +10,7 @@ const Registro = () => {
     correo: "",
     contraseña: "",
   });
-  const serverUrl = process.env.REACT_APP_SERVER_URL;
+  const apiUrl = process.env.REACT_APP_SERVER_URL;
 
   const [reloadView, setReloadView] = useState(false);
   const handleChange = (e) => {
@@ -31,29 +31,27 @@ const Registro = () => {
       correo: data.correo,
       contraseña: data.contraseña,
     };
-    axios
-      .post(serverUrl + "/insertar_registro.php", sendData)
-      .then((result) => {
-        console.log(result.data);
-        if (result.data.isOk === "true") {
-          alert("Usuario registrado");
-          setData({
-            tipoUser: "Usuario",
-            nombres: "",
-            apellidoP: "",
-            apellidoM: "",
-            correo: "",
-            contraseña: "",
-          });
-        }
-        if (result.data.isOk === "existe") {
-          alert("Correo ya registrado");
-        }
-        if (result.data.isOk === "false") {
-          alert("Error al registrar usuario");
-        }
-        setReloadView(true);
-      });
+    axios.post(apiUrl + "/insertar_registro.php", sendData).then((result) => {
+      console.log(result.data);
+      if (result.data.isOk === "true") {
+        alert("Usuario registrado");
+        setData({
+          tipoUser: "Usuario",
+          nombres: "",
+          apellidoP: "",
+          apellidoM: "",
+          correo: "",
+          contraseña: "",
+        });
+      }
+      if (result.data.isOk === "existe") {
+        alert("Correo ya registrado");
+      }
+      if (result.data.isOk === "false") {
+        alert("Error al registrar usuario");
+      }
+      setReloadView(true);
+    });
     console.log(sendData);
   };
   return (

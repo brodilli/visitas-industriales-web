@@ -56,7 +56,7 @@ export default function Login() {
         };
         console.log(sendData);
         axios
-          .post(serverUrl + "/contador_sesion_usuarios.php", sendData)
+          .post(apiUrl + "/contador_sesion_usuarios.php", sendData)
           .then((result) => {
             // console.log(result.data);
           });

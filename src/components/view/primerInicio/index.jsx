@@ -10,7 +10,7 @@ const editarUsers = () => {
   let navigate = useNavigate();
   const contraseñaRef = useRef("");
   const numTelefonoRef = useRef("");
-  const serverUrl = process.env.REACT_APP_SERVER_URL;
+  const apiUrl = process.env.REACT_APP_SERVER_URL;
 
   useEffect(() => {
     contraseñaRef.current.value = contraseña;
@@ -25,7 +25,7 @@ const editarUsers = () => {
       numTelefono: numTelefonoRef.current.value,
     };
     console.log(sendData);
-    axios.post(serverUrl + "/primer_inicio.php", sendData).then((result) => {
+    axios.post(apiUrl + "/primer_inicio.php", sendData).then((result) => {
       console.log(result.data);
       if (result.data.isOk === true) {
         alert("Usuario actualizado");

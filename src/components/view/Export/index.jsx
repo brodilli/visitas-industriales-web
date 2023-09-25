@@ -8,8 +8,7 @@ const ExportarSolicitudes = () => {
   const [solicitudes, setSolicitudes] = useState([]);
   const [rango, setRango] = useState("1");
   const [reloadView, setReloadView] = useState(false);
-  const serverUrl = process.env.REACT_APP_SERVER_URL;
-
+  const apiUrl = process.env.REACT_APP_API_URL;
   useEffect(() => {
     obtenerSolicitudes();
     setReloadView(false);
@@ -17,7 +16,7 @@ const ExportarSolicitudes = () => {
 
   const obtenerSolicitudes = () => {
     axios
-      .post(serverUrl + "/obtener_solicitudes_visitas.php", {
+      .post(apiUrl + "/obtener_solicitudes_visitas.php", {
         rango,
       })
       .then((response) => {

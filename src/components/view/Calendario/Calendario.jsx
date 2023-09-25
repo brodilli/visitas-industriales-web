@@ -12,7 +12,7 @@ import axios from "axios";
 const Agenda = () => {
   const [events, setEvents] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const serverUrl = process.env.REACT_APP_SERVER_URL;
+  const apiUrl = process.env.REACT_APP_API_URL;
   const [idVisita, setIdVisita] = useState("");
   const [idVehiculo, setIdVehiculo] = useState("");
   const [fecha, setFecha] = useState("");
@@ -59,7 +59,7 @@ const Agenda = () => {
   // };
 
   const obtenerEventos = () => {
-    fetch(serverUrl + "/obtener_agenda.php")
+    fetch(apiUrl + "/obtener_agenda.php")
       .then((resp) => resp.json())
       .then((json) => {
         const eventos = json.map((evento) => ({
@@ -101,7 +101,7 @@ const Agenda = () => {
         id_visita: idVisita,
       };
       axios
-        .get(serverUrl + "/obtener_solicitud_visita.php", {
+        .get(apiUrl + "/obtener_solicitud_visita.php", {
           params: sendData,
         })
         .then((response) => {
@@ -168,20 +168,40 @@ const Agenda = () => {
     const sendData = {
       id_visita: idVisita,
     };
-    axios
-      .post(serverUrl + "/no_repetir_agenda.php", sendData)
-      .then((response) => {
-        const cont = response.data.count;
-        // console.log(idVisita);
-        // console.log(cont.count);
-        if (cont === "0") {
-          if (idVehiculo === "") {
-            setShowModal(false);
-            alert("Ingrese un id de vehiculo");
-          }
-          const newEvent = {
-            idVisita: idVisita,
-            idVehiculo: idVehiculo,
+    axios.post(apiUrl + "/no_repetir_agenda.php", sendData).then((response) => {
+      const cont = response.data.count;
+      // console.log(idVisita);
+      // console.log(cont.count);
+      if (cont === "0") {
+        if (idVehiculo === "") {
+          setShowModal(false);
+          alert("Ingrese un id de vehiculo");
+        }
+        const newEvent = {
+          idVisita: idVisita,
+          idVehiculo: idVehiculo,
+          fecha: fecha,
+          horaSalida: horaSalida,
+          horaLlegada: horaLlegada,
+          empresa: empresa,
+          lugar: lugar,
+          docente: maestroResponsable,
+          numAlumnos: numAlumnos,
+          title: idVisita,
+        };
+        const colors = ["blue", "red", "green", "yellow", "purple", "orange"];
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+
+        setEvents([...events, newEvent]);
+
+        fetch(apiUrl + "/insertar_agenda.php", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id_visita: idVisita,
+            id_vehiculo: idVehiculo,
             fecha: fecha,
             horaSalida: horaSalida,
             horaLlegada: horaLlegada,
@@ -189,45 +209,23 @@ const Agenda = () => {
             lugar: lugar,
             docente: maestroResponsable,
             numAlumnos: numAlumnos,
-            title: idVisita,
-          };
-          const colors = ["blue", "red", "green", "yellow", "purple", "orange"];
-          const randomColor = colors[Math.floor(Math.random() * colors.length)];
-
-          setEvents([...events, newEvent]);
-
-          fetch(serverUrl + "/insertar_agenda.php", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              id_visita: idVisita,
-              id_vehiculo: idVehiculo,
-              fecha: fecha,
-              horaSalida: horaSalida,
-              horaLlegada: horaLlegada,
-              empresa: empresa,
-              lugar: lugar,
-              docente: maestroResponsable,
-              numAlumnos: numAlumnos,
-              color: randomColor,
-            }),
+            color: randomColor,
+          }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Success:", data);
           })
-            .then((response) => response.json())
-            .then((data) => {
-              console.log("Success:", data);
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-            });
+          .catch((error) => {
+            console.error("Error:", error);
+          });
 
-          setShowModal(false);
-        } else {
-          alert("La visita ya se encuentra en la agenda");
-          setShowModal(false);
-        }
-      });
+        setShowModal(false);
+      } else {
+        alert("La visita ya se encuentra en la agenda");
+        setShowModal(false);
+      }
+    });
   };
 
   return (

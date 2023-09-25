@@ -21,6 +21,7 @@ import Estatus from "./Estatus";
 
 const mostrarSolicitudes = () => {
   const serverUrl = process.env.REACT_APP_SERVER_URL;
+  const apiUrl = process.env.REACT_APP_API_URL;
   const [solicitudes, setSolicitudes] = useState([]);
   const [modal, setModal] = useState(false);
   const [empresas, setEmpresas] = useState([]);
@@ -76,7 +77,7 @@ const mostrarSolicitudes = () => {
     };
     console.log(sendData);
     axios
-      .post(serverUrl + "/actualizar_solicitud_visita.php", sendData)
+      .post(apiUrl + "/actualizar_solicitud_visita.php", sendData)
       .then((result) => {
         console.log(result.data);
         if (result.data.isOk === "true") {
@@ -116,7 +117,7 @@ const mostrarSolicitudes = () => {
 
     try {
       const result = await axios.post(
-        serverUrl + "/obtener_solicitudes_pdf.php",
+        apiUrl + "/obtener_solicitudes_pdf.php",
         sendData
       );
       const data = result.data;
@@ -141,7 +142,7 @@ const mostrarSolicitudes = () => {
 
     try {
       const result = await axios.post(
-        serverUrl + "/num_solicitud_usuario.php",
+        apiUrl + "/num_solicitud_usuario.php",
         sendData
       );
       console.log(result.data);
@@ -246,7 +247,7 @@ const mostrarSolicitudes = () => {
 
   const obtenerSolicitudes = () => {
     axios
-      .post(serverUrl + "/obtener_solicitudes_visitas.php", { rango })
+      .post(apiUrl + "/obtener_solicitudes_visitas.php", { rango })
       .then((response) => {
         setSolicitudes(response.data);
         setReloadView(true);
@@ -256,7 +257,7 @@ const mostrarSolicitudes = () => {
       });
   };
   const obtenerDiasOcupados = () => {
-    fetch(serverUrl + "/obtener_agenda.php")
+    fetch(apiUrl + "/obtener_agenda.php")
       .then((resp) => resp.json())
       .then((json) => {
         console.log(json);
@@ -265,7 +266,7 @@ const mostrarSolicitudes = () => {
   };
 
   const obtenerEmpresas = () => {
-    fetch(serverUrl + "/obtener_empresas.php")
+    fetch(apiUrl + "/obtener_empresas.php")
       .then((resp) => resp.json())
       .then((json) => {
         //console.log(json);

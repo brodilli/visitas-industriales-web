@@ -9,7 +9,6 @@ const RegistroEmpresa = () => {
     correo_contacto: "",
     telefono_contacto: "",
   });
-  const serverUrl = process.env.REACT_APP_SERVER_URL;
   const apiUrl = process.env.REACT_APP_API_URL;
   const [reloadView, setReloadView] = useState(false);
   const handleChange = (e) => {
@@ -29,21 +28,19 @@ const RegistroEmpresa = () => {
       correo_contacto: data.correo_contacto,
       telefono_contacto: data.telefono_contacto,
     };
-    axios
-      .post(serverUrl + apiUrl + "/insertar_empresa.php", sendData)
-      .then((result) => {
-        console.log(result.data);
-        if (result.data.isOk === "true") {
-          alert("Empresa registrada");
-        }
-        setData({
-          nombre_empresa: "",
-          lugar: "",
-          nombre_contacto: "",
-          correo_contacto: "",
-          telefono_contacto: "",
-        });
+    axios.post(apiUrl + "/insertar_empresa.php", sendData).then((result) => {
+      console.log(result.data);
+      if (result.data.isOk === "true") {
+        alert("Empresa registrada");
+      }
+      setData({
+        nombre_empresa: "",
+        lugar: "",
+        nombre_contacto: "",
+        correo_contacto: "",
+        telefono_contacto: "",
       });
+    });
     setReloadView(true);
     console.log(sendData);
   };

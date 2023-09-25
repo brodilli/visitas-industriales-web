@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useRef } from "react";
 import { useSelector } from "react-redux";
 const editarUsers = () => {
-  const serverUrl = process.env.REACT_APP_SERVER_URL;
+  const apiUrl = process.env.REACT_APP_API_URL;
   const {
     nombres,
     apellidoP,
@@ -49,16 +49,14 @@ const editarUsers = () => {
       numTelefono: numTelefonoRef.current.value,
     };
     console.log(sendData);
-    axios
-      .post(serverUrl + "/actualizar_usuarios.php", sendData)
-      .then((result) => {
-        console.log(result.data);
-        if (result.data.isOk === true) {
-          alert("Usuario actualizado");
-        } else {
-          alert("Error al actualizar usuario");
-        }
-      });
+    axios.post(apiUrl + "/actualizar_usuarios.php", sendData).then((result) => {
+      console.log(result.data);
+      if (result.data.isOk === true) {
+        alert("Usuario actualizado");
+      } else {
+        alert("Error al actualizar usuario");
+      }
+    });
   };
   return (
     <div className="container">

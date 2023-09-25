@@ -20,12 +20,12 @@ const VistaCalendario = () => {
   const [lugar, setLugar] = useState("");
   const [maestroResponsable, setMaestroResponsable] = useState("");
   const [numAlumnos, setNumAlumnos] = useState("");
-  const serverUrl = process.env.REACT_APP_SERVER_URL;
+  const apiUrl = process.env.REACT_APP_SERVER_URL;
   const handleCloseModal = () => {
     setShowModal(false);
   };
   const obtenerEventos = () => {
-    fetch(serverUrl + "/obtener_agenda.php")
+    fetch(apiUrl + "/obtener_agenda.php")
       .then((resp) => resp.json())
       .then((json) => {
         const eventos = json.map((evento) => ({
