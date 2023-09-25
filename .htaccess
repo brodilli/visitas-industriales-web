@@ -1,11 +1,8 @@
-touch /var/www/html/visitas-industriales-web/.htaccess 
+Options +FollowSymLinks
 RewriteEngine On
 RewriteBase /app/
 
-Options +FollowSymLinks
-RewriteEngine On
+# Las reglas de enrutamiento de React deben ir después de las reglas anteriores
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ http://visitas.agendapsicologicaitcg.mx [L,R=301]
-
-
+RewriteRule . /app/index.html [L]
