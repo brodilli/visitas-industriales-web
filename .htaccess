@@ -1,8 +1,7 @@
-Options +FollowSymLinks
 RewriteEngine On
-RewriteBase /app/
+RewriteBase /
 
-# Las reglas de enrutamiento de React deben ir después de las reglas anteriores
+# Redirigir todas las solicitudes que no sean archivos o directorios existentes al archivo principal
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /app/index.html [L]
+RewriteRule . /index.html [L]

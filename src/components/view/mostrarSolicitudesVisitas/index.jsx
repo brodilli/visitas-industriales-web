@@ -20,7 +20,6 @@ import "./mostrarSolicitudesVisitas.css";
 import Estatus from "./Estatus";
 
 const mostrarSolicitudes = () => {
-  const serverUrl = process.env.REACT_APP_SERVER_URL;
   const apiUrl = process.env.REACT_APP_API_URL;
   const [solicitudes, setSolicitudes] = useState([]);
   const [modal, setModal] = useState(false);

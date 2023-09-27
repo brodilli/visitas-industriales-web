@@ -8,7 +8,6 @@ import { useDispatch } from "react-redux";
 import { setLogin } from "../../../redux/reducers/userReducer";
 
 export default function Login() {
-  const serverUrl = process.env.REACT_APP_SERVER_URL;
   const apiUrl = process.env.REACT_APP_API_URL;
   const url = apiUrl + "/login2.php";
 
