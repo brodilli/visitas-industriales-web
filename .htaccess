@@ -1,7 +1,7 @@
+touch /var/www/html/visitas-industriales-web/.htaccess 
 RewriteEngine On
-RewriteBase /
+RewriteBase /app/
 
-# Redirigir todas las solicitudes que no sean archivos o directorios existentes al archivo principal
-<!-- RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /index.html [L] -->
+RewriteRule ^(.*)$ /app/index.html [L]
