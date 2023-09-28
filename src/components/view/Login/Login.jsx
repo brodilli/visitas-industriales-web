@@ -49,6 +49,7 @@ export default function Login() {
             numTelefono: result.data.numTelefono,
           })
         );
+        console.log(result.data);
         const sendData = {
           id_usuario: result.data.id_usuario,
           numSesion: parseInt(result.data.numSesion) + 1,
@@ -57,10 +58,10 @@ export default function Login() {
         axios
           .post(apiUrl + "/contador_sesion_usuarios.php", sendData)
           .then((result) => {
-            // console.log(result.data);
+            localStorage.setItem("nombres", result.data.nombres);
+            localStorage.setItem("id_usuario", result.data.id_usuario);
           });
-        localStorage.setItem("nombres", result.data.nombres);
-        localStorage.setItem("id_usuario", result.data.id_usuario);
+
         if (result.data.numSesion === "0") {
           navigate("/cambiarContraseña");
         } else {
@@ -72,6 +73,7 @@ export default function Login() {
             navigate("/home");
           }
         }
+        console.log(result.data);
       } else {
         alert("Usuario o contraseña incorrectos");
       }

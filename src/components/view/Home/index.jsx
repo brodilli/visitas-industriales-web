@@ -3,18 +3,18 @@ import { useSelector } from "react-redux";
 import { Input } from "antd";
 import axios from "axios";
 import "./home.css";
+
 export default function Home() {
-  // // Variable que guarda los registros
   const [empresas, setEmpresas] = useState([]);
   const [reloadView, setReloadView] = useState(false);
-  // // Ciclo de vida: cuando el componente esta recien cargado
   const { id_usuario } = useSelector((state) => state.login);
   const apiUrl = process.env.REACT_APP_API_URL;
+
   const cerrarSesion = () => {
     localStorage.removeItem("token");
     window.location.href = "/login";
   };
-  console.log(id_usuario);
+
   const refId_empresa = useRef("");
 
   const [data, setData] = useState({
@@ -31,30 +31,36 @@ export default function Home() {
     asignatura: "",
     acompanante: "",
   });
+
   window.addEventListener("popstate", () => {
     cerrarSesion();
   });
+
   useEffect(() => {
     obtenerEmpresas();
     setReloadView(false);
   }, [reloadView]);
+
   const handleChange = (e) => {
     setData({ ...data, [e.target.id]: e.target.value });
-    console.log(data);
-    console.log(id_usuario);
   };
 
   const obtenerEmpresas = () => {
     fetch(apiUrl + "/obtener_empresas.php")
       .then((resp) => resp.json())
       .then((json) => {
-        //console.log(json);
-        setEmpresas(json);
+        if (json.status === 200) {
+          setEmpresas(json.data); // Actualizar el estado con los datos
+        } else {
+          console.error("Error al obtener las empresas.");
+        }
+      })
+      .catch((error) => {
+        console.error("Error al obtener las empresas:", error);
       });
   };
 
   const submitForm = (e) => {
-    console.log(id_usuario);
     e.preventDefault();
     const sendData = {
       id_usuario: id_usuario,
@@ -74,37 +80,22 @@ export default function Home() {
     axios
       .post(apiUrl + "/insertar_solicitud_visita.php", sendData)
       .then((result) => {
-        console.log(result.data);
-        console.log(result.data);
         if (result.data.isOk === "true") {
-          alert("visita registrada");
-          // setData({
-          //   semestre: "1",
-          //   grupo: "",
-          //   objetivo: "",
-          //   fecha: "",
-          //   id_carrera: "1",
-          //   num_alumnos: "",
-          //   num_alumnas: "",
-          //   asignatura: "",
-          // });
-          // setData({ ...data, [e.target.id]: "" });
-          refId_empresa.current.value = "1";
+          alert("Visita registrada");
+          setReloadView(true);
         } else {
-          // console.log(result.data.num);
           if (result.data.isOk === "false") {
             alert("Error al registrar la visita");
           } else if (result.data.isMore === "406") {
-            //numero que indica que ya se alcanzo el limite de solicitudes
             alert(
               "Usted no puede realizar otra solicitud de visita, ya que alcanzó el límite de solicitudes permitidas por grupo, semestre y materia."
             );
           }
         }
+      })
+      .catch((error) => {
+        console.error("Error al enviar la solicitud:", error);
       });
-    setReloadView(true);
-
-    console.log(sendData);
   };
 
   return (
@@ -128,17 +119,20 @@ export default function Home() {
                   required
                   onChange={handleChange}
                 >
-                  {empresas.sort().map((empresas, i) => (
-                    <option key={i} value={empresas.id_empresa}>
-                      {`${empresas.nombre_empresa}` +
-                        "  " +
-                        "(" +
-                        `${empresas.lugar}` +
-                        ")"}
-                    </option>
-                  ))}
+                  {Array.isArray(empresas) && empresas.length > 0 ? (
+                    empresas.map((empresa) => (
+                      <option
+                        key={empresa.id_empresa}
+                        value={empresa.id_empresa}
+                      >
+                        {`${empresa.nombre_empresa} (${empresa.lugar})`}
+                      </option>
+                    ))
+                  ) : (
+                    <option value="">No hay empresas disponibles</option>
+                  )}
                 </select>
-                <label htmlFor="">Área a observar y objetivo</label>
+                <label>Área a observar y objetivo</label>
                 <Input
                   type="text"
                   id="objetivo"
@@ -205,7 +199,6 @@ export default function Home() {
                       id="semestre"
                       onChange={handleChange}
                       value={data.semestre}
-                      // defaultValue="1"
                       required
                     >
                       <option value="1">1°</option>
@@ -221,15 +214,6 @@ export default function Home() {
                   </div>
                   <div>
                     <label htmlFor="">Grupo: </label>
-                    {/* <Input
-                      className="grupo"
-                      id="grupo"
-                      type="text"
-                      maxLength={1}
-                      pattern="[A-Z]"
-                      onChange={handleChange}
-                      value={data.grupo}
-                    /> */}
                     <select
                       name="grupo"
                       id="grupo"
