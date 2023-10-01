@@ -54,13 +54,14 @@ export default function Login() {
           id_usuario: result.data.id_usuario,
           numSesion: parseInt(result.data.numSesion) + 1,
         };
-        console.log(sendData);
+
         axios
           .post(apiUrl + "/contador_sesion_usuarios.php", sendData)
           .then((result) => {
             localStorage.setItem("nombres", result.data.nombres);
             localStorage.setItem("id_usuario", result.data.id_usuario);
           });
+        console.log(localStorage.getItem("nombres"));
 
         if (result.data.numSesion === "0") {
           navigate("/cambiarContraseña");

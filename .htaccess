@@ -1,7 +1,6 @@
-touch /var/www/html/visitas-industriales-web/.htaccess 
-RewriteEngine On
-RewriteBase /app/
+RewriteEngine On  
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
+RewriteRule ^ - [L]
 
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ /app/index.html [L]
+RewriteRule ^ /index.html [L]
