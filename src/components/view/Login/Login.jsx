@@ -33,50 +33,60 @@ export default function Login() {
     // console.log(sendData);
 
     axios.post(url, JSON.stringify(sendData)).then((result) => {
-      //   console.log(result.data.Status);
-      if (result.data.Status === "200") {
+      const responseData = result.data; // La respuesta es un objeto JSON
+
+      if (responseData.Status === "200") {
         dispatch(
           setLogin({
             login: true,
-            nombres: result.data.nombres,
-            apellidoP: result.data.apellidoP,
-            apellidoM: result.data.apellidoM,
+            nombres: responseData.data.nombres,
+            apellidoP: responseData.data.apellidoP,
+            apellidoM: responseData.data.apellidoM,
             correo: user.correo,
             contraseña: user.contraseña,
-            id_usuario: result.data.id_usuario,
-            tipoUser: result.data.tipoUser,
-            numSesion: result.data.numSesion,
-            numTelefono: result.data.numTelefono,
+            id_usuario: responseData.data.id_usuario,
+            tipoUser: responseData.data.tipoUser,
+            numSesion: responseData.data.numSesion,
+            numTelefono: responseData.data.numTelefono,
           })
         );
-        console.log(result.data);
+        console.log(responseData.data.id_usuario);
         const sendData = {
-          id_usuario: result.data.id_usuario,
-          numSesion: parseInt(result.data.numSesion) + 1,
+          id_usuario: responseData.data.id_usuario,
+          numSesion: parseInt(responseData.data.numSesion) + 1,
         };
-
+        console.log(sendData);
         axios
           .post(apiUrl + "/contador_sesion_usuarios.php", sendData)
           .then((result) => {
+            // Almacena nombres e id_usuario en el almacenamiento local
             localStorage.setItem("nombres", result.data.nombres);
             localStorage.setItem("id_usuario", result.data.id_usuario);
-          });
-        console.log(localStorage.getItem("nombres"));
 
-        if (result.data.numSesion === "0") {
-          navigate("/cambiarContraseña");
-        } else {
-          if (result.data.tipoUser === "Administrador de recursos") {
-            navigate("/Calendario");
-          } else if (result.data.tipoUser === "Usuario Consulta") {
-            navigate("/vistaCalendario");
-          } else {
-            navigate("/home");
-          }
-        }
-        console.log(result.data);
-      } else {
-        alert("Usuario o contraseña incorrectos");
+            // Imprime los nombres en la consola
+            console.log(localStorage.getItem("nombres"));
+
+            // Corrige la comparación de numSesion (asumiendo que numSesion es un número)
+            if (result.data.numSesion === 0) {
+              navigate("/cambiarContraseña");
+            } else {
+              console.log(result.data.tipoUser);
+              if (result.data.tipoUser === "Administrador de recursos") {
+                navigate("/Calendario");
+              } else if (result.data.tipoUser === "Usuario Consulta") {
+                navigate("/vistaCalendario");
+              } else {
+                navigate("/home");
+              }
+            }
+
+            // Imprime el objeto JSON completo en la consola
+            console.log(result.data);
+          })
+          .catch((error) => {
+            alert("Usuario o contraseña incorrectos");
+            console.error(error);
+          });
       }
     });
   };

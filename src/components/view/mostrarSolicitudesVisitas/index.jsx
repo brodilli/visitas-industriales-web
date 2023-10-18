@@ -97,13 +97,17 @@ const mostrarSolicitudes = () => {
     setModal(false);
   };
 
-  useEffect(() => {
-    obtenerSolicitudes();
-    obtenerEmpresas();
-    obtenerDiasOcupados();
-    setReloadView(false);
-    console.log(diasOcupados);
-  }, [reloadView]);
+  useEffect(
+    () => {
+      obtenerSolicitudes();
+      obtenerEmpresas();
+      obtenerDiasOcupados();
+      setReloadView(false);
+      console.log(diasOcupados);
+    },
+    [reloadView],
+    [diasOcupados]
+  );
 
   async function obtenerSolicitudesPDF(solicitud) {
     const sendData = {
@@ -410,15 +414,15 @@ const mostrarSolicitudes = () => {
               onChange={handleChange}
               required
             >
-              {empresas.sort().map((empresas, i) => (
-                <option key={i} value={empresas.id_empresa}>
-                  {`${empresas.nombre_empresa}` +
-                    "  " +
-                    "(" +
-                    `${empresas.lugar}` +
-                    ")"}
-                </option>
-              ))}
+              {Array.isArray(empresas) && empresas.length > 0 ? (
+                empresas.map((empresa) => (
+                  <option key={empresa.id_empresa} value={empresa.id_empresa}>
+                    {`${empresa.nombre_empresa} (${empresa.lugar})`}
+                  </option>
+                ))
+              ) : (
+                <option value="">No hay empresas disponibles</option>
+              )}
             </select>
           </FormGroup>
           <FormGroup>

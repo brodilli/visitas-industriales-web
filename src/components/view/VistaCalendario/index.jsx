@@ -20,7 +20,7 @@ const VistaCalendario = () => {
   const [lugar, setLugar] = useState("");
   const [maestroResponsable, setMaestroResponsable] = useState("");
   const [numAlumnos, setNumAlumnos] = useState("");
-  const apiUrl = process.env.REACT_APP_SERVER_URL;
+  const apiUrl = process.env.REACT_APP_API_URL;
   const handleCloseModal = () => {
     setShowModal(false);
   };
