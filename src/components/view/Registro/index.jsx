@@ -10,7 +10,7 @@ const Registro = () => {
     correo: "",
     contraseña: "",
   });
-  const apiUrl = process.env.REACT_APP_SERVER_URL;
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   const [reloadView, setReloadView] = useState(false);
   const handleChange = (e) => {
