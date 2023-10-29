@@ -12,7 +12,7 @@ const NavBar = () => {
   const { nombres } = useSelector((state) => state.login);
   const cerrarSesion = () => {
     localStorage.removeItem("token");
-    window.location.href = "/login";
+    window.location.href = "/";
   };
 
   return (

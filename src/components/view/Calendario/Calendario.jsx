@@ -27,7 +27,7 @@ const Agenda = () => {
 
   const cerrarSesion = () => {
     localStorage.removeItem("token");
-    window.location.href = "/login";
+    window.location.href = "/";
   };
 
   window.addEventListener("popstate", () => {

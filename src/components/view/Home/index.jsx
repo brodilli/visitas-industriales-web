@@ -12,7 +12,7 @@ export default function Home() {
 
   const cerrarSesion = () => {
     localStorage.removeItem("token");
-    window.location.href = "/login";
+    window.location.href = "/";
   };
 
   const refId_empresa = useRef("");
