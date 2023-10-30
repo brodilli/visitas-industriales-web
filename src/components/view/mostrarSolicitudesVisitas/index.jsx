@@ -252,6 +252,7 @@ const mostrarSolicitudes = () => {
     axios
       .post(apiUrl + "/obtener_solicitudes_visitas.php", { rango })
       .then((response) => {
+        console.log(response.data.data);
         setSolicitudes(response.data);
         setReloadView(true);
       })

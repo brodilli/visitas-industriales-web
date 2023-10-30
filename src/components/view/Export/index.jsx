@@ -21,6 +21,7 @@ const ExportarSolicitudes = () => {
       })
       .then((response) => {
         setSolicitudes(response.data);
+        console.log(response.data.data);
         setReloadView(false);
       })
       .catch((error) => {

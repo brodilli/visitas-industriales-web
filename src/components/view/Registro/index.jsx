@@ -18,7 +18,6 @@ const Registro = () => {
     console.log(data);
   };
   useEffect(() => {
-    console.log("useEffect");
     setReloadView(false);
   }, [reloadView]);
   const submitForm = (e) => {
