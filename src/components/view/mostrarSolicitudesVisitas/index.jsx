@@ -78,7 +78,7 @@ const mostrarSolicitudes = () => {
     axios
       .post(apiUrl + "/actualizar_solicitud_visita.php", sendData)
       .then((result) => {
-        console.log(result.data);
+        console.log(result.data.isOk);
         if (result.data.isOk === "true") {
           setModal(false);
           setReloadView(true);
