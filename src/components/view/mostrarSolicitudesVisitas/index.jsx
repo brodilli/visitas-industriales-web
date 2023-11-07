@@ -103,7 +103,6 @@ const mostrarSolicitudes = () => {
       obtenerEmpresas();
       obtenerDiasOcupados();
       setReloadView(false);
-      console.log(diasOcupados);
     },
     [reloadView],
     [diasOcupados]
@@ -252,7 +251,6 @@ const mostrarSolicitudes = () => {
     axios
       .post(apiUrl + "/obtener_solicitudes_visitas.php", { rango })
       .then((response) => {
-        console.log(response.data.data);
         setSolicitudes(response.data);
         setReloadView(true);
       })
@@ -264,7 +262,6 @@ const mostrarSolicitudes = () => {
     fetch(apiUrl + "/obtener_agenda.php")
       .then((resp) => resp.json())
       .then((json) => {
-        console.log(json);
         setDiasOcupados(json);
       });
   };

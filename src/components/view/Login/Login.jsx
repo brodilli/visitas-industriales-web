@@ -67,7 +67,9 @@ export default function Login() {
             console.log(localStorage.getItem("nombres"));
 
             // Corrige la comparación de numSesion (asumiendo que numSesion es un número)
-            if (result.data.numSesion === 0) {
+            console.log(result.data.numSesion);
+            if (result.data.numSesion === 1) {
+              console.log("cambiar contraseña");
               navigate("/cambiarContraseña");
             } else {
               console.log(result.data.tipoUser);
@@ -79,13 +81,11 @@ export default function Login() {
                 navigate("/home");
               }
             }
-
             // Imprime el objeto JSON completo en la consola
             console.log(result.data);
-          })
-          .catch((error) => {
-            alert("Usuario o contraseña incorrectos");
-            console.error(error);
+            if (result.data.Status === 404) {
+              alert("Usuario o contraseña incorrectos");
+            }
           });
       }
     });
