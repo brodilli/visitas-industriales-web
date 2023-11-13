@@ -34,30 +34,6 @@ const Agenda = () => {
     cerrarSesion();
   });
 
-  // const obtenerEventos = () => {
-  //   fetch(serverUrl+"/obtener_agenda.php")
-  //     .then((resp) => resp.json())
-  //     .then((json) => {
-  //       const eventos = json.map((evento) => ({
-  //         idVisita: evento.id_visita,
-  //         idVehiculo: evento.id_vehiculo, // Convertir la fecha a tipo Date
-  //         fecha: evento.fecha, // Convertir la fecha a tipo Date
-  //         horaSalida: evento.horaSalida,
-  //         horaLlegada: evento.horaLlegada,
-  //         empresa: evento.nombre_empresa,
-  //         lugar: evento.lugar,
-  //         maestroResponsable: evento.docente,
-  //         numAlumnos: evento.num_alumnos,
-  //         color: evento.color,
-  //       }));
-  //       setEvents(eventos);
-  //       console.log(eventos);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error al obtener eventos:", error);
-  //     });
-  // };
-
   const obtenerEventos = () => {
     fetch(apiUrl + "/obtener_agenda.php")
       .then((resp) => resp.json())
@@ -69,7 +45,7 @@ const Agenda = () => {
           end: new Date(evento.fecha + "T" + evento.horaLlegada), // Concatenar fecha y hora
           color: evento.color,
           // ... (otros campos que quieras incluir)
-          idVehiculo: evento.id_vehiculo, // Convertir la fecha a tipo Date
+          idVehiculo: evento.id_vehiculo,
           fecha: evento.fecha, // Convertir la fecha a tipo Date
           horaSalida: evento.horaSalida,
           horaLlegada: evento.horaLlegada,
@@ -144,34 +120,12 @@ const Agenda = () => {
     setShowModal(true);
   };
 
-  // const handleDateSelect = (selectInfo) => {
-  //   const selectedDate = selectInfo.dateStr;
-  //   console.log(selectInfo);
-  //   // Simulamos la obtención del evento correspondiente desde tu lista de eventos
-  //   const eventData = {
-  //     id_visita: selectInfo.id,
-  //     nombre_empresa: empresa,
-  //     lugar: lugar,
-  //     docente: maestroResponsable,
-  //     num_alumnos: numAlumnos,
-  //     fecha: selectedDate,
-  //     horaSalida: horaSalida,
-  //     horaLlegada: horaLlegada,
-  //     id_vehiculo: idVehiculo,
-  //   };
-
-  //   setSelectedEvent(eventData);
-  //   setShowModal(true);
-  // };
-
   const handleAddEvent = () => {
     const sendData = {
       id_visita: idVisita,
     };
     axios.post(apiUrl + "/no_repetir_agenda.php", sendData).then((response) => {
       const cont = response.data.count;
-      // console.log(idVisita);
-      // console.log(cont.count);
       if (cont === "0") {
         if (idVehiculo === "") {
           setShowModal(false);

@@ -82,11 +82,11 @@ export default function Login() {
               }
             }
             // Imprime el objeto JSON completo en la consola
-            console.log(result.data);
-            if (result.data.Status === 404) {
-              alert("Usuario o contraseña incorrectos");
-            }
           });
+      }
+      console.log(result.data);
+      if (result.data.status === 404) {
+        alert("Usuario o contraseña incorrectos");
       }
     });
   };
