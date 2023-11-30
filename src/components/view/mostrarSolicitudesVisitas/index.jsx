@@ -80,9 +80,8 @@ const mostrarSolicitudes = () => {
       .then((result) => {
         console.log(result.status);
         if (result.status === 200) {
-          setReloadView(true);
           setModal(false);
-          alert("Solicitud actualizada correctamente");
+          setReloadView(true);
         } else {
           alert("Error al actualizar");
         }
@@ -98,16 +97,21 @@ const mostrarSolicitudes = () => {
     setModal(false);
   };
 
-  useEffect(
-    () => {
-      obtenerSolicitudes();
-      obtenerEmpresas();
-      obtenerDiasOcupados();
-      setReloadView(false);
-    },
-    [reloadView],
-    [diasOcupados]
-  );
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await obtenerSolicitudes();
+        await obtenerEmpresas();
+        await obtenerDiasOcupados();
+      } catch (error) {
+        console.error("Error al obtener datos:", error);
+      } finally {
+        setReloadView(false);
+      }
+    };
+
+    fetchData();
+  }, [reloadView, diasOcupados]);
 
   async function obtenerSolicitudesPDF(solicitud) {
     const sendData = {
