@@ -80,8 +80,9 @@ const mostrarSolicitudes = () => {
       .then((result) => {
         console.log(result.status);
         if (result.status === 200) {
-          setModal(false);
           setReloadView(true);
+          setModal(false);
+          alert("Solicitud actualizada correctamente");
         } else {
           alert("Error al actualizar");
         }
