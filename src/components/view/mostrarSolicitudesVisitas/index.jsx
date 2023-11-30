@@ -271,13 +271,14 @@ const mostrarSolicitudes = () => {
       });
   };
 
-  const obtenerEmpresas = () => {
-    fetch(apiUrl + "/obtener_empresas.php")
-      .then((resp) => resp.json())
-      .then((json) => {
-        //console.log(json);
-        setEmpresas(json);
-      });
+  const obtenerEmpresas = async () => {
+    try {
+      const response = await fetch(apiUrl + "/obtener_empresas.php");
+      const json = await response.json();
+      setEmpresas(json);
+    } catch (error) {
+      console.error("Error al obtener empresas:", error);
+    }
   };
 
   return (
