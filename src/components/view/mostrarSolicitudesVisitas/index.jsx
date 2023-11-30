@@ -280,6 +280,31 @@ const mostrarSolicitudes = () => {
       console.error("Error al obtener empresas:", error);
     }
   };
+  const eliminar = () => {
+    const confirmar = window.confirm(
+      "¿Seguro que quieres eliminar esta solicitud?"
+    );
+    if (confirmar) {
+      const sendData = {
+        id_visita: data.id_visita,
+      };
+
+      axios
+        .delete(apiUrl + "/eliminar_solicitud_visita.php", { data: sendData })
+        .then((result) => {
+          console.log(result.status);
+          if (result.status === 200) {
+            setModal(false);
+            setReloadView(true);
+          } else {
+            alert("Error al eliminar");
+          }
+        })
+        .catch((error) => {
+          console.error("Error al eliminar la solicitud:", error);
+        });
+    }
+  };
 
   return (
     <>
@@ -581,6 +606,9 @@ const mostrarSolicitudes = () => {
           </Button>{" "}
           <Button color="danger" onClick={cerrarModal}>
             Cancelar
+          </Button>
+          <Button color="danger" onClick={eliminar}>
+            Eliminar
           </Button>
         </ModalFooter>
       </Modal>
