@@ -20,8 +20,12 @@ const ExportarSolicitudes = () => {
         rango,
       })
       .then((response) => {
-        setSolicitudes(response.data);
-        console.log(response.data);
+        // Ordenar las solicitudes por id_visita de forma descendente
+        const solicitudesOrdenadas = response.data.sort(
+          (a, b) => b.id_visita - a.id_visita
+        );
+
+        setSolicitudes(solicitudesOrdenadas);
         setReloadView(false);
       })
       .catch((error) => {
