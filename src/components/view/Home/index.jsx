@@ -37,27 +37,32 @@ export default function Home() {
   });
 
   useEffect(() => {
-    obtenerEmpresas();
-    setReloadView(false);
+    const fetchData = async () => {
+      await obtenerEmpresas();
+      setReloadView(false);
+      // Realizar otras acciones después de obtener las empresas
+    };
+
+    fetchData();
   }, [reloadView]);
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.id]: e.target.value });
   };
 
-  const obtenerEmpresas = () => {
-    fetch(apiUrl + "/obtener_empresas.php")
-      .then((resp) => resp.json())
-      .then((json) => {
-        if (json.status === 200) {
-          setEmpresas(json.data); // Actualizar el estado con los datos
-        } else {
-          console.error("Error al obtener las empresas.");
-        }
-      })
-      .catch((error) => {
-        console.error("Error al obtener las empresas:", error);
-      });
+  const obtenerEmpresas = async () => {
+    try {
+      const response = await fetch(apiUrl + "/obtener_empresas.php");
+      const json = await response.json();
+
+      if (json.status === 200) {
+        setEmpresas(json.data); // Actualizar el estado con los datos
+      } else {
+        console.error("Error al obtener las empresas.");
+      }
+    } catch (error) {
+      console.error("Error al obtener las empresas:", error);
+    }
   };
 
   const submitForm = (e) => {
@@ -80,6 +85,7 @@ export default function Home() {
     axios
       .post(apiUrl + "/insertar_solicitud_visita.php", sendData)
       .then((result) => {
+        console.log(result.data);
         if (result.data.isOk === "true") {
           alert("Visita registrada");
           setReloadView(true);
