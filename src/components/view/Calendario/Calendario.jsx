@@ -22,6 +22,7 @@ const Agenda = () => {
   const [lugar, setLugar] = useState("");
   const [maestroResponsable, setMaestroResponsable] = useState("");
   const [numAlumnos, setNumAlumnos] = useState("");
+  const [reloadView, setReloadView] = useState(false);
 
   const [selectedEvent, setSelectedEvent] = useState(null);
 
@@ -63,7 +64,7 @@ const Agenda = () => {
   };
   useEffect(() => {
     obtenerEventos();
-  }, []);
+  }, [reloadView]);
   const handleCloseModal = () => {
     setShowModal(false);
   };
