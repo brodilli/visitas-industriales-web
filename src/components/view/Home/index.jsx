@@ -86,7 +86,7 @@ export default function Home() {
       .post(apiUrl + "/insertar_solicitud_visita.php", sendData)
       .then((result) => {
         console.log(result.data);
-        if (result.data.isOk === "true") {
+        if (result.data.isOk === true) {
           alert("Visita registrada");
           setReloadView(true);
         } else {
