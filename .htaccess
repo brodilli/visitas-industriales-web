@@ -1,9 +1,11 @@
-Header set Access-Control-Allow-Origin "*"
-Header set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
-Header set Access-Control-Allow-Headers "Content-Type, Authorization"
-RewriteEngine On  
-RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]
-RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
-RewriteRule ^ - [L]
+<IfModule mod_rewrite.c>
+    # Activar el motor de reescritura
+    RewriteEngine On
 
-RewriteRule ^ /index.html [L]
+    # Evitar la reescritura si el recurso existe como archivo o directorio
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+    # Redirigir todas las demás solicitudes a index.html
+    RewriteRule ^(.*)$ /index.html [L,QSA]
+</IfModule>
