@@ -71,7 +71,7 @@ function Rutas() {
         </Route>
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/" element={<Login />} />
-        <Route path="*" element={"No encontrado"}></Route>
+        <Route path="*" element={<Login />} />
       </Routes>
     </Router>
   );
