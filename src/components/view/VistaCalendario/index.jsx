@@ -53,7 +53,8 @@ const VistaCalendario = () => {
   };
   useEffect(() => {
     obtenerEventos();
-  }, []);
+    setReloadView(false);
+  }, [reloadView]);
   const handleEventClick = (eventClickInfo) => {
     // Obtén el evento clicado desde eventClickInfo.event y configura el estado
     setIdVisita(eventClickInfo.event.id);
