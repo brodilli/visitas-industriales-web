@@ -274,12 +274,18 @@ const mostrarSolicitudes = () => {
   const obtenerEmpresas = async () => {
     try {
       const response = await fetch(apiUrl + "/obtener_empresas.php");
+
+      if (!response.ok) {
+        throw new Error(`¡Error HTTP! Estado: ${response.status}`);
+      }
+
       const json = await response.json();
       setEmpresas(json);
     } catch (error) {
-      console.error("Error al obtener empresas:", error);
+      console.error("Error al obtener empresas:", error.message);
     }
   };
+
   const eliminar = () => {
     const confirmar = window.confirm(
       "¿Seguro que quieres eliminar esta solicitud?"
