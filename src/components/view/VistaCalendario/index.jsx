@@ -10,6 +10,7 @@ import { useEffect } from "react";
 const VistaCalendario = () => {
   const [events, setEvents] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [reloadView, setReloadView] = useState(false);
 
   const [idVisita, setIdVisita] = useState("");
   const [idVehiculo, setIdVehiculo] = useState("");
