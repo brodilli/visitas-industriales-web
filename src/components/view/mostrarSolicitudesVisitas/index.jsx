@@ -265,9 +265,17 @@ const mostrarSolicitudes = () => {
   };
   const obtenerDiasOcupados = () => {
     fetch(apiUrl + "/obtener_agenda.php")
-      .then((resp) => resp.json())
+      .then((resp) => {
+        if (!resp.ok) {
+          throw new Error(`¡Error HTTP! Estado: ${resp.status}`);
+        }
+        return resp.json();
+      })
       .then((json) => {
         setDiasOcupados(json);
+      })
+      .catch((error) => {
+        console.error("Error al obtener días ocupados:", error);
       });
   };
 
@@ -318,15 +326,16 @@ const mostrarSolicitudes = () => {
         <h1>Solicitudes de visitas</h1>
         <select
           className="form-control"
-          id="tipoUser"
+          id="Rango"
           value={rango}
           onChange={(e) => {
             setRango(e.target.value); // Actualizar el estado 'rango' con el valor seleccionado
             obtenerSolicitudes(e.target.value);
+            // setReloadView(true);
           }}
         >
-          <option value="1">Este semestre</option>
           <option value="2">Todas</option>
+          <option value="1">Este semestre</option>
         </select>
         <div className="contenedorSolicitudes">
           {solicitudes.length > 0 &&

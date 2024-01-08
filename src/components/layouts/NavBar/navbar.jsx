@@ -28,6 +28,13 @@ const NavBar = () => {
               <Link className="nav-link" id="registro" to="/registro">
                 Registro
               </Link>
+              <Link
+                className="nav-link"
+                id="mostrarEmpresas"
+                to="/mostrarEmpresas"
+              >
+                Mostrar Empresas
+              </Link>
               <Link className="nav-link" id="mostrarUsers" to="/mostrarUsers">
                 Mostrar Usuarios
               </Link>

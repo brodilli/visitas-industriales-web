@@ -9,6 +9,7 @@ import MostrarSolicitudesUsuario from "../view/MostrarSolicitudVisitaUsuario";
 import ExportarSolicitudes from "../view/Export/index";
 import RegistroEmpresa from "../RegistroEmpresa";
 import Calendario from "../view/Calendario/Calendario";
+import MostrarEmpresas from "../view/Empresas";
 import PrimerInicio from "../view/primerInicio/index";
 import NavBar from "../../components/layouts/NavBar/navbar";
 import NavBarUser from "../layouts/NavBar/navBarUser";
@@ -68,6 +69,7 @@ function Rutas() {
           <Route exact path="/calendario" element={<Calendario />} />
           <Route exact path="/vistaCalendario" element={<VistaCalendario />} />
           <Route exact path="/cambiarContraseña" element={<PrimerInicio />} />
+          <Route exact path="/mostrarEmpresas" element={<MostrarEmpresas />} />
         </Route>
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/" element={<Login />} />

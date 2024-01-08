@@ -30,7 +30,7 @@ const RegistroEmpresa = () => {
     };
     axios.post(apiUrl + "/insertar_empresa.php", sendData).then((result) => {
       console.log(result.data);
-      if (result.data.msj == "Registro exitoso") {
+      if (result.data.msj === "Registro exitoso") {
         alert("Empresa registrada");
       }
       setData({
