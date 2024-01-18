@@ -25,6 +25,9 @@ const NavBar = () => {
               <Link className="nav-link" id="home" to="/home">
                 Home
               </Link>
+              <Link className="nav-link" id="visita" to="/visitaRegistro">
+                Solicitar visita
+              </Link>
               <Link className="nav-link" id="registro" to="/registro">
                 Registro
               </Link>
@@ -50,7 +53,7 @@ const NavBar = () => {
                 id="mostrarSolicitudes"
                 to="/mostrarSolicitudes"
               >
-                Mostrar solicitudes de visitas
+                Mostrar Solicitudes
               </Link>
               <Link
                 className="nav-link"
@@ -64,7 +67,7 @@ const NavBar = () => {
                 id="vistaCalendario"
                 to="/vistaCalendario"
               >
-                Calendario de Vehiculos
+                Calendario
               </Link>
             </div>
             <div className="datos">

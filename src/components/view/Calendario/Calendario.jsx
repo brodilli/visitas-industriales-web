@@ -24,8 +24,6 @@ const Agenda = () => {
   const [numAlumnos, setNumAlumnos] = useState("");
   const [reloadView, setReloadView] = useState(false);
 
-  const [selectedEvent, setSelectedEvent] = useState(null);
-
   const cerrarSesion = () => {
     localStorage.removeItem("token");
     window.location.href = "/";
@@ -127,7 +125,7 @@ const Agenda = () => {
     };
     axios.post(apiUrl + "/no_repetir_agenda.php", sendData).then((response) => {
       const cont = response.data.count;
-      if (cont == 0) {
+      if (cont === 0) {
         if (idVehiculo === "") {
           setShowModal(false);
           alert("Ingrese un id de vehiculo");

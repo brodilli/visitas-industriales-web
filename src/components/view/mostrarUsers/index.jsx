@@ -18,7 +18,6 @@ export default function MostrarUsers() {
   // Variable que guarda los registros
   const [registros, setRegistros] = useState([]);
   const [modalInsertar, setModalInsertar] = useState(false);
-  const serverUrl = process.env.REACT_APP_SERVER_URL;
   const apiUrl = process.env.REACT_APP_API_URL;
   //variables del usuario
   const [data, setData] = useState({

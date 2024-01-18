@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Table, Button, Container } from "reactstrap";
+import { Table, Container } from "reactstrap";
 import { Modal } from "reactstrap";
 
 export default function MostrarEmpresas() {
   const [empresas, setEmpresas] = useState([]);
-  const [modalInsertar, setModalInsertar] = useState(false);
+  const [modalInsertar] = useState(false);
   const apiUrl = process.env.REACT_APP_API_URL;
 
   const [data, setData] = useState({
@@ -36,9 +36,9 @@ export default function MostrarEmpresas() {
       });
   };
 
-  const handleChange = (e) => {
-    setData({ ...data, [e.target.id]: e.target.value });
-  };
+  // const handleChange = (e) => {
+  //   setData({ ...data, [e.target.id]: e.target.value });
+  // };
 
   //   const abrirModalInsertar = (empresa) => {
   //     setModalInsertar(true);

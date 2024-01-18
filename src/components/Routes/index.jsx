@@ -1,6 +1,7 @@
 import React from "react";
 import Login from "../view/Login/Login";
 import Home from "../../components/view/Home/index";
+import VisitaRegistro from "../../components/view/solicitudVisita/index";
 import Registo from "../../components/view/Registro/index";
 import MostrarUsers from "../../components/view/mostrarUsers/index";
 import EditarUsers from "../../components/view/editarUsers/index";
@@ -70,6 +71,7 @@ function Rutas() {
           <Route exact path="/vistaCalendario" element={<VistaCalendario />} />
           <Route exact path="/cambiarContraseña" element={<PrimerInicio />} />
           <Route exact path="/mostrarEmpresas" element={<MostrarEmpresas />} />
+          <Route exact path="/visitaRegistro" element={<VisitaRegistro />} />
         </Route>
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/" element={<Login />} />
